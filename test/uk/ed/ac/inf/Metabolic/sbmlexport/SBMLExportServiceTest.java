@@ -3,10 +3,7 @@ package uk.ed.ac.inf.Metabolic.sbmlexport;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 
 import org.jmock.Expectations;
 import org.jmock.Mockery;
@@ -21,7 +18,6 @@ import org.pathwayeditor.businessobjectsAPI.IMap;
 import org.pathwayeditor.businessobjectsAPI.IRootMapObject;
 import org.pathwayeditor.contextadapter.publicapi.ExportServiceException;
 import org.pathwayeditor.contextadapter.publicapi.IContext;
-import org.sbml.libsbml.SBMLDocument;
 @RunWith(JMock.class)
 public class SBMLExportServiceTest {
 
@@ -34,7 +30,7 @@ public class SBMLExportServiceTest {
 	SBMLExportService service;
     File NONEXISTENT = new File ("??");
     File EXISTENT;
-    static boolean canRun = false;
+    static boolean canRun = false; // check this is true b4 running export tests.
    
     
    //uk.ac.ed.inf.csb.Metabolic
