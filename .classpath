@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="test"/>
+	<classpathentry exported="true" kind="lib" path="lib/sbmlj.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="jmock-2.2.0-jars/jmock-2.2.0/cglib-2.1_3-src.jar"/>
+	<classpathentry kind="lib" path="jmock-2.2.0-jars/jmock-2.2.0/cglib-nodep-2.1_3.jar"/>
+	<classpathentry kind="lib" path="jmock-2.2.0-jars/jmock-2.2.0/hamcrest-core-1.1.jar"/>
+	<classpathentry kind="lib" path="jmock-2.2.0-jars/jmock-2.2.0/hamcrest-library-1.1.jar"/>
+	<classpathentry kind="lib" path="jmock-2.2.0-jars/jmock-2.2.0/jmock-2.2.0.jar"/>
+	<classpathentry kind="lib" path="jmock-2.2.0-jars/jmock-2.2.0/jmock-junit3-2.2.0.jar"/>
+	<classpathentry kind="lib" path="jmock-2.2.0-jars/jmock-2.2.0/jmock-junit4-2.2.0.jar"/>
+	<classpathentry kind="lib" path="jmock-2.2.0-jars/jmock-2.2.0/jmock-legacy-2.2.0.jar"/>
+	<classpathentry kind="lib" path="jmock-2.2.0-jars/jmock-2.2.0/objenesis-1.0.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
