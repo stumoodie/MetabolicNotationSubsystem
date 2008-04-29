@@ -6,7 +6,7 @@ import java.io.FileReader;
 public class LibSBMLConfigManager {
 	
 	private static boolean isWindows() {
-		return System.getProperty("os.name").indexOf("Win") != -1;
+		return System.getProperty("os.name").indexOf("x") != -1;
 	}
 
 	private static String getPath() throws Exception {
