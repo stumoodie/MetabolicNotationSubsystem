@@ -36,6 +36,14 @@
 		<echo> Compiling test cases</echo>
 		<javac classpathref="testclasspath" debug="true" srcdir="../test/" destdir="${build.root}/testbin" >
 		</javac>
+	
+	<!-- copy testConfig files  -->
+	<copy todir="${build.root}/testbin">
+				<fileset dir="../test">
+				   <exclude name="**/*.java"/>
+	             </fileset>
+	 </copy>
+	
 	<!--run test cases. All test class names  should end in 'Test' to avoid
 		       inclusion of inner classes. -->
 	<mkdir dir="logs"/>
