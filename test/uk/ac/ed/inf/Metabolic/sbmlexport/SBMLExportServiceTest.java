@@ -17,12 +17,10 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjectsAPI.IMap;
+import org.pathwayeditor.businessobjectsAPI.IMapObject;
 import org.pathwayeditor.businessobjectsAPI.IRootMapObject;
 import org.pathwayeditor.contextadapter.publicapi.ExportServiceException;
 import org.pathwayeditor.contextadapter.publicapi.IContext;
-
-import uk.ac.ed.inf.Metabolic.sbmlexport.ISBMLGenerator;
-import uk.ac.ed.inf.Metabolic.sbmlexport.SBMLExportService;
 @RunWith(JMock.class)
 public class SBMLExportServiceTest {
 
@@ -31,6 +29,7 @@ public class SBMLExportServiceTest {
 	final IContext context = mockery.mock(IContext.class);
 	final IMap map = mockery.mock(IMap.class);
 	final IRootMapObject rmo = mockery.mock(IRootMapObject.class);
+	final IMapObject child = mockery.mock(IMapObject.class);
 	final ISBMLGenerator generator = mockery.mock(ISBMLGenerator.class);
 	SBMLExportService service;
     File NONEXISTENT = new File ("??");
@@ -38,7 +37,7 @@ public class SBMLExportServiceTest {
     static boolean canRun = false; // check this is true b4 running export tests.
    
     
-   //uk.ac.ed.inf.csb.Metabolic
+   //uk.ac.ed.inf.Metabolic
     @BeforeClass 
     public static void loadNativeLibraries () throws Exception {
     	canRun = LibSBMLConfigManager.configure();
@@ -49,6 +48,10 @@ public class SBMLExportServiceTest {
 	public void setUp() throws Exception {
 		service = new SBMLExportService(context);
 		 EXISTENT = new File ("SBMLoutput");
+		 mockery.checking(new Expectations() {
+			{one(rmo).addChild(child);}
+		});
+		 rmo.addChild(child);
 	
 	}
 
@@ -81,10 +84,10 @@ public class SBMLExportServiceTest {
 		if(!canRun){
 			fail();
 		}
-		System.out.println("here");
 		mockery.checking(new Expectations () {
 			{atLeast(1).of(map).getTheSingleRootMapObject();}
 			{will(returnValue(rmo));}
+			{ignoring(rmo);}
 		
 			
 		});
