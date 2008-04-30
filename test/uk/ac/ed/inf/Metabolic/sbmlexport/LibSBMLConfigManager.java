@@ -32,7 +32,7 @@ public class LibSBMLConfigManager {
     		return false;
     	}
 		}catch (Exception e) {
-			throw e;
+			return false;
 		}
   
 	}

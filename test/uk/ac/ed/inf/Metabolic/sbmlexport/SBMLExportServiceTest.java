@@ -77,7 +77,7 @@ public class SBMLExportServiceTest {
 	@Test
 	public void testExportMap() throws Throwable {
 		if(!canRun){
-			
+			return;
 		}
 		System.out.println("here");
 		mockery.checking(new Expectations () {
