@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: MetabolicContext Plug-in
 Bundle-SymbolicName: uk.ac.ed.inf.csb.Metabolic
 Bundle-Version: 1.0.0
-Bundle-Activator: uk.ed.ac.inf.metaboliccontext.Activator
+Bundle-Activator: uk.ac.ed.inf.metaboliccontext.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.pathwayeditor.application
