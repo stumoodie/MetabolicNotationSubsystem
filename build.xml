@@ -1,0 +1,97 @@
+<project name="Metabolic build" default="test">
+<property file="nonPDEbuild.properties"/>
+<!-- ========
+     CLASSPATH DEFINITIONS
+     ======== -->
+	<path id="classpath">
+		<pathelement location="${MyWorkspace}/org.pathwayeditor.application/EPE2_new.jar"/>
+		<fileset dir="./lib" />
+	</path>
+	<path id="jmock">
+		 <fileset dir="./jmock-2.2.0-jars" includes="**/*.jar"/>
+    </path>
+	
+<!-- builds syntax definition code and drops into application -->
+<target name="non_plugin_main" depends="clean, clean_compile" description="builds class files into target">
+	   
+	     			 <jar destfile="${archive}">
+	     			     <fileset dir="${build.root}/bin" >
+	 
+	     			     </fileset>
+	     		      </jar>
+</target>
+
+<target name="test" depends="non_plugin_main">
+ 	   
+        <!-- classpath must include javalibs, compiled src AND tests -->
+		<path id="testclasspath">
+			  <path refid="classpath"/>
+			  <path refid="jmock"/>
+			  <pathelement location="${archive}"/>
+			 <pathelement location="${build.root}/testbin"/>
+			 
+				 
+		</path>
+	
+    <!-- now compile test cases -->
+		<echo> Compiling test cases</echo>
+		<javac classpathref="testclasspath" debug="true" srcdir="test/" destdir="${build.root}/testbin" >
+		</javac>
+	<!--run test cases. All test class names  should end in 'Test' to avoid
+		       inclusion of inner classes. -->
+	<mkdir dir="logs"/>
+			<junit  printsummary="yes" haltonfailure="no">
+				<formatter type="xml"/>
+		        <classpath>
+		        	<path refid="testclasspath"/>
+		        	<pathelement location="${devEclipse.dir.plugins}/org.junit/junit4_4.1.0.1/junit-4.1.jar"/>
+		        </classpath>
+				
+				<batchtest todir="logs">
+					<fileset dir= "${build.root}/testbin">
+						<include name="**/*Test.class"/>
+					</fileset>
+					</batchtest>
+				
+				
+			    
+			</junit>
+	
+	
+	
+</target>
+
+	
+<!-- ==========================
+    Clean Compile
+     ========================== -->
+<target name="clean_compile"  depends="clean" description=" clean compile">
+	<echo> here </echo>
+	<mkdir dir="${build.root}"/>
+	<mkdir dir="${build.root}/bin"/>
+	<mkdir dir="${build.root}/testbin"/>
+	
+	<antcall target="compile"/>
+</target>
+
+	<!-- ==========================
+	    Incremental Compile
+	     ========================== -->
+<target name="compile" description="Incremental compile">
+	      <!-- define classpath for src code (not tests) -->
+			
+	        <javac classpathref="classpath" srcdir="src/" destdir="${build.root}/bin">
+	            
+	        	<exclude name= "**/Activator.java"/> <!-- or plugin code -->
+	        </javac>
+</target>
+	
+ <!-- =========================
+      Clean
+      ========================= -->
+<target name="clean" description="removes old build artefacts">
+	<delete dir="${build.root}"/>
+	<delete file="${archive}"/>
+</target>
+	
+</project>
