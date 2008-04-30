@@ -1,13 +1,11 @@
-package uk.ed.ac.inf.Metabolic.sbmlexport;
+package uk.ac.ed.inf.Metabolic.sbmlexport;
 
 import org.pathwayeditor.businessobjectsAPI.IRootMapObject;
 import org.sbml.libsbml.Compartment;
 import org.sbml.libsbml.Model;
 import org.sbml.libsbml.SBMLDocument;
 import org.sbml.libsbml.Species;
-import org.sbml.libsbml.libsbml;
 
-import com.sun.xml.internal.txw2.Document;
 
 public class TestGenerator implements ISBMLGenerator {
 

@@ -1,6 +1,7 @@
-package uk.ed.ac.inf.Metabolic.sbmlexport;
+package uk.ac.ed.inf.Metabolic.sbmlexport;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 
 public class LibSBMLConfigManager {
@@ -19,8 +20,9 @@ public class LibSBMLConfigManager {
 	/**
 	 * 
 	 * @return true if sbml libraries loaded ok
+	 * @throws Exception 
 	 */
-	static boolean configure () {
+	static boolean configure () throws Exception {
 		try {
 		String path = getPath();
     	if(isWindows()) {
@@ -30,7 +32,7 @@ public class LibSBMLConfigManager {
     		return false;
     	}
 		}catch (Exception e) {
-			return false;
+			throw e;
 		}
   
 	}

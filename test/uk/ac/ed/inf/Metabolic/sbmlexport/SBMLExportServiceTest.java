@@ -1,4 +1,4 @@
-package uk.ed.ac.inf.Metabolic.sbmlexport;
+package uk.ac.ed.inf.Metabolic.sbmlexport;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -18,6 +18,9 @@ import org.pathwayeditor.businessobjectsAPI.IMap;
 import org.pathwayeditor.businessobjectsAPI.IRootMapObject;
 import org.pathwayeditor.contextadapter.publicapi.ExportServiceException;
 import org.pathwayeditor.contextadapter.publicapi.IContext;
+
+import uk.ac.ed.inf.Metabolic.sbmlexport.ISBMLGenerator;
+import uk.ac.ed.inf.Metabolic.sbmlexport.SBMLExportService;
 @RunWith(JMock.class)
 public class SBMLExportServiceTest {
 
@@ -74,12 +77,13 @@ public class SBMLExportServiceTest {
 	@Test
 	public void testExportMap() throws Throwable {
 		if(!canRun){
-			return;
+			
 		}
+		System.out.println("here");
 		mockery.checking(new Expectations () {
 			{atLeast(1).of(map).getTheSingleRootMapObject();}
 			{will(returnValue(rmo));}
-		//	{one(generator).generateSBMLModel(rmo);}
+		
 			
 		});
 		EXISTENT.createNewFile();

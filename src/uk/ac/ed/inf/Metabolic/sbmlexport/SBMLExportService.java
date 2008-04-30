@@ -1,6 +1,4 @@
-package uk.ed.ac.inf.Metabolic.sbmlexport;
-import org.sbml.libsbml.*;
-
+package uk.ac.ed.inf.Metabolic.sbmlexport;
 import java.io.File;
 import java.io.IOException;
 
@@ -8,6 +6,8 @@ import org.pathwayeditor.businessobjectsAPI.IMap;
 import org.pathwayeditor.contextadapter.publicapi.ExportServiceException;
 import org.pathwayeditor.contextadapter.publicapi.IContext;
 import org.pathwayeditor.contextadapter.publicapi.IContextAdapterExportService;
+import org.sbml.libsbml.SBMLDocument;
+import org.sbml.libsbml.libsbml;
 
 public class SBMLExportService implements IContextAdapterExportService {
      String DISPLAY_NAME = "SBML exportL2v3";

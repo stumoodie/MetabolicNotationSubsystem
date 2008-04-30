@@ -1,4 +1,4 @@
-package uk.ed.ac.inf.Metabolic.sbmlexport;
+package uk.ac.ed.inf.Metabolic.sbmlexport;
 
 import org.sbml.libsbml.Model;
 import org.sbml.libsbml.SBMLDocument;
