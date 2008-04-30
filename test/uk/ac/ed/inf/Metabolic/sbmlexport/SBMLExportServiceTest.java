@@ -2,6 +2,7 @@ package uk.ac.ed.inf.Metabolic.sbmlexport;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.File;
 
@@ -12,6 +13,7 @@ import org.jmock.integration.junit4.JUnit4Mockery;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjectsAPI.IMap;
@@ -42,7 +44,7 @@ public class SBMLExportServiceTest {
     	canRun = LibSBMLConfigManager.configure();
     	
     }
- 
+    @Ignore
 	@Before
 	public void setUp() throws Exception {
 		service = new SBMLExportService(context);
@@ -77,7 +79,7 @@ public class SBMLExportServiceTest {
 	@Test
 	public void testExportMap() throws Throwable {
 		if(!canRun){
-			return;
+			fail();
 		}
 		System.out.println("here");
 		mockery.checking(new Expectations () {
