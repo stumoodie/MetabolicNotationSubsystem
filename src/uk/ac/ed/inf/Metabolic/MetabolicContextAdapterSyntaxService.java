@@ -22,7 +22,7 @@ import org.pathwayeditor.contextadapter.toolkit.ctxdefn.ShapeObjectType;
 import org.pathwayeditor.contextadapter.toolkit.ctxdefn.TextPropertyDefinition;
 
 public class MetabolicContextAdapterSyntaxService implements IContextAdapterSyntaxService {
-	static enum ObjectTypes {
+	public static enum ObjectTypes {
 Compartment{public String toString(){return "10";}},
 Process{public String toString(){return "11";}},
 Compound{public String toString(){return "12";}},
@@ -545,7 +545,7 @@ private IPropertyDefinition getPropRole(){
 }
 private IPropertyDefinition getPropIC(){
 	IPropertyDefinition IC= new NumberPropertyDefinition(
- "IC",new BigDecimal(""),false,true);
+ "IC",new BigDecimal("0"),false,true);
 	return IC;
 }
 private IPropertyDefinition getPropKineticLaw(){

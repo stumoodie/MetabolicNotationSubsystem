@@ -21,7 +21,7 @@ public class SBMLExportService implements IContextAdapterExportService {
 	SBMLExportService(IContext context) {
 		super();
 		this.context = context;
-		this.generator = new TestGenerator();
+		this.generator = new DefaultSBMLGenerator();
 	}
 
 	/**
