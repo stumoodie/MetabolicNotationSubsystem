@@ -1,10 +1,12 @@
 <project name="build" default="main">
+	
 	<!-- create copy of this file and assign your machine specific paths -->
 	<property name="home" value="C:\\Documents and Settings/Richard Adams"/>
 	<property name="MyWorkspace" value="${home}/workspace/epe"/>
 	<property name="EclipseHome" value="D:\work/apps/europa/eclipse"/>
 	
-	<!-- include these statements unchanged.-->
+	<!-- include these statements unchanged.
+	     If you want to run a non-default target, add 'target=XXX' in the ant call -->
 	<property file="nonPDEbuild.properties"/>
 	<target name="main">
 	  <ant antfile="build.xml"> </ant>

@@ -1,3 +1,13 @@
+<!-- ======================================
+
+      This build.xml is for a standard build of the src and test code that has no Eclipse
+      dependencies. The output is a jar.
+      
+      For building a project as a plugin, use PDE tools->Create ant script.
+      
+      This build file should have no machine-specific file paths. 
+
+     ====================================== -->
 <project name="Metabolic build" default="test">
 
 <!-- ========
