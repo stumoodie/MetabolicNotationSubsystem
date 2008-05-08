@@ -1,5 +1,0 @@
-1) Copy 'Richard.xml' and use it as a template for your own file of machine specific settings.
-2) Run it as a normal ant build file.
-
-For tests to run, you may need to add the junit4.4 jar from your eclipse plugin into
-the ant classpath (via the classpath tab of the launch configuration).

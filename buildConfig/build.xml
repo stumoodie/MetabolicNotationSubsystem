@@ -9,7 +9,9 @@
 
      ====================================== -->
 <project name="Metabolic build" default="test">
-
+<property file="./${user.name}.properties"/> <!-- must be loaded first -->
+<property file="./nonPDEbuild.properties"/>
+	
 <!-- ========
      CLASSPATH DEFINITIONS
      ======== -->
@@ -37,7 +39,10 @@
 			  <path refid="classpath"/>
 			  <path refid="jmock"/>
 			  <pathelement location="${archive}"/>
-			 <pathelement location="${build.test}"/>
+			  <pathelement location="${build.test}"/>
+			  <fileset dir ="${MyWorkspace}/org.pathwayeditor.application">
+			  	 <include name="**/*.jar"/>
+			  </fileset>
 			 
 				 
 		</path>
@@ -110,6 +115,7 @@
 	<delete dir="${build.root}"/>
 	<delete file="${archive}"/>
 	<delete file="logs"/>
+	<delete file="sbmlLoaded"/>
 </target>
 	
 </project>

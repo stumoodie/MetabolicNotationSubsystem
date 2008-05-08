@@ -1,0 +1,6 @@
+1) Copy 'Richard Adams.properties' and use it as a template for your own file of machine specific settings.
+2) Rename the file 'user.name'.properties where user.name is  the value of the Java system property user.name.
+2) Run build.xml.
+
+For tests to run, you may need to add the junit4.4 jar from your eclipse plugin into
+the ant classpath (via the classpath tab of the launch configuration).
