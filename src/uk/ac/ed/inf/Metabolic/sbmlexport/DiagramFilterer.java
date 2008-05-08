@@ -25,6 +25,7 @@ public class DiagramFilterer {
 		
 	}
 
+
 	private void recurseThroughChildren(Set<IShape> rc, IShape s, OTFilter filter) {
 		for (IMapObject child : s.getChildren()) {
 			if(filter.accept(s)){

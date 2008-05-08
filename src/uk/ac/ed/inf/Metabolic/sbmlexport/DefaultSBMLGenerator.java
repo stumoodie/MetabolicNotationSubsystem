@@ -44,7 +44,7 @@ public class DefaultSBMLGenerator implements ISBMLGenerator {
 	private void addProducts(IShape process, Reaction r) {
 		Set <ILink> produceLinks = new DiagramFilterer().getLinks(process, new OTFilter () {
 			public boolean accept (IMapObject imo) {
-				return imo.getObjectType().equals(MetabolicContextAdapterSyntaxService.ObjectTypes.Produce);
+				return imo.getObjectType().getTypeName().equals(MetabolicContextAdapterSyntaxService.ObjectTypes.Produce.name());
 			}
 		});
 		for(ILink l:produceLinks) {
@@ -55,7 +55,7 @@ public class DefaultSBMLGenerator implements ISBMLGenerator {
 	private void addReactants(IShape process, Reaction r) {
 		Set <ILink> consumeLinks = new DiagramFilterer().getLinks(process, new OTFilter () {
 			public boolean accept (IMapObject imo) {
-				return imo.getObjectType().equals(MetabolicContextAdapterSyntaxService.ObjectTypes.Consume);
+				return imo.getObjectType().getTypeName().equals(MetabolicContextAdapterSyntaxService.ObjectTypes.Consume.name());
 			}
 		});
 		for(ILink l:consumeLinks) {
@@ -66,7 +66,7 @@ public class DefaultSBMLGenerator implements ISBMLGenerator {
 	private Set<IShape> findProcesses(IRootMapObject rmo, Model m) {
 		Set <IShape> processes =new DiagramFilterer().getRequiredShapes(rmo, new OTFilter (){
 			public boolean accept (IMapObject imo) {
-				return imo.getObjectType().equals(MetabolicContextAdapterSyntaxService.ObjectTypes.Process);
+				return imo.getObjectType().getTypeName().equals(MetabolicContextAdapterSyntaxService.ObjectTypes.Process.name());
 			}
 		});
 		return processes;
@@ -74,15 +74,13 @@ public class DefaultSBMLGenerator implements ISBMLGenerator {
 	private Set <IShape> findSpecies(IRootMapObject rmo, Model m) {
 		Set <IShape> species =new DiagramFilterer().getRequiredShapes(rmo, new OTFilter (){
 			public boolean accept (IMapObject imo) {
-				return imo.getObjectType().equals(MetabolicContextAdapterSyntaxService.ObjectTypes.Compound) ||
-				       imo.getObjectType().equals(MetabolicContextAdapterSyntaxService.ObjectTypes.Macromolecule);
+				return imo.getObjectType().getTypeName().equals(MetabolicContextAdapterSyntaxService.ObjectTypes.Compound.name()) ||
+				       imo.getObjectType().getTypeName().equals(MetabolicContextAdapterSyntaxService.ObjectTypes.Macromolecule.name());
 			}
 		});
 		return species;
 	}
-	private boolean isProcess(IMapObject imo) {
-		return imo.getObjectType().equals(MetabolicContextAdapterSyntaxService.ObjectTypes.Process);
-	}
+	
 	String RDFdec = "rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:dcterms=\"http://purl.org/dc/terms/\" xmlns:vCard=\"http://www.w3.org/2001/vcard-rdf/3.0#\" xmlns:bqbiol=\"http://biomodels.net/biology-qualifiers/\" xmlns:bqmodel=\"http://biomodels.net/model-qualifiers/";
 	String Desc ="rdf:Description rdf:about=\"#\"";
 	/* <annotation>
@@ -108,7 +106,7 @@ public class DefaultSBMLGenerator implements ISBMLGenerator {
 		
 	}
 	private boolean isCompound(IMapObject imo) {
-		return imo.getObjectType().equals(MetabolicContextAdapterSyntaxService.ObjectTypes.Compound);
+		return imo.getObjectType().getTypeName().equals(MetabolicContextAdapterSyntaxService.ObjectTypes.Compound.name());
 	}
 
 	private void setUpDiagramCompartment(IRootMapObject rmo, Model m) {
