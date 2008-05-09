@@ -6,14 +6,14 @@ import java.io.OutputStream;
 import uk.ac.ed.inf.Metabolic.ExportAdapterCreationException;
 import uk.ac.ed.inf.Metabolic.IExportAdapter;
 
- class MetabolicSBMLExportAdapter <IModel>implements IExportAdapter <IModel>{
-    boolean isTargetCreated = false;
-    
+class MetabolicSBMLExportAdapter<IModel> implements IExportAdapter<IModel> {
+	boolean isTargetCreated = false;
+
 	public void createTarget(IModel model) throws ExportAdapterCreationException {
-	if(model == null) {
-		throw new IllegalArgumentException("model is null");
-	}
-      isTargetCreated = true;
+		if (model == null) {
+			throw new IllegalArgumentException("model is null");
+		}
+		isTargetCreated = true;
 	}
 
 	public boolean isTargetCreated() {
@@ -21,10 +21,10 @@ import uk.ac.ed.inf.Metabolic.IExportAdapter;
 	}
 
 	public void writeTarget(OutputStream stream) throws IOException {
-		if(stream == null) {
+		if (stream == null) {
 			throw new IllegalArgumentException("output stream is null");
 		}
-		if(!isTargetCreated()){
+		if (!isTargetCreated()) {
 			throw new IllegalStateException("Target not created");
 		}
 

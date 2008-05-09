@@ -9,6 +9,9 @@ import org.pathwayeditor.contextadapter.publicapi.IContextAdapterExportService;
 import org.sbml.libsbml.SBMLDocument;
 import org.sbml.libsbml.libsbml;
 
+import uk.ac.ed.inf.Metabolic.IExportAdapter;
+import uk.ac.ed.inf.Metabolic.ndomAPI.IModel;
+
 public class SBMLExportService implements IContextAdapterExportService {
      String DISPLAY_NAME = "SBML exportL2v3";
     
@@ -16,12 +19,12 @@ public class SBMLExportService implements IContextAdapterExportService {
     
     final String TYPECODE= "MetSBML_1.0.0";
     private IContext context;
-    private ISBMLGenerator generator;
+    private IExportAdapter<IModel>generator;
     
 	SBMLExportService(IContext context) {
 		super();
 		this.context = context;
-		this.generator = new DefaultSBMLGenerator();
+		this.generator = new MetabolicSBMLExportAdapter<IModel>();
 	}
 
 	/**
@@ -33,14 +36,13 @@ public class SBMLExportService implements IContextAdapterExportService {
 	 */
 	public void exportMap(IMap map, File exportFile) throws ExportServiceException {
 		checkArgs(map, exportFile);
-		SBMLDocument doc = generator.generateSBMLModel(map.getTheSingleRootMapObject());
-		System.out.println(exportFile.getAbsolutePath());
+	
 		try {
 		exportFile.createNewFile();
 		} catch (IOException e) {
 			throw new ExportServiceException(e);
 		}
-		libsbml.writeSBML(doc, exportFile.getAbsolutePath());
+
 
 	}
 
