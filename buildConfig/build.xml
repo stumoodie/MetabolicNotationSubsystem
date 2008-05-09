@@ -8,7 +8,7 @@
       This build file should have no machine-specific file paths. 
 
      ====================================== -->
-<project name="Metabolic build" default="test">
+<project name="Metabolic build" default="non_plugin_main">
 <property file="./${user.name}.properties"/> <!-- must be loaded first -->
 <property file="./nonPDEbuild.properties"/>
 	
