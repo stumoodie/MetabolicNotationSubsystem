@@ -67,6 +67,7 @@ class MetabolicSBMLExportAdapter<N extends IModel> implements IExportAdapter<N> 
 			s.setId(compound.getId());
 			s.setName(compound.getASCIIName());
 			s.setCompartment(sbmlCompartment.getId());
+			s.setInitialConcentration(compound.getIC());
 			AnnotationBuilder builder = new CompoundAnnotationBuilder(compound);
 			String notes = builder.buildNotes();
 			s.appendNotes(notes);

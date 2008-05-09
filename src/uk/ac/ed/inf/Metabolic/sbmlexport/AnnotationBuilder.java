@@ -61,7 +61,11 @@ public abstract class AnnotationBuilder {
 	private String getBagEnd() {
 		return RDFbagEnd+"\n";
 	}
-
+    /**
+     * Fills in specific annotation for an element.
+     * Only added for property values that aren't empty.
+     * @return
+     */
 	abstract String getRDFResources();
 
 	private String buildStart() {
