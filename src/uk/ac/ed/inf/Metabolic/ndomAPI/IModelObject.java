@@ -8,5 +8,5 @@ public interface IModelObject {
 
 	public String getDescription();
 
-	public String getDetailedDescritpion();
+	public String getDetailedDescription();
 }
