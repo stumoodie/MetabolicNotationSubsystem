@@ -1,10 +1,12 @@
-
 package uk.ac.ed.inf.Metabolic.ndomAPI;
 
 public interface IModelObject {
-  String getId();
-  String getName() ;
-  String getASCIIName() ;
-  String getDescription() ;
-  String getDetailedDescription() ;
+	public String getId();
+	public String getName();
+
+	public String getASCIIName();
+
+	public String getDescription();
+
+	public String getDetailedDescritpion();
 }
