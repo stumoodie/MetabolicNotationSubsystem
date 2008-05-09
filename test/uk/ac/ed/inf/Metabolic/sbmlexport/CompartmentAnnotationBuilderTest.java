@@ -11,6 +11,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.sbml.libsbml.Model;
+import org.sbml.libsbml.SBMLDocument;
+import org.sbml.libsbml.Species;
 
 import uk.ac.ed.inf.Metabolic.ndomAPI.ICompartment;
 
@@ -42,6 +45,14 @@ public class CompartmentAnnotationBuilderTest {
 		});
 		String anno =builder.buildAnnotation();
 		assertTrue(anno.contains("GOTERM"));
+		
+	}
+	
+	@Test
+	public void testspecies(){
+		SBMLDocument doc = new SBMLDocument();
+		Model m = doc.createModel();
+		System.out.println(m.getListOfSpecies().size());
 		
 	}
 

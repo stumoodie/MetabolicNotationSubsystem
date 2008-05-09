@@ -22,6 +22,7 @@ import org.junit.runner.RunWith;
 import uk.ac.ed.inf.Metabolic.IExportAdapter;
 import uk.ac.ed.inf.Metabolic.ndomAPI.ICompartment;
 import uk.ac.ed.inf.Metabolic.ndomAPI.ICompound;
+import uk.ac.ed.inf.Metabolic.ndomAPI.IMacromolecule;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IModel;
 
 @RunWith(JMock.class)
@@ -77,11 +78,15 @@ public class MetabolicSBMLExportAdapterTest {
 			{one(compartments.get(0)).getParentCompartment();will(returnValue(null));}
 			{allowing(compartments.get(0)).getCompoundList();}
 			{will(returnValue(Collections.EMPTY_LIST));}
+			{allowing(compartments.get(0)).getMacromoleculeList();}
+			{will(returnValue(Collections.EMPTY_LIST));}
 			
 			{allowing(compartments.get(1)).getChildCompartments();}
 			{will(returnValue(Collections.EMPTY_LIST));}
 			{one(compartments.get(1)).getParentCompartment();will(returnValue(null));}
 			{allowing(compartments.get(1)).getCompoundList();}
+			{will(returnValue(Collections.EMPTY_LIST));}
+			{allowing(compartments.get(1)).getMacromoleculeList();}
 			{will(returnValue(Collections.EMPTY_LIST));}
 		});
 		exportAdapter.createTarget(model);
@@ -101,11 +106,15 @@ public class MetabolicSBMLExportAdapterTest {
 			{allowing(parentcompartments.get(0)).getParentCompartment();will(returnValue(null));}
 			{allowing(parentcompartments.get(0)).getCompoundList();}
 			{will(returnValue(Collections.EMPTY_LIST));}
+			{allowing(parentcompartments.get(0)).getMacromoleculeList();}
+			{will(returnValue(Collections.EMPTY_LIST));}
 			
 			{allowing(parentcompartments.get(1)).getChildCompartments();}
 			{will(returnValue(Collections.EMPTY_LIST));}
 			{allowing(parentcompartments.get(1)).getParentCompartment();will(returnValue(null));}
 			{allowing(parentcompartments.get(1)).getCompoundList();}
+			{will(returnValue(Collections.EMPTY_LIST));}
+			{allowing(parentcompartments.get(1)).getMacromoleculeList();}
 			{will(returnValue(Collections.EMPTY_LIST));}
 			
 			{allowing(childCompartments.get(0)).getChildCompartments();}
@@ -113,6 +122,8 @@ public class MetabolicSBMLExportAdapterTest {
 			{allowing(childCompartments.get(0)).getParentCompartment();}
 			{will(returnValue(parentcompartments.get(0)));}
 			{allowing(childCompartments.get(0)).getCompoundList();}
+			{will(returnValue(Collections.EMPTY_LIST));}
+			{allowing(childCompartments.get(0)).getMacromoleculeList();}
 			{will(returnValue(Collections.EMPTY_LIST));}
 			
 			{one(model).getCompartmentList();will(returnValue(parentcompartments));}
@@ -135,7 +146,60 @@ public class MetabolicSBMLExportAdapterTest {
 			{allowing(parentcompartments.get(0)).getParentCompartment();will(returnValue(null));}
 			{allowing(parentcompartments.get(0)).getCompoundList();}
 			{will(returnValue(compounds));}
+			{allowing(parentcompartments.get(0)).getMacromoleculeList();}
+			{will(returnValue(Collections.EMPTY_LIST));}
 			{one(model).getCompartmentList();will(returnValue(parentcompartments));}
+			
+		});
+		exportAdapter.createTarget(model);
+		assertTrue(exportAdapter.isTargetCreated());
+		
+	}
+	
+	@Test
+	public void testTargetCreatedForSingleMacromoleculeInSingleCompartment()throws Exception {
+		final IModel model = mockery.mock(IModel.class);
+		setUpmodelExpectations(model);
+		final List<ICompartment> parentcompartments = setUpCompartmentExpectations(0,1);
+		final List<IMacromolecule> macromols = Arrays.asList(new IMacromolecule[]{createMockMacromolecule(1)});
+		
+		mockery.checking(new Expectations() {
+			{allowing(parentcompartments.get(0)).getChildCompartments();}
+			{will(returnValue(Collections.EMPTY_LIST));}
+			{allowing(parentcompartments.get(0)).getParentCompartment();will(returnValue(null));}
+			{allowing(parentcompartments.get(0)).getCompoundList();}
+			{will(returnValue(Collections.EMPTY_LIST));}
+			{allowing(parentcompartments.get(0)).getMacromoleculeList();}
+			{will(returnValue(macromols));}
+			{one(model).getCompartmentList();will(returnValue(parentcompartments));}
+			{allowing(macromols.get(0)).getCompoundList();will(returnValue(Collections.EMPTY_LIST));}
+			{allowing(macromols.get(0)).getSubunitList();will(returnValue(Collections.EMPTY_LIST));}
+			
+		});
+		exportAdapter.createTarget(model);
+		assertTrue(exportAdapter.isTargetCreated());
+		
+	}
+	
+	@Test
+	public void testTargetCreatedForSingleMacromoleculeWithChildCompoundInSingleCompartment()throws Exception {
+		final IModel model = mockery.mock(IModel.class);
+		setUpmodelExpectations(model);
+		final List<ICompartment> parentcompartments = setUpCompartmentExpectations(0,1);
+		final List<IMacromolecule> macromols = Arrays.asList(new IMacromolecule[]{createMockMacromolecule(1)});
+		final List<ICompound> childcompounds = Arrays.asList(new ICompound[]{createMockCompoundForHasPArtAnnotation(2)});
+		
+		mockery.checking(new Expectations() {
+			{allowing(parentcompartments.get(0)).getChildCompartments();}
+			{will(returnValue(Collections.EMPTY_LIST));}
+			{allowing(parentcompartments.get(0)).getParentCompartment();will(returnValue(null));}
+			{allowing(parentcompartments.get(0)).getCompoundList();}
+			{will(returnValue(Collections.EMPTY_LIST));}
+			{allowing(parentcompartments.get(0)).getMacromoleculeList();}
+			{will(returnValue(macromols));}
+			{one(model).getCompartmentList();will(returnValue(parentcompartments));}
+			{allowing(macromols.get(0)).getCompoundList();will(returnValue(childcompounds));}
+			{allowing(macromols.get(0)).getSubunitList();will(returnValue(Collections.EMPTY_LIST));}
 			
 		});
 		exportAdapter.createTarget(model);
@@ -194,5 +258,31 @@ public class MetabolicSBMLExportAdapterTest {
 			{atLeast(1).of(compound).getIC();will(returnValue(new Integer(i).doubleValue()));}
 		});
 		return compound;
+	}
+	
+	ICompound createMockCompoundForHasPArtAnnotation(final int i) {
+		final ICompound compound = mockery.mock(ICompound.class);
+		mockery.checking(new Expectations () {
+			{allowing(compound).getInChI();will(returnValue("INCHI"));}
+			{allowing(compound).getCID();will(returnValue("CID"+i));}
+			{allowing(compound).getPubChemId();will(returnValue("PubchemID"+i));}
+			{allowing(compound).getChEBIId();will(returnValue("ChEBIID"+i));}
+			
+		});
+		return compound;
+	}
+	
+	IMacromolecule createMockMacromolecule(final int i) {
+		final IMacromolecule macro = mockery.mock(IMacromolecule.class);
+		mockery.checking(new Expectations () {
+			{atLeast(1).of(macro).getId();will(returnValue("macroID" + i));}
+			{atLeast(1).of(macro).getASCIIName();will(returnValue("macroAsciiName" +i));}
+			{atLeast(1).of(macro).getDescription();will(returnValue("macroDescription"+i));}
+			{atLeast(1).of(macro).getDetailedDescription();will(returnValue("macroDetailedDescription"+i));}
+			{atLeast(1).of(macro).getGOTerm();will(returnValue("macromolecule GO"+i));}
+			{atLeast(1).of(macro).getUniProt();will(returnValue("macromoleculeUniprot"+i));}
+			
+		});
+		return macro;
 	}
 }
