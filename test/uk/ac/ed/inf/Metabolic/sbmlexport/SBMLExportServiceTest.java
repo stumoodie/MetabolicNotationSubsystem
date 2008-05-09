@@ -30,7 +30,7 @@ public class SBMLExportServiceTest {
 	final IMap map = mockery.mock(IMap.class);
 	final IRootMapObject rmo = mockery.mock(IRootMapObject.class);
 	final IMapObject child = mockery.mock(IMapObject.class);
-	final ISBMLGenerator generator = mockery.mock(ISBMLGenerator.class);
+	
 	SBMLExportService service;
     File NONEXISTENT = new File ("??");
     File EXISTENT;
