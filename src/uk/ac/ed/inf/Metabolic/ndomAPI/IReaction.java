@@ -6,7 +6,7 @@ import java.util.List;
 public interface IReaction extends IModelObject {
   List<IRelation> getSubstrateList() ;
   List<IRelation> getProductList() ;
-  List<IRelation> getActovatorList() ;
+  List<IRelation> getActivatorList() ;
   List<IRelation> getInhibitorList() ;
   List<IRelation> getCatalystList() ;
   String getECNumber() ;
