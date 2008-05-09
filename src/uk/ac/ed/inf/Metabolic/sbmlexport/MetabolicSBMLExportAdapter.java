@@ -7,7 +7,6 @@ import java.util.List;
 import org.sbml.libsbml.Compartment;
 import org.sbml.libsbml.Model;
 import org.sbml.libsbml.SBMLDocument;
-import org.sbml.libsbml.SBase;
 import org.sbml.libsbml.Species;
 import org.sbml.libsbml.libsbml;
 
@@ -16,7 +15,6 @@ import uk.ac.ed.inf.Metabolic.IExportAdapter;
 import uk.ac.ed.inf.Metabolic.ndomAPI.ICompartment;
 import uk.ac.ed.inf.Metabolic.ndomAPI.ICompound;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IModel;
-import uk.ac.ed.inf.Metabolic.ndomAPI.IModelObject;
 
 class MetabolicSBMLExportAdapter<N extends IModel> implements IExportAdapter<N> {
 	private boolean isTargetCreated = false;

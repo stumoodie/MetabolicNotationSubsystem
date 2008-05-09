@@ -6,8 +6,6 @@ import org.pathwayeditor.businessobjectsAPI.IMap;
 import org.pathwayeditor.contextadapter.publicapi.ExportServiceException;
 import org.pathwayeditor.contextadapter.publicapi.IContext;
 import org.pathwayeditor.contextadapter.publicapi.IContextAdapterExportService;
-import org.sbml.libsbml.SBMLDocument;
-import org.sbml.libsbml.libsbml;
 
 import uk.ac.ed.inf.Metabolic.IExportAdapter;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IModel;

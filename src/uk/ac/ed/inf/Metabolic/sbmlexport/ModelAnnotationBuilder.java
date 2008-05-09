@@ -3,7 +3,7 @@ package uk.ac.ed.inf.Metabolic.sbmlexport;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IModelObject;
 
 
-public class ModelAnnotationBuilder extends AnnotationBuilder {
+ class ModelAnnotationBuilder extends AnnotationBuilder {
  
 	ModelAnnotationBuilder(IModelObject object) {
 		super(object);

@@ -1,9 +1,8 @@
 package uk.ac.ed.inf.Metabolic.sbmlexport;
 
 import uk.ac.ed.inf.Metabolic.ndomAPI.ICompound;
-import uk.ac.ed.inf.Metabolic.ndomAPI.IModelObject;
 
-public class CompoundAnnotationBuilder extends AnnotationBuilder {
+ class CompoundAnnotationBuilder extends AnnotationBuilder {
     ICompound compound;
     
 	CompoundAnnotationBuilder(ICompound compound) {

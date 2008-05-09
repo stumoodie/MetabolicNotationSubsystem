@@ -1,6 +1,6 @@
 package uk.ac.ed.inf.Metabolic.sbmlexport;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import org.jmock.Expectations;
 import org.jmock.Mockery;
@@ -11,8 +11,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.sbml.libsbml.XMLInputStream;
-import org.sbml.libsbml.XMLToken;
 
 import uk.ac.ed.inf.Metabolic.ndomAPI.ICompartment;
 
