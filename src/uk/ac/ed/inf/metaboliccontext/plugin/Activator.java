@@ -1,4 +1,4 @@
-package uk.ac.ed.inf.metaboliccontext;
+package uk.ac.ed.inf.metaboliccontext.plugin;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
