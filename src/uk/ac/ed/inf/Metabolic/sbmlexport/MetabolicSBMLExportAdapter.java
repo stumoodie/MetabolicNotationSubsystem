@@ -2,11 +2,14 @@ package uk.ac.ed.inf.Metabolic.sbmlexport;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.sbml.libsbml.Compartment;
 import org.sbml.libsbml.Model;
 import org.sbml.libsbml.SBMLDocument;
+import org.sbml.libsbml.SBase;
 import org.sbml.libsbml.Species;
 import org.sbml.libsbml.libsbml;
 
@@ -14,12 +17,17 @@ import uk.ac.ed.inf.Metabolic.ExportAdapterCreationException;
 import uk.ac.ed.inf.Metabolic.IExportAdapter;
 import uk.ac.ed.inf.Metabolic.ndomAPI.ICompartment;
 import uk.ac.ed.inf.Metabolic.ndomAPI.ICompound;
+import uk.ac.ed.inf.Metabolic.ndomAPI.IMacromolecule;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IModel;
 
 class MetabolicSBMLExportAdapter<N extends IModel> implements IExportAdapter<N> {
+	
+	final long SPATIAL_DIMENSIONS = 3;
 	private boolean isTargetCreated = false;
 	
 	private SBMLDocument document;
+	
+	private Set<IMacromolecule> seenMacromols = new HashSet<IMacromolecule>();
 	
 	
 
@@ -37,7 +45,7 @@ class MetabolicSBMLExportAdapter<N extends IModel> implements IExportAdapter<N> 
 			isTargetCreated = true;
 	}
     
-	final long SPATIAL_DIMENSIONS = 3;
+	
 	private void addCompartments(Model sbmlModel, List<ICompartment> comps) {
 		for (ICompartment comp: comps) {
 			Compartment sbmlCompartment = sbmlModel.createCompartment();
@@ -50,18 +58,45 @@ class MetabolicSBMLExportAdapter<N extends IModel> implements IExportAdapter<N> 
 				sbmlCompartment.setOutside(comp.getParentCompartment().getId());
 			}
 			AnnotationBuilder builder = new CompartmentAnnotationBuilder(comp);
-			String annotation = builder.buildAnnotation();
-			sbmlCompartment.appendAnnotation(annotation);
-			String notes = builder.buildNotes();
-			sbmlCompartment.appendNotes(notes);
+			addAnnotationAndNotes(sbmlCompartment, builder);
 			addCompounds(sbmlCompartment, comp);
+		    addMacromolecules(sbmlCompartment, comp);
 			addCompartments(sbmlModel, comp.getChildCompartments());
 		}
 		
 	}
 
+	private void addMacromolecules(Compartment sbmlCompartment, ICompartment comp) {
+		List<IMacromolecule> macromolecules = comp.getMacromoleculeList();
+		for (IMacromolecule macromol: macromolecules) {
+			Species s = sbmlCompartment.getModel().createSpecies();
+			
+			s.setId(macromol.getId());
+			s.setName(macromol.getASCIIName());
+			s.setCompartment(sbmlCompartment.getId());
+			AnnotationBuilder builder = new MacromoleculeAnnotationBuilder(macromol,true);
+			addAnnotationAndNotes(s, builder);
+			seenMacromols.add(macromol);
+		}
+		
+	}
+
+
+	private void addAnnotationAndNotes(SBase sbmlObject, AnnotationBuilder builder) {
+		String annotation = builder.buildAnnotation();
+		sbmlObject.appendAnnotation(annotation);
+		String notes = builder.buildNotes();
+		sbmlObject.appendNotes(notes);
+	}
+
 	private void addCompounds(Compartment sbmlCompartment, ICompartment comp) {
 		List<ICompound> compounds = comp.getCompoundList();
+		addCompoundsFromList(sbmlCompartment, compounds);
+		
+	}
+
+
+	private void addCompoundsFromList(Compartment sbmlCompartment, List<ICompound> compounds) {
 		for (ICompound compound: compounds) {
 			Species s = sbmlCompartment.getModel().createSpecies();
 			s.setId(compound.getId());
@@ -69,12 +104,8 @@ class MetabolicSBMLExportAdapter<N extends IModel> implements IExportAdapter<N> 
 			s.setCompartment(sbmlCompartment.getId());
 			s.setInitialConcentration(compound.getIC());
 			AnnotationBuilder builder = new CompoundAnnotationBuilder(compound);
-			String notes = builder.buildNotes();
-			s.appendNotes(notes);
-			String annotation = builder.buildAnnotation();
-			s.appendAnnotation(annotation);
+			addAnnotationAndNotes(s, builder);
 		}
-		
 	}
 
 	private Model createSBMLModel(IModel model) {

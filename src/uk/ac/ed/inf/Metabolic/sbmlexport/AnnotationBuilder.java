@@ -19,6 +19,15 @@ public abstract class AnnotationBuilder {
 	
 	String RDFdescEnd = "</rdf:Description>";
 	
+	String RDF_IS_ST= "<bqbiol:is>";
+	String RDF_IS_END="</bqbiol:is>";
+	
+	String RDF_HAS_ST= "<bqbiol:hasPart>";
+	String RDF_HAS_END="</bqbiol:hasPart>";
+	
+	String RDF_ISVERSIONOF_ST= "<bqbiol:isVersionOf>";
+	String RDF_ISVERSIONOF_END="</bqbiol:isVersionOf>";
+	
 	AnnotationBuilder(IModelObject object) {
 		super();
 		this.object = object;
@@ -40,11 +49,9 @@ public abstract class AnnotationBuilder {
 	final String buildAnnotation() {
 		StringBuffer sb = new StringBuffer();
 		sb.append(buildStart());
-		sb.append(getBQBiolSt());
-		sb.append(getBagStart());
+		
 		sb.append(getRDFResources());
-		sb.append(getBagEnd());
-		sb.append(getBQBiolEnd());
+		
 		sb.append(buildEnd());
 		return sb.toString();
 
@@ -58,7 +65,7 @@ public abstract class AnnotationBuilder {
 
 	abstract String  getBQBiolEnd() ;
 
-	private String getBagEnd() {
+	 String getBagEnd() {
 		return RDFbagEnd+"\n";
 	}
     /**
@@ -78,7 +85,7 @@ public abstract class AnnotationBuilder {
 
 	abstract String getBQBiolSt();
 
-	private String getBagStart() {
+	 String getBagStart() {
 		return RDFBagSt+"\n";
 	}
 

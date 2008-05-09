@@ -24,9 +24,12 @@ import uk.ac.ed.inf.Metabolic.ndomAPI.IModelObject;
 	@Override
 	String getRDFResources(){
 		StringBuffer sb = new StringBuffer();
-		sb.append(RDFList).append("http://www.geneontology.org/#")
+		sb.append(BQBIOLst).append(getBagStart())
+		.append(RDFList).append(AnnotationURLs.GO.getURL())
 		                  .append( ((ICompartment)compartment).getGOTerm())
-		                  .append(RDFListEnd);
+		                  .append(RDFListEnd)
+		.append(getBagEnd())
+		.append(BQBiolEnd);
 		return sb.toString();
 	}
 
