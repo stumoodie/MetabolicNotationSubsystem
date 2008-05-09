@@ -8,4 +8,6 @@ public interface ICompartment extends IModelObject {
   List<IMacromolecule> getMacromoleculeList() ;
   String getGOTerm() ;
   double getVolume() ;
+  List<ICompartment>getChildCompartments();
+  ICompartment getParentCompartment();
 }

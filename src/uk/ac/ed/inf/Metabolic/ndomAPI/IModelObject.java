@@ -6,5 +6,5 @@ public interface IModelObject {
   String getName() ;
   String getASCIIName() ;
   String getDescription() ;
-  String getDetailedDescritpion() ;
+  String getDetailedDescription() ;
 }
