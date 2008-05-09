@@ -138,7 +138,6 @@ public class MetabolicSBMLExportAdapterTest {
 			{one(model).getCompartmentList();will(returnValue(parentcompartments));}
 			
 		});
-		
 		exportAdapter.createTarget(model);
 		assertTrue(exportAdapter.isTargetCreated());
 		
@@ -184,14 +183,15 @@ public class MetabolicSBMLExportAdapterTest {
 		final ICompound compound = mockery.mock(ICompound.class);
 		mockery.checking(new Expectations () {
 			{atLeast(1).of(compound).getId();will(returnValue("CompoundID" + i));}
-			{one(compound).getASCIIName();will(returnValue("CompoundAsciiName" +i));}
-			{one(compound).getDescription();will(returnValue("CompoundDescription"+i));}
-			{one(compound).getDetailedDescription();will(returnValue("CompoundDetailedDescription"+i));}
-			{one(compound).getInChI();will(returnValue("INCHI"));}
-			{one(compound).getCID();will(returnValue("CID"+i));}
-			{one(compound).getPubChemId();will(returnValue("PubchemID"+i));}
-			{one(compound).getChEBIId();will(returnValue("ChEBIID"+i));}
-			{one(compound).getSmiles();will(returnValue("Smiles"+i));}
+			{atLeast(1).of(compound).getASCIIName();will(returnValue("CompoundAsciiName" +i));}
+			{atLeast(1).of(compound).getDescription();will(returnValue("CompoundDescription"+i));}
+			{atLeast(1).of(compound).getDetailedDescription();will(returnValue("CompoundDetailedDescription"+i));}
+			{atLeast(1).of(compound).getInChI();will(returnValue("INCHI"));}
+			{atLeast(1).of(compound).getCID();will(returnValue("CID"+i));}
+			{atLeast(1).of(compound).getPubChemId();will(returnValue("PubchemID"+i));}
+			{atLeast(1).of(compound).getChEBIId();will(returnValue("ChEBIID"+i));}
+			{atLeast(1).of(compound).getSmiles();will(returnValue("Smiles"+i));}
+			{atLeast(1).of(compound).getIC();will(returnValue(new Integer(i).doubleValue()));}
 		});
 		return compound;
 	}
