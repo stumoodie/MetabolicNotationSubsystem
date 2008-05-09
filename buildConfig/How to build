@@ -4,3 +4,6 @@
 
 For tests to run, you may need to add the junit4.4 jar from your eclipse plugin into
 the ant classpath (via the classpath tab of the launch configuration).
+
+Running unit tests from ant that use libSBML do not run properly on Windows; this is due to
+ant using different classloaders for each junit test class. But runningthem from Eclipse works fine.
