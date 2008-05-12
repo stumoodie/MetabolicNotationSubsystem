@@ -70,6 +70,7 @@ public class EntittyBuilderTest {
 		});
 		entityFactory.buildSpeciesAndCompartments(sbmlModel, model);
 		assertEquals(2, sbmlModel.getListOfCompartments().size());
+		assertEquals(0,doc.checkL2v3Compatibility());
 	}
 	
 	@Test
@@ -95,6 +96,7 @@ public class EntittyBuilderTest {
 		
 		entityFactory.buildSpeciesAndCompartments(sbmlModel, model);
 		assertEquals(3, sbmlModel.getListOfCompartments().size());
+		assertEquals(0,doc.checkL2v3Compatibility());
 		
 	}
 	
@@ -117,6 +119,7 @@ public class EntittyBuilderTest {
 		});
 		entityFactory.buildSpeciesAndCompartments(sbmlModel, model);
 		assertEquals(1, sbmlModel.getListOfSpecies().size());
+		assertEquals(0,doc.checkL2v3Compatibility());
 		
 	}
 	
@@ -141,6 +144,7 @@ public class EntittyBuilderTest {
 		});
 		entityFactory.buildSpeciesAndCompartments(sbmlModel, model);
 		assertEquals(1, sbmlModel.getListOfSpecies().size());
+		assertEquals(0,doc.checkL2v3Compatibility());
 		
 	}
 	
@@ -166,6 +170,7 @@ public class EntittyBuilderTest {
 		});
 		entityFactory.buildSpeciesAndCompartments(sbmlModel, model);
 	assertEquals(1, sbmlModel.getListOfSpecies().size());
+	assertEquals(0,doc.checkL2v3Compatibility());
 		
 		
 	}

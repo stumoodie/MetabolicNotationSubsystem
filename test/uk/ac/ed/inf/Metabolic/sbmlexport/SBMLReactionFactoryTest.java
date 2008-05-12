@@ -24,6 +24,7 @@ import org.sbml.libsbml.SBMLDocument;
 import org.sbml.libsbml.SimpleSpeciesReference;
 import org.sbml.libsbml.Species;
 import org.sbml.libsbml.SpeciesReference;
+import org.sbml.libsbml.libsbml;
 
 import uk.ac.ed.inf.Metabolic.ndomAPI.IModel;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IReaction;
@@ -56,6 +57,7 @@ public class SBMLReactionFactoryTest {
 
 	@After
 	public void tearDown() throws Exception {
+		System.out.println(libsbml.writeSBMLToString(doc));
 	}
 	
 	final String SUB_1_ID="sub1";
@@ -76,6 +78,7 @@ public class SBMLReactionFactoryTest {
 		
 		reactionBuilder.buildReactions(sbmlModel, model);
 		assertEquals(0,sbmlModel.getListOfReactions().size());
+		assertEquals(0,doc.checkL2v3Compatibility());
 		
 	}
 	
@@ -86,15 +89,16 @@ public class SBMLReactionFactoryTest {
 		sbmlModel.addSpecies(new Species(PROD_1_ID));
 		final List<IReaction> reactions = getMockReactions(1);
 		
-		setUpExpecations(model, reactions);
+		setUpExpectationsForReactionWithNoModifiers(model, reactions);
 		
 		reactionBuilder.buildReactions(sbmlModel, model);
 		assertEquals(1,sbmlModel.getListOfReactions().size());
-		assertTrue(getSubstrate(0).getSpecies().contains(SUB_1_ID));
-		assertTrue(getProduct(0).getSpecies().contains(PROD_1_ID));
-		assertTrue(getProduct(0).getSpecies().contains(PROD_1_ID));
-		assertTrue(getReaction().getReversible());
+		assertTrue(SBMLVerificationUtilities.getSubstrateByIndex(sbmlModel,0,0).getSpecies().contains(SUB_1_ID));
+		assertTrue(SBMLVerificationUtilities.getProductByIndex(sbmlModel,0,0).getSpecies().contains(PROD_1_ID));
+		assertTrue(SBMLVerificationUtilities.getProductByIndex(sbmlModel,0,0).getSpecies().contains(PROD_1_ID));
+		assertTrue(SBMLVerificationUtilities.getReactionByIndex(sbmlModel,0).getReversible());
 		assertEquals(0,((Reaction)sbmlModel.getListOfReactions().get(0)).getListOfModifiers().size());
+		assertEquals(0,doc.checkL2v3Compatibility());
 		
 	}
 	
@@ -104,17 +108,16 @@ public class SBMLReactionFactoryTest {
 		sbmlModel.addSpecies(new Species(SUB_1_ID));
 		sbmlModel.addSpecies(new Species(PROD_1_ID));
 		final List<IReaction> reactions = Arrays.asList(new IReaction[]{createMockIrreversibleReaction(0)});
-		setUpExpecations(model, reactions);
-		
+		setUpExpectationsForReactionWithNoModifiers(model, reactions);
 		
 		reactionBuilder.buildReactions(sbmlModel, model);
-	
-		assertFalse(getReaction().getReversible());
+		assertFalse(SBMLVerificationUtilities.getReactionByIndex(sbmlModel, 0).getReversible());
+		assertEquals(0,doc.checkL2v3Compatibility());
 		
 		
 	}
 	
-	private void setUpExpecations(final IModel model, final List<IReaction> reactions) {
+	private void setUpExpectationsForReactionWithNoModifiers(final IModel model, final List<IReaction> reactions) {
 		final List<IRelation> substrates = getMockSubstrateRelations(1);
 		final List<IRelation> products = getMockProductRelations(1);
 		mockery.checking(new Expectations () {
@@ -127,17 +130,7 @@ public class SBMLReactionFactoryTest {
 		});
 		
 	}
-	private Reaction getReaction() {
-		return (Reaction)sbmlModel.getListOfReactions().get(0);
-	}
-	private SimpleSpeciesReference getProduct(int i) {
-		Reaction r = ((Reaction)sbmlModel.getListOfReactions().get(0));
-		return (SpeciesReference)r.getListOfProducts().get(i);
-	}
-	private SpeciesReference getSubstrate(int index) {
-		Reaction r = ((Reaction)sbmlModel.getListOfReactions().get(0));
-		return (SpeciesReference)r.getListOfReactants().get(index);
-	}
+	
 	
 	
 	private List<IRelation> getMockSubstrateRelations (int num) {
@@ -153,6 +146,7 @@ public class SBMLReactionFactoryTest {
 		mockery.checking(new Expectations () {
 			{one(substrate).getStoichiometry();will(returnValue(1));}
 			{one(substrate).getId();will(returnValue(SUB_1_ID+i));}
+			{one(substrate).getRole();will(returnValue("SUBSTRATE"));}
 		});
 		return substrate;
 	}
@@ -166,12 +160,13 @@ public class SBMLReactionFactoryTest {
 	}
 	
 	private IRelation createMockProductRelation(final int i) {
-		final IRelation  substrate = mockery.mock(IRelation.class);
+		final IRelation  product = mockery.mock(IRelation.class);
 		mockery.checking(new Expectations () {
-			{one(substrate).getStoichiometry();will(returnValue(1));}
-			{one(substrate).getId();will(returnValue(PROD_1_ID +i));}
+			{one(product).getStoichiometry();will(returnValue(1));}
+			{one(product).getId();will(returnValue(PROD_1_ID +i));}
+			{one(product).getRole();will(returnValue("PRODUCT"));}
 		});
-		return substrate;
+		return product;
 	}
 	private List<IReaction> getMockReactions(int num) {
 		List<IReaction> rc = new ArrayList<IReaction>();
@@ -182,12 +177,8 @@ public class SBMLReactionFactoryTest {
 		
 	}
 	private IReaction createMockReversibleReaction(final int i) {
-		final IReaction mockReaction = mockery.mock(IReaction.class);
+		final IReaction mockReaction = createBasicReaction(i);
 		mockery.checking(new Expectations () {
-			{allowing(mockReaction).getId();will(returnValue("ReacID" + i));}
-			{allowing(mockReaction).getASCIIName();will(returnValue("ReacName" +i));}
-			{allowing(mockReaction).getDescription();will(returnValue("ReacDescription"+i));}
-			{allowing(mockReaction).getDetailedDescription();will(returnValue("ReacDetailedDescription"+i));}
 			{allowing(mockReaction).isReversible();will(returnValue(true));}
 	
 		});
@@ -195,16 +186,25 @@ public class SBMLReactionFactoryTest {
 	}
 	
 	private IReaction createMockIrreversibleReaction(final int i) {
+		final IReaction mockReaction = createBasicReaction(i);
+		mockery.checking(new Expectations () {
+			{allowing(mockReaction).isReversible();will(returnValue(false));}
+		});
+		return mockReaction;
+	}
+	
+	private IReaction createBasicReaction (final int i) {
 		final IReaction mockReaction = mockery.mock(IReaction.class);
 		mockery.checking(new Expectations () {
 			{allowing(mockReaction).getId();will(returnValue("ReacID" + i));}
 			{allowing(mockReaction).getASCIIName();will(returnValue("ReacName" +i));}
 			{allowing(mockReaction).getDescription();will(returnValue("ReacDescription"+i));}
 			{allowing(mockReaction).getDetailedDescription();will(returnValue("ReacDetailedDescription"+i));}
-			{allowing(mockReaction).isReversible();will(returnValue(false));}
-	
+			{allowing(mockReaction).getECNumber();will(returnValue("1.1.1.1"));}
+			{allowing(mockReaction).getKineticLaw();will(returnValue("kinetic law"));}
 		});
 		return mockReaction;
 	}
+		
 
 }

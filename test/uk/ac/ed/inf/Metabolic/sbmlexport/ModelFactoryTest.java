@@ -51,6 +51,7 @@ public class ModelFactoryTest {
 		Model sbmlmodel = factory.createSBMLModel(document, model);
 		mockery.assertIsSatisfied();
 		assertGeneratedModelHasExpectedValues(sbmlmodel);
+		assertEquals(0,document.checkL2v3Compatibility());
 	
 	}
 	
