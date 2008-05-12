@@ -9,27 +9,18 @@ import uk.ac.ed.inf.Metabolic.ndomAPI.IModelObject;
 		super((IModelObject)comp);
 		this.compartment=comp;
 	}
-	String BQBIOLst =  "<bqbiol:isVersionOf>";
-	String BQBiolEnd = "</bqbiol:isVersionOf>";
-	@Override
-	String getBQBiolSt() {
-		return BQBIOLst;
-	}
-
-	@Override
-	String getBQBiolEnd() {
-		return BQBiolEnd;
-	}
+	
+	
 
 	@Override
 	String getRDFResources(){
 		StringBuffer sb = new StringBuffer();
-		sb.append(BQBIOLst).append(getBagStart())
+		sb.append(RDF_ISVERSIONOF_ST).append(getBagStart())
 		.append(RDFList).append(AnnotationURLs.GO.getURL())
 		                  .append( ((ICompartment)compartment).getGOTerm())
 		                  .append(RDFListEnd)
 		.append(getBagEnd())
-		.append(BQBiolEnd);
+		.append(RDF_ISVERSIONOF_END);
 		return sb.toString();
 	}
 

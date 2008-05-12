@@ -10,22 +10,11 @@ import uk.ac.ed.inf.Metabolic.ndomAPI.IModelObject;
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
-	String getBQBiolEnd() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
-	String getBQBiolSt() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	String getRDFResources() {
-		// TODO Auto-generated method stub
-		return null;
+		return "";
 	}
 
 }

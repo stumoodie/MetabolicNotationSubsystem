@@ -10,30 +10,21 @@ import uk.ac.ed.inf.Metabolic.ndomAPI.ICompound;
 		this.compound = compound;
 	}
 
-	@Override
-	String getBQBiolEnd() {
-		return RDF_IS_END;
-	}
-
-	@Override
-	String getBQBiolSt() {
-		return RDF_IS_ST;
-	}
 
 	@Override
 	String getRDFResources() {
 		String resource="<rdf:li rdf:resource=\"";
 		StringBuffer rc = new StringBuffer();
-		rc.append(getBQBiolSt()).append(getBagStart());
+		rc.append(RDF_IS_ST).append(getBagStart());
 		if(!compound.getChEBIId().isEmpty())
 			rc.append(resource).append(AnnotationURLs.ChEBIID.getURL()).append(compound.getChEBIId()).append(RDFListEnd);
 		if(!compound.getPubChemId().isEmpty())
-		  rc.append(resource).append("http://www.pubchem.gov/substance/#").append(compound.getPubChemId()).append(RDFListEnd);
+		  rc.append(resource).append(AnnotationURLs.PUBCHEM).append(compound.getPubChemId()).append(RDFListEnd);
 		if(!compound.getInChI().isEmpty())
-		  rc.append(resource).append("http://www.iupac.org/inchi/#").append(compound.getInChI()).append(RDFListEnd);
+		  rc.append(resource).append(AnnotationURLs.IUPAC).append(compound.getInChI()).append(RDFListEnd);
 		if(!compound.getCID().isEmpty())
 	      rc.append(resource).append(AnnotationURLs.KEGG.getURL()).append(compound.getCID()).append(RDFListEnd);
-		rc.append(getBagEnd()).append(getBQBiolEnd());
+		rc.append(getBagEnd()).append(RDF_IS_END);
 		return rc.toString();
 	}
 

@@ -63,7 +63,6 @@ public abstract class AnnotationBuilder {
 		              .append(RDFend).toString();
 	}
 
-	abstract String  getBQBiolEnd() ;
 
 	 String getBagEnd() {
 		return RDFbagEnd+"\n";
@@ -83,7 +82,7 @@ public abstract class AnnotationBuilder {
 		      .append("\n").toString();
 	}
 
-	abstract String getBQBiolSt();
+	
 
 	 String getBagStart() {
 		return RDFBagSt+"\n";

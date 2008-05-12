@@ -16,15 +16,7 @@ public class MacromoleculeAnnotationBuilder extends AnnotationBuilder {
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
-	String getBQBiolEnd() {
-		return"";
-	}
-
-	@Override
-	String getBQBiolSt() {
-		return "";
-	}
+	
 
 	@Override
 	String getRDFResources() {
