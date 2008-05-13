@@ -1,5 +1,6 @@
 package uk.ac.ed.inf.Metabolic.sbmlexport;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.sbml.libsbml.KineticLaw;
@@ -41,25 +42,37 @@ class SBMLReactionFactory implements IReactionBuilder {
 			for (IRelation product: products) {
 			   sbmlReaction.addProduct(createSpeciesReference(product));
 			}
-			
-			List<IRelation> modifiers = reaction.getCatalystList();
-			modifiers.addAll(reaction.getInhibitorList());
-			modifiers.addAll(reaction.getActovatorList());
-			for (IRelation modifier: modifiers) {
-				ModifierSpeciesReference msr = new ModifierSpeciesReference(modifier.getId());
+			List<IRelation>all = new ArrayList<IRelation>();
+			all.addAll(reaction.getCatalystList());
+			all.addAll(reaction.getInhibitorList());
+			all.addAll(reaction.getActovatorList());
+			for (IRelation modifier: all) {
+				ModifierSpeciesReference msr = createModifierReference(modifier);
 			    sbmlReaction.addModifier(msr);
 			}
 		}
 
 	}
 
+	private ModifierSpeciesReference createModifierReference(IRelation modifier) {
+		ModifierSpeciesReference msr = new ModifierSpeciesReference(modifier.getId());
+		
+		addRoleToNotes(msr, modifier.getRole());
+		return msr;
+	}
+
+	private void addRoleToNotes(SBase ref, String role) {
+		StringBuffer sb = new StringBuffer();
+		 sb.append("<p xmlns='http://www.w3.org/1999/xhtml'> Role:");
+		 sb.append(role);
+		 sb.append("</p>");
+		 ref.appendNotes(sb.toString());
+		
+	}
+
 	private SpeciesReference createSpeciesReference(IRelation substrate) {
 		SpeciesReference sr = new SpeciesReference(substrate.getId(), substrate.getStoichiometry());
-		StringBuffer sb = new StringBuffer();
-		 sb.append("<p xmlns='http://www.w3.org/1999/xhtml'>");
-		 sb.append(substrate.getRole());
-		 sb.append("</p>");
-		sr.appendNotes(sb.toString());
+		addRoleToNotes(sr, substrate.getRole());
 		return sr;
 	}
 
