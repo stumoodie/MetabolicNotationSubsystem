@@ -71,6 +71,7 @@ public class EntittyBuilderTest {
 		entityFactory.buildSpeciesAndCompartments(sbmlModel, model);
 		assertEquals(2, sbmlModel.getListOfCompartments().size());
 		assertEquals(0,doc.checkL2v3Compatibility());
+		assertEquals(0,doc.checkConsistency());
 	}
 	
 	@Test
@@ -97,6 +98,7 @@ public class EntittyBuilderTest {
 		entityFactory.buildSpeciesAndCompartments(sbmlModel, model);
 		assertEquals(3, sbmlModel.getListOfCompartments().size());
 		assertEquals(0,doc.checkL2v3Compatibility());
+		assertEquals(0,doc.checkConsistency());
 		
 	}
 	
@@ -120,6 +122,7 @@ public class EntittyBuilderTest {
 		entityFactory.buildSpeciesAndCompartments(sbmlModel, model);
 		assertEquals(1, sbmlModel.getListOfSpecies().size());
 		assertEquals(0,doc.checkL2v3Compatibility());
+		assertEquals(0,doc.checkConsistency());
 		
 	}
 	
@@ -145,6 +148,7 @@ public class EntittyBuilderTest {
 		entityFactory.buildSpeciesAndCompartments(sbmlModel, model);
 		assertEquals(1, sbmlModel.getListOfSpecies().size());
 		assertEquals(0,doc.checkL2v3Compatibility());
+		assertEquals(0,doc.checkConsistency());
 		
 	}
 	
@@ -171,6 +175,8 @@ public class EntittyBuilderTest {
 		entityFactory.buildSpeciesAndCompartments(sbmlModel, model);
 	assertEquals(1, sbmlModel.getListOfSpecies().size());
 	assertEquals(0,doc.checkL2v3Compatibility());
+	assertEquals(0,doc.checkConsistency());
+	
 		
 		
 	}
@@ -187,16 +193,16 @@ public class EntittyBuilderTest {
 	
 	
 	ICompartment getMockCompartment(final int i) {
-		final ICompartment comp = mockery.mock(ICompartment.class);
+		final ICompartment compound = mockery.mock(ICompartment.class);
 		mockery.checking(new Expectations () {
-			{atLeast(1).of(comp).getId();will(returnValue("CompID" + i));}
-			{one(comp).getASCIIName();will(returnValue("CompAsciiName" +i));}
-			{one(comp).getDescription();will(returnValue("CompDescription"+i));}
-			{one(comp).getDetailedDescription();will(returnValue("CompDetailedDescription"+i));}
-			{one(comp).getVolume();will(returnValue(new Integer(i+1).doubleValue()));}
-			{one(comp).getGOTerm();will(returnValue("GOTerm"+i));}
+			{atLeast(1).of(compound).getId();will(returnValue("CompID" + i));}
+			{atLeast(1).of(compound).getASCIIName();will(returnValue("CompAsciiName" +i));}
+			{atLeast(1).of(compound).getDescription();will(returnValue("CompDescription"+i));}
+			{atLeast(1).of(compound).getDetailedDescription();will(returnValue("CompDetailedDescription"+i));}
+			{atLeast(1).of(compound).getVolume();will(returnValue(new Integer(i+1).doubleValue()));}
+			{atLeast(1).of(compound).getGOTerm();will(returnValue("GOTerm"+i));}
 		});
-		return comp;
+		return compound;
 	}
 	
 	ICompound createMockCompound(final int i) {
