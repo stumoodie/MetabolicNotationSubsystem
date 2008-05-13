@@ -62,6 +62,7 @@ public class SBMLReactionFactoryTest {
 	
 	final String SUB_1_ID="sub1";
 	final String PROD_1_ID="prod11";
+	final String ACTIVATOR_1_ID="prod11";
 
 	@Test
 	public void testBuildReactionDoesNotAddSBMLREactionIfNoSubstrateOrProductDefined() {
@@ -117,6 +118,24 @@ public class SBMLReactionFactoryTest {
 		
 	}
 	
+	@Test
+	public void testBuildReactionWithActivator() {
+		final IModel model = mockery.mock(IModel.class);
+		sbmlModel.addSpecies(new Species(SUB_1_ID));
+		sbmlModel.addSpecies(new Species(PROD_1_ID));
+		sbmlModel.addSpecies(new Species(ACTIVATOR_1_ID));
+		final List<IReaction> reactions = Arrays.asList(new IReaction[]{createMockIrreversibleReaction(0)});
+		setUpExpectationsForReactionWithModifiers(model, reactions);
+		
+		reactionBuilder.buildReactions(sbmlModel, model);
+		Reaction r = SBMLVerificationUtilities.getReactionByIndex(sbmlModel, 0);
+		assertFalse(r.getReversible());
+		assertEquals(1, r.getListOfModifiers().size());
+		assertEquals(0,doc.checkL2v3Compatibility());
+		
+		
+	}
+	
 	private void setUpExpectationsForReactionWithNoModifiers(final IModel model, final List<IReaction> reactions) {
 		final List<IRelation> substrates = getMockSubstrateRelations(1);
 		final List<IRelation> products = getMockProductRelations(1);
@@ -126,6 +145,21 @@ public class SBMLReactionFactoryTest {
 			{atLeast(1).of(reactions.get(0)).getProductList();will(returnValue(products));}
 			{atLeast(1).of(reactions.get(0)).getInhibitorList();will(returnValue(Collections.EMPTY_LIST));}
 			{atLeast(1).of(reactions.get(0)).getActovatorList();will(returnValue(Collections.EMPTY_LIST));}
+			{atLeast(1).of(reactions.get(0)).getCatalystList();will(returnValue(Collections.EMPTY_LIST));}
+		});
+		
+	}
+	
+	private void setUpExpectationsForReactionWithModifiers(final IModel model, final List<IReaction> reactions) {
+		final List<IRelation> substrates = getMockSubstrateRelations(1);
+		final List<IRelation> products = getMockProductRelations(1);
+		final List<IRelation> activators = getMockActivatorRelations(1);
+		mockery.checking(new Expectations () {
+			{one(model).getReactionList();will(returnValue(reactions));}
+			{atLeast(1).of(reactions.get(0)).getSubstrateList();will(returnValue(substrates));}
+			{atLeast(1).of(reactions.get(0)).getProductList();will(returnValue(products));}
+			{atLeast(1).of(reactions.get(0)).getInhibitorList();will(returnValue(Collections.EMPTY_LIST));}
+			{atLeast(1).of(reactions.get(0)).getActovatorList();will(returnValue(activators));}
 			{atLeast(1).of(reactions.get(0)).getCatalystList();will(returnValue(Collections.EMPTY_LIST));}
 		});
 		
@@ -155,6 +189,24 @@ public class SBMLReactionFactoryTest {
 		List<IRelation> rc = new ArrayList<IRelation>();
 		for (int i = 0; i< num; i++) {
 			rc.add(createMockProductRelation(i));
+		}
+		return rc;
+	}
+	
+	private IRelation createMockActivatorRelation(final int i) {
+		final IRelation  activator = mockery.mock(IRelation.class);
+		mockery.checking(new Expectations () {
+			{never(activator).getStoichiometry();will(returnValue(1));}
+			{one(activator).getId();will(returnValue(ACTIVATOR_1_ID+i));}
+			{one(activator).getRole();will(returnValue("ACTIVATOR"));}
+		});
+		return activator;
+	}
+	
+	private List<IRelation> getMockActivatorRelations (int num) {
+		List<IRelation> rc = new ArrayList<IRelation>();
+		for (int i = 0; i< num; i++) {
+			rc.add(createMockActivatorRelation(i));
 		}
 		return rc;
 	}
