@@ -32,17 +32,33 @@ public abstract class AnnotationBuilder {
 		super();
 		this.object = object;
 	}
+	 final String buildNotes () {
+		 StringBuffer sb = new StringBuffer();
+		 sb.append(buildDefaultNotes());
+		 sb.append(buildSpecificNotes());
+		 return sb.toString();
+	 }
 	
-	 String buildNotes(){
+	 /**
+	  * Subclasses shold override this method to 
+	  * add type-specific content to an ABML object's notes
+	  * @return A <code>String</code>
+	  */
+	protected String  buildSpecificNotes() {return "";}
+	String buildDefaultNotes(){
 		StringBuffer sb = new StringBuffer();
+		if(!object.getDetailedDescription().isEmpty()) {
 		 sb.append("<p xmlns='http://www.w3.org/1999/xhtml'>")
 		  .append("Description :")
 		  .append(object.getDescription())
-		  .append("</p>")
-		  .append("<p xmlns='http://www.w3.org/1999/xhtml'>")
+		  .append("</p>");
+		}
+		if (!object.getDescription().isEmpty()){
+		  sb.append("<p xmlns='http://www.w3.org/1999/xhtml'>")
 		  .append("Detailed Description :")
 		  .append(object.getDetailedDescription())
 		  .append("</p>").toString();
+		}
 		 return sb.toString();
 	}
 

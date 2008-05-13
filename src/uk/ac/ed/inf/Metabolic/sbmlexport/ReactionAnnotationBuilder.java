@@ -10,8 +10,6 @@ public class ReactionAnnotationBuilder extends AnnotationBuilder {
 		
 	}
 
-	
-
 	@Override
 	String getRDFResources() {
 		StringBuffer rc = new StringBuffer();

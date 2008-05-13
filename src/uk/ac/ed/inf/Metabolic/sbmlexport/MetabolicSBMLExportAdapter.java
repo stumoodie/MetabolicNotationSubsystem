@@ -7,6 +7,7 @@ import java.util.List;
 import org.sbml.libsbml.Model;
 import org.sbml.libsbml.Reaction;
 import org.sbml.libsbml.SBMLDocument;
+import org.sbml.libsbml.SBMLError;
 import org.sbml.libsbml.libsbml;
 
 import uk.ac.ed.inf.Metabolic.ExportAdapterCreationException;
@@ -31,13 +32,23 @@ class MetabolicSBMLExportAdapter<N extends IModel> implements IExportAdapter<N> 
 		if (model == null) {
 			throw new IllegalArgumentException("model is null");
 		}
-		document = new SBMLDocument();
+		// concession to testing
+		if(document ==null) 
+		   document = new SBMLDocument();
 		Model sbmlModel = getModelFactory().createSBMLModel(document, model);
 	    getEntityBuilder().buildSpeciesAndCompartments(sbmlModel, model);
 		//addReactions(sbmlModel, model.getReactionList());
 		System.out.println(libsbml.writeSBMLToString(document));
-		if(document.checkL2v3Compatibility() == 0)
+		if(document.checkConsistency() == 0)
 			isTargetCreated = true;
+		else {
+			StringBuffer sb = new StringBuffer();
+			for(int i=0; i< document.getNumErrors();i++) {
+				SBMLError err = document.getError(i);
+				sb.append(err.getMessage()).append("\n");
+			}
+			throw new ExportAdapterCreationException("Invalid SBML document created: \n" + sb.toString());
+		}
 	}
     
 	
@@ -62,9 +73,12 @@ class MetabolicSBMLExportAdapter<N extends IModel> implements IExportAdapter<N> 
 		if (!isTargetCreated()) {
 			throw new IllegalStateException("Target not created");
 		}
+		String s = libsbml.writeSBMLToString(document);
+		stream.write(s.getBytes());
 		
-
 	}
+	
+	
 
 
 	IEntityFactory getEntityBuilder() {

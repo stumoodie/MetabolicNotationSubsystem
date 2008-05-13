@@ -29,15 +29,21 @@ import uk.ac.ed.inf.Metabolic.ndomAPI.ICompound;
 	}
 
 	@Override
-	String buildNotes() {
-		String supernotes = super.buildNotes();
-		StringBuffer  notes = new StringBuffer(supernotes).append("<h2 xmlns='http://www.w3.org/1999/xhtml'>")
+	protected String buildSpecificNotes() {
+	    String rc;
+        if (!compound.getSmiles().isEmpty()) {
+        	StringBuffer  notes = new StringBuffer().append("<h2 xmlns='http://www.w3.org/1999/xhtml'>")
+        
 		  .append("Smiles")
 		  .append("</h2>")
 		  .append("<p xmlns='http://www.w3.org/1999/xhtml'>")
 		  .append(compound.getSmiles())
 		  .append("</p>");
-		return notes.toString();
+         rc = notes.toString();
+        } else {
+        	rc="";
+        	
+        }
+        return rc;
 	}
-
 }
