@@ -96,7 +96,7 @@ public class MetabolicSBMLExportAdapterTest {
 	});
 	  addDependencies(moeckModelFactory, mockentityFac, doc);
 	  
-	  exportAdapter = stubexportAdapter;
+	  
 	  
 	  // use SUT
 	  try {
@@ -125,16 +125,13 @@ public class MetabolicSBMLExportAdapterTest {
 		{will(returnValue(doc.getModel()));}
 		
 	});
-	 // doc.getModel().appendNotes("</p>dsds</p>");
-	  // add dependencies
-	  addDependencies(moeckModelFactory, mockentityFac, doc);
-	  
 	  exportAdapter = stubexportAdapter;
-	  
+	  addDependencies(moeckModelFactory, mockentityFac, doc);
+	 
 	  // use SUT
-	
+	    // invalidates model - reaction with no specuies
 		doc.getModel().addReaction(new Reaction());
-	  exportAdapter.createTarget(mockModel);
+	   exportAdapter.createTarget(mockModel);
 	 
 	  //validate
 	  mockery.assertIsSatisfied();
