@@ -1,13 +1,9 @@
 package uk.ac.ed.inf.Metabolic.sbmlexport;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 
-import org.eclipse.core.runtime.Platform;
 import org.sbml.libsbml.Model;
 import org.sbml.libsbml.Reaction;
 import org.sbml.libsbml.SBMLDocument;
@@ -20,9 +16,10 @@ import uk.ac.ed.inf.Metabolic.ndomAPI.IModel;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IReaction;
 
 class MetabolicSBMLExportAdapter<N extends IModel> implements IExportAdapter<N> {
+	static boolean isLibraryLoaded = false;
 	static {  
 		
-	    SBMLLibraryLoader.getInstance().loadLibrary();
+	   isLibraryLoaded = SBMLLibraryLoader.getInstance().loadLibrary();
 	
 	}
 	
@@ -40,6 +37,9 @@ class MetabolicSBMLExportAdapter<N extends IModel> implements IExportAdapter<N> 
 		
 		if (model == null) {
 			throw new IllegalArgumentException("model is null");
+		}
+		if(!isLibraryLoaded) {
+			throw new ExportAdapterCreationException("Could not load libSBML - only supported on Windows at present");
 		}
 		// concession to testing
 		if(document ==null) 
