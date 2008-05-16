@@ -17,7 +17,7 @@
      ======== -->
 	<path id="classpath">
 		<pathelement location="${MyWorkspace}/org.pathwayeditor.application/EPE2_new.jar"/>
-		<fileset dir="../lib" />
+		<fileset dir="../" />
 	</path>
 	<path id="jmock">
 		 <fileset dir="../jmock-2.2.0-jars" includes="**/*.jar"/>
