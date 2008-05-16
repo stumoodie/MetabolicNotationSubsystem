@@ -21,6 +21,8 @@ import org.pathwayeditor.businessobjectsAPI.IMapObject;
 import org.pathwayeditor.businessobjectsAPI.IRootMapObject;
 import org.pathwayeditor.contextadapter.publicapi.ExportServiceException;
 import org.pathwayeditor.contextadapter.publicapi.IContext;
+
+import uk.ac.ed.inf.Metabolic.sbmlexport.SBMLExportService;
 @RunWith(JMock.class)
 public class SBMLExportServiceTest {
 
@@ -37,7 +39,7 @@ public class SBMLExportServiceTest {
     static boolean canRun = false; // check this is true b4 running export tests.
    
     
-   //uk.ac.ed.inf.Metabolic
+   //uk.ac.ed.inf.metabolic
     @BeforeClass 
     public static void loadNativeLibraries () throws Exception {
     	canRun = LibSBMLConfigManager.configure();

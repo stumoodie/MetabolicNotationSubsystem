@@ -1,9 +1,13 @@
 package uk.ac.ed.inf.Metabolic.sbmlexport;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 
+import org.eclipse.core.runtime.Platform;
 import org.sbml.libsbml.Model;
 import org.sbml.libsbml.Reaction;
 import org.sbml.libsbml.SBMLDocument;
@@ -16,6 +20,11 @@ import uk.ac.ed.inf.Metabolic.ndomAPI.IModel;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IReaction;
 
 class MetabolicSBMLExportAdapter<N extends IModel> implements IExportAdapter<N> {
+	static {  
+		
+	    SBMLLibraryLoader.getInstance().loadLibrary();
+	
+	}
 	
 	final long SPATIAL_DIMENSIONS = 3;
 	private boolean isTargetCreated = false;
