@@ -1,6 +1,7 @@
 package uk.ac.ed.inf.Metabolic.sbmlexport;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.jmock.Expectations;
 import org.jmock.Mockery;
@@ -67,10 +68,10 @@ public class ModelFactoryTest {
 	private void setUpmodelExpectations(final IModel model) {
 		
 		mockery.checking(new Expectations () {
-			{one(model).getId();will(returnValue(ID));}
-			{one(model).getASCIIName();will(returnValue(NAME));}
-			{one(model).getDescription();will(returnValue(DESC));}
-			{one(model).getDetailedDescription();will(returnValue(DETAILED_DESC));}
+			{atLeast(1).of(model).getId();will(returnValue(ID));}
+			{atLeast(1).of(model).getASCIIName();will(returnValue(NAME));}
+			{atLeast(1).of(model).getDescription();will(returnValue(DESC));}
+			{atLeast(1).of(model).getDetailedDescription();will(returnValue(DETAILED_DESC));}
 			
 			
 		});

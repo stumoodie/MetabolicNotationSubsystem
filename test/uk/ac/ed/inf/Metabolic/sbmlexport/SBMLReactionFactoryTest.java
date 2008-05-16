@@ -1,7 +1,7 @@
 package uk.ac.ed.inf.Metabolic.sbmlexport;
 
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -21,9 +21,7 @@ import org.junit.runner.RunWith;
 import org.sbml.libsbml.Model;
 import org.sbml.libsbml.Reaction;
 import org.sbml.libsbml.SBMLDocument;
-import org.sbml.libsbml.SimpleSpeciesReference;
 import org.sbml.libsbml.Species;
-import org.sbml.libsbml.SpeciesReference;
 import org.sbml.libsbml.libsbml;
 
 import uk.ac.ed.inf.Metabolic.ndomAPI.IModel;

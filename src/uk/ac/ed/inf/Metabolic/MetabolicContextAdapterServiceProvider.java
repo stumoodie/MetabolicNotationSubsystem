@@ -1,19 +1,24 @@
 package uk.ac.ed.inf.Metabolic;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.pathwayeditor.businessobjectsAPI.IMap;
 import org.pathwayeditor.contextadapter.publicapi.IContext;
 import org.pathwayeditor.contextadapter.publicapi.IContextAdapterAutolayoutService;
+import org.pathwayeditor.contextadapter.publicapi.IContextAdapterExportService;
 import org.pathwayeditor.contextadapter.publicapi.IContextAdapterServiceProvider;
 import org.pathwayeditor.contextadapter.publicapi.IContextAdapterValidationService;
 import org.pathwayeditor.contextadapter.toolkit.ctxdefn.GeneralContext;
 
+import uk.ac.ed.inf.Metabolic.sbmlexport.SBMLExportService;
+
 
 
 public class MetabolicContextAdapterServiceProvider implements IContextAdapterServiceProvider {
+    
 	private static final String GLOBAL_ID = "uk.ac.ed.inf.Metabolic1_0_0.Metabolic";
 	//private static final String GLOBAL_ID = "12635452516346262546";
 	private static final String DISPLAY_NAME = "Basic biochemical context";
@@ -30,20 +35,26 @@ public class MetabolicContextAdapterServiceProvider implements IContextAdapterSe
 	}
 	private MetabolicContextAdapterSyntaxService syntaxService;
 	private IContext context;
+	private Set<IContextAdapterExportService> exportServices = new HashSet<IContextAdapterExportService>();
 
 	public MetabolicContextAdapterServiceProvider() {
+	
 		this.context = new GeneralContext(GLOBAL_ID, DISPLAY_NAME, NAME,
 				VERS[0], VERS[1], VERS[2]);
 		this.syntaxService = new MetabolicContextAdapterSyntaxService(this.getContext());
+		exportServices.add(new SBMLExportService(context));
+		
 	}
 	
 
 	public IContext getContext() {
 		return this.context;
 	}
-
-	public Set getExportServices() {
-		return Collections.emptySet();
+    /**
+     * Returns an unmodifiable collection of export services
+     */
+	public Set <IContextAdapterExportService>getExportServices() {
+		return Collections.unmodifiableSet (exportServices);
 	}
 
 	public Set getImportServices() {

@@ -1,9 +1,6 @@
 package uk.ac.ed.inf.Metabolic.sbmlexport;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
@@ -31,8 +28,8 @@ public class LibSBMLConfigManager {
 		try {
 		String path = getPath();
     	if(isWindows()) {
-    	      System.load(path + "os/win32/sbmlj.dll");
-    	      markLoaded();
+    	      System.load(path + "sbmlj.dll");
+    	    
     	      return true;
     		
     	} else {
@@ -43,16 +40,6 @@ public class LibSBMLConfigManager {
 		}
   
 	}
-	private static void markLoaded() throws IOException{
-		FileWriter fw = new FileWriter(new File ("./sbmlLoaded"));
-		fw.write("1");
-		fw.close();
-		
-	}
-	
-	private static boolean isLoaded() throws IOException{
-		File f = new File ("./sbmlLoaded");
-		return f.exists();
-		
-	}
+
+
 }
