@@ -21,8 +21,6 @@ import org.pathwayeditor.businessobjectsAPI.IMapObject;
 import org.pathwayeditor.businessobjectsAPI.IRootMapObject;
 import org.pathwayeditor.contextadapter.publicapi.ExportServiceException;
 import org.pathwayeditor.contextadapter.publicapi.IContext;
-
-import uk.ac.ed.inf.Metabolic.sbmlexport.SBMLExportService;
 @RunWith(JMock.class)
 public class SBMLExportServiceTest {
 

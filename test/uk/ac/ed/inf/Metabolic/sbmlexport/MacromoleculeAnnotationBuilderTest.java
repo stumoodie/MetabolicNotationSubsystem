@@ -15,8 +15,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import uk.ac.ed.inf.Metabolic.ndomAPI.IMacromolecule;
-import uk.ac.ed.inf.Metabolic.sbmlexport.AnnotationBuilder;
-import uk.ac.ed.inf.Metabolic.sbmlexport.MacromoleculeAnnotationBuilder;
 @RunWith(JMock.class)
 public class MacromoleculeAnnotationBuilderTest {
     AnnotationBuilder builder;

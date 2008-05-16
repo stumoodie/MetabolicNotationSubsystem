@@ -28,7 +28,6 @@ import org.sbml.libsbml.libsbml;
 import uk.ac.ed.inf.Metabolic.ExportAdapterCreationException;
 import uk.ac.ed.inf.Metabolic.IExportAdapter;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IModel;
-import uk.ac.ed.inf.Metabolic.sbmlexport.IModelFactory;
 
 @RunWith(JMock.class)
 public class MetabolicSBMLExportAdapterTest {

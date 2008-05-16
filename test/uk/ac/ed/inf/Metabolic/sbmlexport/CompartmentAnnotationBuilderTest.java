@@ -15,7 +15,6 @@ import org.sbml.libsbml.Model;
 import org.sbml.libsbml.SBMLDocument;
 
 import uk.ac.ed.inf.Metabolic.ndomAPI.ICompartment;
-import uk.ac.ed.inf.Metabolic.sbmlexport.AnnotationBuilder;
 
 @RunWith(JMock.class)
 public class CompartmentAnnotationBuilderTest {

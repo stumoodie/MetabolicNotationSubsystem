@@ -1,9 +1,5 @@
 package uk.ac.ed.inf.metaboliccontext.plugin;
 
-import java.io.File;
-import java.net.URL;
-
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 

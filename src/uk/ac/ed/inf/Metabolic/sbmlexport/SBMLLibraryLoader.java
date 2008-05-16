@@ -5,8 +5,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.eclipse.core.runtime.Platform;
-
  class SBMLLibraryLoader {
 	
    protected static SBMLLibraryLoader instance;
@@ -23,7 +21,10 @@ import org.eclipse.core.runtime.Platform;
    }
    
    public boolean loadLibrary () {
-	     String os = Platform.getOS();
+	     String os = System.getProperty("os.name");
+	     if(os.contains("win") || os.contains("Win")){
+	    	 os="win32";
+	     }
 		 String lib = System.mapLibraryName("sbmlj");
 		 InputStream is = MetabolicSBMLExportAdapter.class.getResourceAsStream("/os/" +os +"/" + lib);
 		 File temp = new File(System.getProperty("java.io.tmpdir") + File.separator + lib);
