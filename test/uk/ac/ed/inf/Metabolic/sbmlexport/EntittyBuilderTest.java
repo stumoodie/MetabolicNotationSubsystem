@@ -1,7 +1,6 @@
 package uk.ac.ed.inf.Metabolic.sbmlexport;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,7 +27,7 @@ import uk.ac.ed.inf.Metabolic.ndomAPI.IModel;
 @RunWith(JMock.class)
 public class EntittyBuilderTest {
     IEntityFactory entityFactory;
-    
+    SBMLDocument doc1;
     Mockery mockery = new JUnit4Mockery();
     Model sbmlModel;
     SBMLDocument doc;

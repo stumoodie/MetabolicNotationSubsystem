@@ -1,12 +1,9 @@
 package uk.ac.ed.inf.Metabolic.sbmlexport;
 
-import static org.junit.Assert.*;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 import org.jmock.Expectations;
 import org.jmock.Mockery;
@@ -14,14 +11,9 @@ import org.jmock.integration.junit4.JMock;
 import org.jmock.integration.junit4.JUnit4Mockery;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.sbml.libsbml.Model;
-import org.sbml.libsbml.SBMLDocument;
-import org.sbml.libsbml.Species;
 
-import uk.ac.ed.inf.Metabolic.ndomAPI.ICompound;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IMacromolecule;
 @RunWith(JMock.class)
 public class MacromoleculeAnnotationBuilderTest {

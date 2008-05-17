@@ -14,6 +14,7 @@ import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
 import org.jmock.integration.junit4.JUnit4Mockery;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -22,7 +23,6 @@ import org.sbml.libsbml.Compartment;
 import org.sbml.libsbml.Model;
 import org.sbml.libsbml.Reaction;
 import org.sbml.libsbml.SBMLDocument;
-import org.sbml.libsbml.Species;
 import org.sbml.libsbml.libsbml;
 
 import uk.ac.ed.inf.Metabolic.ExportAdapterCreationException;
@@ -33,6 +33,7 @@ import uk.ac.ed.inf.Metabolic.ndomAPI.IModel;
 public class MetabolicSBMLExportAdapterTest {
 	Mockery mockery = new JUnit4Mockery();
 	static boolean canRun;
+	static File aFile;
 	
 	/**
 	 * Shortcut to be able to test writeTarget
@@ -52,6 +53,12 @@ public class MetabolicSBMLExportAdapterTest {
 	@BeforeClass 
     public static void loadNativeLibraries () throws Exception {
     	canRun = LibSBMLConfigManager.configure();
+    	//overrides application code
+    	TestSBMLLoader.overrideSingleton( new SBMLLibraryLoader(){
+    		public boolean loadLibrary() {
+    			return true;
+    		}
+    	});
     	
     }
     IExportAdapter<IModel> exportAdapter;
@@ -63,13 +70,20 @@ public class MetabolicSBMLExportAdapterTest {
 	public void setUp() throws Exception {
 		stubexportAdapter=new MetabolicSBMLExportAdapterTestStub();
 	    exportAdapter = new MetabolicSBMLExportAdapter<IModel>();
+	    aFile = new File("file");
 		
 	}
 
 	@After
 	public void tearDown() throws Exception {
+		
 	}
-
+	@AfterClass
+	 public static void deleteFiles () {
+		 if(aFile.exists()) {
+			 aFile.delete();
+		 }
+	}
 	@Test(expected=IllegalArgumentException.class)
 	public void testCreateTargetPreconditions() throws Exception {
 		exportAdapter.createTarget(null);
@@ -97,7 +111,7 @@ public class MetabolicSBMLExportAdapterTest {
 	  addDependencies(moeckModelFactory, mockentityFac, doc);
 	  
 	  
-	  
+	  exportAdapter = stubexportAdapter;
 	  // use SUT
 	  try {
 	  exportAdapter.createTarget(mockModel);
@@ -155,7 +169,8 @@ public class MetabolicSBMLExportAdapterTest {
 	
 	@Test(expected=IllegalStateException.class)
 	public void testWriteTargetFailsIfTargetNotCreated() throws Exception{
-		exportAdapter.writeTarget(new FileOutputStream("file"));
+		
+		exportAdapter.writeTarget(new FileOutputStream(aFile));
 	}
 	
 	
@@ -163,8 +178,6 @@ public class MetabolicSBMLExportAdapterTest {
 	public void testWriteTargetWritesStringrepresentation () throws Exception {
 		MetabolicSBMLExportAdapterTestStub stub = new MetabolicSBMLExportAdapterTestStub ();
 		SBMLDocument toWrite = createSBMLDocument();
-		File f = new File ("./sbml");
-		f.createNewFile();
 		stub.setDocument(toWrite);
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		stub.writeTarget(baos);

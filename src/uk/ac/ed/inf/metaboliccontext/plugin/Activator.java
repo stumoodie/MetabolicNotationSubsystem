@@ -9,7 +9,7 @@ import org.osgi.framework.BundleContext;
 public class Activator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "uk.ed.ac.inf.MetabolicContext";
+	public static final String PLUGIN_ID = "uk.ac.ed.inf.csb.Metabolic";
 
 	// The shared instance
 	private static Activator plugin;
@@ -26,7 +26,7 @@ public class Activator extends AbstractUIPlugin {
 	 */
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
-		plugin = this;
+		plugin = this;		
 	}
 
 	/*

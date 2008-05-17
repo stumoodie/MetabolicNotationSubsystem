@@ -37,7 +37,7 @@ public class SBMLExportServiceTest {
     static boolean canRun = false; // check this is true b4 running export tests.
    
     
-   //uk.ac.ed.inf.Metabolic
+   //uk.ac.ed.inf.metabolic
     @BeforeClass 
     public static void loadNativeLibraries () throws Exception {
     	canRun = LibSBMLConfigManager.configure();
