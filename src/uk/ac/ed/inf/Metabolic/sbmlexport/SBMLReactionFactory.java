@@ -23,6 +23,7 @@ class SBMLReactionFactory implements IReactionBuilder {
 			if(reactionIsEmpty(reaction)){
 				continue;
 			}
+			// set up reaction
 			Reaction sbmlReaction = sbmlModel.createReaction();
 			sbmlReaction.setId(reaction.getId());
 			sbmlReaction.setName(reaction.getASCIIName());
@@ -33,15 +34,21 @@ class SBMLReactionFactory implements IReactionBuilder {
 			
 			AnnotationBuilder builder = new ReactionAnnotationBuilder(reaction);
 			addAnnotationAndNotes(sbmlReaction, builder);
+			
+			//handle susbtrates
 			List<IRelation> substrates = reaction.getSubstrateList();
 			for (IRelation substrate: substrates) {
 			   sbmlReaction.addReactant(createSpeciesReference(substrate));
 			}
 			
+			
+			//handle products
 			List<IRelation> products = reaction.getProductList();
 			for (IRelation product: products) {
 			   sbmlReaction.addProduct(createSpeciesReference(product));
 			}
+			
+			//handle modifiers
 			List<IRelation>all = new ArrayList<IRelation>();
 			all.addAll(reaction.getCatalystList());
 			all.addAll(reaction.getInhibitorList());
@@ -75,7 +82,9 @@ class SBMLReactionFactory implements IReactionBuilder {
 		addRoleToNotes(sr, substrate.getRole());
 		return sr;
 	}
-
+    /*
+     * Currently put in notes as is only string
+     */
 	private void setUpKineticLaw(Reaction sbmlReaction, IReaction reaction) {
 		KineticLaw law = sbmlReaction.createKineticLaw();
 		StringBuffer sb = new StringBuffer();
@@ -85,11 +94,13 @@ class SBMLReactionFactory implements IReactionBuilder {
 		law.appendNotes(sb.toString());
 		
 	}
-
+   
 	private boolean reactionIsEmpty(IReaction reaction) {
 		return reaction.getSubstrateList().isEmpty() && reaction.getProductList().isEmpty();
 	}
-	
+	/*
+	 * Adds notes and annotations to the reaction object
+	 */
 	private void addAnnotationAndNotes(SBase sbmlObject, AnnotationBuilder builder) {
 		String annotation = builder.buildAnnotation();
 		sbmlObject.appendAnnotation(annotation);

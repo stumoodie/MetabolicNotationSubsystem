@@ -19,7 +19,7 @@ class MetabolicSBMLExportAdapter<N extends IModel> implements IExportAdapter<N> 
 	static boolean isLibraryLoaded = false;
 	static {  
 		
-	   isLibraryLoaded = SBMLLibraryLoader.getInstance().loadLibrary();
+	   isLibraryLoaded = LibSBMLLoader.getInstance().loadLibrary();
 	
 	}
 	
@@ -29,12 +29,13 @@ class MetabolicSBMLExportAdapter<N extends IModel> implements IExportAdapter<N> 
 	//package protected to allow access from tests
 	SBMLDocument document;
 	
-	IEntityFactory entityFactory;
-	IModelFactory modelFactory;
+	IEntityFactory entityFactory     = new EntityBuilder();
+	IModelFactory modelFactory       = new ModelFactory();
+	IReactionBuilder reactionFactory = new SBMLReactionFactory();;
 	
 
 	public void createTarget(IModel model) throws ExportAdapterCreationException {
-		
+		isTargetCreated = false; //reset
 		if (model == null) {
 			throw new IllegalArgumentException("model is null");
 		}
@@ -44,9 +45,9 @@ class MetabolicSBMLExportAdapter<N extends IModel> implements IExportAdapter<N> 
 		// concession to testing
 		if(document ==null) 
 		   document = new SBMLDocument();
-		Model sbmlModel = getModelFactory().createSBMLModel(document, model);
-	    getEntityBuilder().buildSpeciesAndCompartments(sbmlModel, model);
-		//addReactions(sbmlModel, model.getReactionList());
+		Model sbmlModel = modelFactory.createSBMLModel(document, model);
+	    entityFactory.buildSpeciesAndCompartments(sbmlModel, model);
+		reactionFactory.buildReactions(sbmlModel, model);
 		System.out.println(libsbml.writeSBMLToString(document));
 		if(document.checkConsistency() == 0)
 			isTargetCreated = true;
@@ -60,17 +61,6 @@ class MetabolicSBMLExportAdapter<N extends IModel> implements IExportAdapter<N> 
 		}
 	}
     
-	
-	private void addReactions(Model sbmlModel, List<IReaction> reactionList) {
-		for (IReaction reaction: reactionList) {
-			Reaction sbmlReaction = sbmlModel.createReaction();
-			sbmlReaction.setId(reaction.getId());
-			sbmlReaction.setName(reaction.getASCIIName());
-			
-		}
-		
-	}
-
 	public boolean isTargetCreated() {
 		return isTargetCreated;
 	}
@@ -87,32 +77,6 @@ class MetabolicSBMLExportAdapter<N extends IModel> implements IExportAdapter<N> 
 		
 	}
 	
-	
 
-
-	IEntityFactory getEntityBuilder() {
-		if(entityFactory == null) {
-			entityFactory = new EntityBuilder();
-		}
-		return entityFactory;
-	}
-
-
-	void setEntityBuilder(IEntityFactory entityFactory) {
-		this.entityFactory = entityFactory;
-	}
-
-
-	IModelFactory getModelFactory() {
-		if(modelFactory == null) {
-			modelFactory = new ModelFactory();
-		}
-		return modelFactory;
-	}
-
-
-	void setModelFactory(IModelFactory modelFactory) {
-		this.modelFactory = modelFactory;
-	}
 
 }
