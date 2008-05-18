@@ -33,6 +33,7 @@ public class SBMLExportService implements IContextAdapterExportService {
 	 * @throws ExportServiceException if exportFile: <ul>
 	 * <li> Doesn't exist
 	 *  <li> Is not writable.
+	 *  <li> Cannot produce valid SBML
 	 *  </ul>
 	 */
 	public void exportMap(IMap map, File exportFile) throws ExportServiceException {
