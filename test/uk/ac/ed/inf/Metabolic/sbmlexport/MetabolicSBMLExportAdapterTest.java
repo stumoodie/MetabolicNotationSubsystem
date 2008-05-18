@@ -36,7 +36,7 @@ public class MetabolicSBMLExportAdapterTest {
 	static File aFile;
 	
 	/**
-	 * Shortcut to be able to test writeTarget
+	 * Shortcut to be able to add test doubles.
 	 * @author Richard Adams
 	 *
 	 */
@@ -48,13 +48,25 @@ public class MetabolicSBMLExportAdapterTest {
 		void setDocument(SBMLDocument doc) {
 			this.document=doc;
 		}
+		void setEntityBuilder(IEntityFactory entityFactory) {
+			this.entityFactory = entityFactory;
+		}
+
+		void setModelFactory(IModelFactory modelFactory) {
+			this.modelFactory = modelFactory;
+		}
+
+
+		void setReactionFactory(IReactionBuilder reactionFactory) {
+			this.reactionFactory = reactionFactory;
+		}
 	}
 	
 	@BeforeClass 
     public static void loadNativeLibraries () throws Exception {
     	canRun = LibSBMLConfigManager.configure();
     	//overrides application code
-    	TestSBMLLoader.overrideSingleton( new SBMLLibraryLoader(){
+    	TestSBMLLoader.overrideSingleton( new LibSBMLLoader(){
     		public boolean loadLibrary() {
     			return true;
     		}
@@ -100,15 +112,17 @@ public class MetabolicSBMLExportAdapterTest {
 	  final IModelFactory moeckModelFactory = mockery.mock(IModelFactory.class);
 	  final IModel mockModel = mockery.mock(IModel.class);
 	  final IEntityFactory mockentityFac = mockery.mock(IEntityFactory.class);
+	  final IReactionBuilder mockReactionFactory = mockery.mock(IReactionBuilder.class);
 	  final SBMLDocument doc = createSBMLDocument();
 	  mockery.checking(new Expectations() {
 		{one(moeckModelFactory).createSBMLModel(with(any(SBMLDocument.class)), with(any(IModel.class)));}
 		{will(returnValue(doc.getModel()));}
 		{one(mockentityFac).buildSpeciesAndCompartments(with(any(Model.class)), with(any(IModel.class)));}
 		{will(returnValue(doc.getModel()));}
+		{one(mockReactionFactory).buildReactions(with(any(Model.class)), with(any(IModel.class)));}
 		
 	});
-	  addDependencies(moeckModelFactory, mockentityFac, doc);
+	  addDependencies(moeckModelFactory, mockentityFac, doc,mockReactionFactory);
 	  
 	  
 	  exportAdapter = stubexportAdapter;
@@ -131,16 +145,18 @@ public class MetabolicSBMLExportAdapterTest {
 	  final IModelFactory moeckModelFactory = mockery.mock(IModelFactory.class);
 	  final IModel mockModel = mockery.mock(IModel.class);
 	  final IEntityFactory mockentityFac = mockery.mock(IEntityFactory.class);
+	  final IReactionBuilder mockReactionFactory = mockery.mock(IReactionBuilder.class);
 	  final SBMLDocument doc = createSBMLDocument();
 	  mockery.checking(new Expectations() {
 		{one(moeckModelFactory).createSBMLModel(with(any(SBMLDocument.class)), with(any(IModel.class)));}
 		{will(returnValue(doc.getModel()));}
 		{one(mockentityFac).buildSpeciesAndCompartments(with(any(Model.class)), with(any(IModel.class)));}
 		{will(returnValue(doc.getModel()));}
+		{one(mockReactionFactory).buildReactions(with(any(Model.class)), with(any(IModel.class)));}
 		
 	});
 	  exportAdapter = stubexportAdapter;
-	  addDependencies(moeckModelFactory, mockentityFac, doc);
+	  addDependencies(moeckModelFactory, mockentityFac, doc,mockReactionFactory);
 	 
 	  // use SUT
 	    // invalidates model - reaction with no specuies
@@ -155,10 +171,11 @@ public class MetabolicSBMLExportAdapterTest {
 	}
 
 	private void addDependencies(final IModelFactory moeckModelFactory, final IEntityFactory mockentityFac,
-			final SBMLDocument doc) {
-		stubexportAdapter.setEntityBuilder(mockentityFac);
+			final SBMLDocument doc, final IReactionBuilder mockReactionFactory) {
+		  stubexportAdapter.setEntityBuilder(mockentityFac);
 		  stubexportAdapter.setModelFactory(moeckModelFactory);
 		  stubexportAdapter.setDocument(doc);
+		  stubexportAdapter.setReactionFactory(mockReactionFactory);
 	}
 
 	@Test(expected=IllegalArgumentException.class)

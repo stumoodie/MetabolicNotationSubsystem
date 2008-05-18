@@ -1,9 +1,9 @@
 package uk.ac.ed.inf.Metabolic.sbmlexport;
 
-public class TestSBMLLoader extends SBMLLibraryLoader {
+public class TestSBMLLoader extends LibSBMLLoader {
 	
 	   
-	public static void overrideSingleton (SBMLLibraryLoader loader) {
+	public static void overrideSingleton (LibSBMLLoader loader) {
 		instance = loader;
 	}
 
