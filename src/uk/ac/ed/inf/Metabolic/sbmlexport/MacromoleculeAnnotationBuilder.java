@@ -65,7 +65,7 @@ public class MacromoleculeAnnotationBuilder extends AnnotationBuilder {
 		StringBuffer sb = new StringBuffer();
 		
 		sb.append(RDF_IS_ST).append(getBagStart());
-		if(!macromolecule.getUniProt().isEmpty())	{
+		if(macromolecule.getUniProt().length() != 0)	{
 			sb.append(RDFList).append(AnnotationURLs.UNIPROT.getURL())
 		                  .append( macromolecule.getUniProt())
 		                  .append(RDFListEnd);
@@ -73,7 +73,7 @@ public class MacromoleculeAnnotationBuilder extends AnnotationBuilder {
 		sb.append(getBagEnd()).append(RDF_IS_END);
 		
 		sb.append(RDF_ISVERSIONOF_ST).append(getBagStart());
-		if(!macromolecule.getGOTerm().isEmpty())	{
+		if(macromolecule.getGOTerm().length() != 0)	{
 			sb.append(RDFList).append(AnnotationURLs.GO.getURL())
 		                  .append( macromolecule.getGOTerm())
 		                  .append(RDFListEnd);
