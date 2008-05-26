@@ -16,13 +16,13 @@ import uk.ac.ed.inf.Metabolic.ndomAPI.ICompound;
 		String resource="<rdf:li rdf:resource=\"";
 		StringBuffer rc = new StringBuffer();
 		rc.append(RDF_IS_ST).append(getBagStart());
-		if(!compound.getChEBIId().isEmpty())
+		if(compound.getChEBIId().length() != 0)
 			rc.append(resource).append(AnnotationURLs.ChEBIID.getURL()).append(compound.getChEBIId()).append(RDFListEnd);
-		if(!compound.getPubChemId().isEmpty())
+		if(compound.getPubChemId().length() != 0)
 		  rc.append(resource).append(AnnotationURLs.PUBCHEM).append(compound.getPubChemId()).append(RDFListEnd);
-		if(!compound.getInChI().isEmpty())
+		if(compound.getInChI().length() != 0)
 		  rc.append(resource).append(AnnotationURLs.IUPAC).append(compound.getInChI()).append(RDFListEnd);
-		if(!compound.getCID().isEmpty())
+		if(compound.getCID().length() != 0)
 	      rc.append(resource).append(AnnotationURLs.KEGG.getURL()).append(compound.getCID()).append(RDFListEnd);
 		rc.append(getBagEnd()).append(RDF_IS_END);
 		return rc.toString();
@@ -31,7 +31,7 @@ import uk.ac.ed.inf.Metabolic.ndomAPI.ICompound;
 	@Override
 	protected String buildSpecificNotes() {
 	    String rc;
-        if (!compound.getSmiles().isEmpty()) {
+        if (compound.getSmiles().length() != 0) {
         	StringBuffer  notes = new StringBuffer().append("<h2 xmlns='http://www.w3.org/1999/xhtml'>")
         
 		  .append("Smiles")

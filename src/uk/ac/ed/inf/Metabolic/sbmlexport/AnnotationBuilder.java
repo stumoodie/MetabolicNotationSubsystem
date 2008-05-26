@@ -47,13 +47,13 @@ public abstract class AnnotationBuilder {
 	protected String  buildSpecificNotes() {return "";}
 	String buildDefaultNotes(){
 		StringBuffer sb = new StringBuffer();
-		if(!object.getDetailedDescription().isEmpty()) {
+		if(object.getDetailedDescription().length() != 0) {
 		 sb.append("<p xmlns='http://www.w3.org/1999/xhtml'>")
 		  .append("Description :")
 		  .append(object.getDescription())
 		  .append("</p>");
 		}
-		if (!object.getDescription().isEmpty()){
+		if (object.getDescription().length() != 0){
 		  sb.append("<p xmlns='http://www.w3.org/1999/xhtml'>")
 		  .append("Detailed Description :")
 		  .append(object.getDetailedDescription())
