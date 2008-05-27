@@ -28,7 +28,7 @@ public class LibSBMLConfigManager {
 		String libName = System.mapLibraryName("sbmlj");
 		System.loadLibrary(libName);
 		return true;
-		}catch(Exception e) {
+		}catch(UnsatisfiedLinkError e) {
 		 try{ 
 			 String path = getPath();
 			 if(isWindows()) {
@@ -39,7 +39,7 @@ public class LibSBMLConfigManager {
 			 } else {
 				 return false;
 			 }
-		 }catch (Exception e2) {
+		 }catch (Throwable  errorOrException) {
 			 return false;
 		 }
 		}
