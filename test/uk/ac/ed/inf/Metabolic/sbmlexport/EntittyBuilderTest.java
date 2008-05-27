@@ -1,6 +1,7 @@
 package uk.ac.ed.inf.Metabolic.sbmlexport;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,16 +32,18 @@ public class EntittyBuilderTest {
     Mockery mockery = new JUnit4Mockery();
     Model sbmlModel;
     SBMLDocument doc;
-	static boolean canRun;
+	static boolean isLibSBMLLoaded;
 	@BeforeClass 
     public static void loadNativeLibraries () throws Exception {
-    	canRun = LibSBMLConfigManager.configure();
+    	isLibSBMLLoaded = LibSBMLConfigManager.configure();
     	
     }
 	@Before
 	public void setUp() throws Exception {
-		entityFactory = new EntityBuilder();
-		createSBMLModel();
+		if(!isLibSBMLLoaded)
+			fail("LibSBML not loaded");
+			entityFactory = new EntityBuilder();
+			createSBMLModel();
 	}
 
 	private void createSBMLModel() {
@@ -71,6 +74,7 @@ public class EntittyBuilderTest {
 		assertEquals(2, sbmlModel.getListOfCompartments().size());
 		assertEquals(0,doc.checkL2v3Compatibility());
 		assertEquals(0,doc.checkConsistency());
+		
 	}
 	
 	@Test

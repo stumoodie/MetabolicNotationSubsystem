@@ -2,10 +2,8 @@ package uk.ac.ed.inf.Metabolic.sbmlexport;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.List;
 
 import org.sbml.libsbml.Model;
-import org.sbml.libsbml.Reaction;
 import org.sbml.libsbml.SBMLDocument;
 import org.sbml.libsbml.SBMLError;
 import org.sbml.libsbml.libsbml;
@@ -13,7 +11,6 @@ import org.sbml.libsbml.libsbml;
 import uk.ac.ed.inf.Metabolic.ExportAdapterCreationException;
 import uk.ac.ed.inf.Metabolic.IExportAdapter;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IModel;
-import uk.ac.ed.inf.Metabolic.ndomAPI.IReaction;
 
 class MetabolicSBMLExportAdapter<N extends IModel> implements IExportAdapter<N> {
 	static boolean isLibraryLoaded = false;

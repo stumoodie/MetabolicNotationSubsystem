@@ -22,21 +22,26 @@ public class LibSBMLConfigManager {
 	/**
 	 * 
 	 * @return true if sbml libraries loaded ok
-	 * @throws Exception 
 	 */
-	static boolean configure () throws Exception {
+	static boolean configure () {
 		try {
-		String path = getPath();
-    	if(isWindows()) {
-    	      System.load(path + "sbmlj.dll");
+		String libName = System.mapLibraryName("sbmlj");
+		System.loadLibrary(libName);
+		return true;
+		}catch(Exception e) {
+		 try{ 
+			 String path = getPath();
+			 if(isWindows()) {
+				 System.load(path + "sbmlj.dll");
     	    
-    	      return true;
+				 return true;
     		
-    	} else {
-    		return false;
-    	}
-		}catch (Exception e) {
-			return false;
+			 } else {
+				 return false;
+			 }
+		 }catch (Exception e2) {
+			 return false;
+		 }
 		}
   
 	}

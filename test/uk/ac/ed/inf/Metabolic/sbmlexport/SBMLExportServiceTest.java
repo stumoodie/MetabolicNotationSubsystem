@@ -82,7 +82,7 @@ public class SBMLExportServiceTest {
 	@Test
 	public void testExportMap() throws Throwable {
 		if(!canRun){
-			fail();
+			fail("LibSBML not loaded");
 		}
 		mockery.checking(new Expectations () {
 			{atLeast(1).of(map).getTheSingleRootMapObject();}

@@ -40,8 +40,7 @@ import java.io.InputStream;
 		 }
 		 is.close();
 		 fos.close();
-		 }catch(IOException ie) {
-			 System.out.println(ie.getMessage());
+		 }catch(Exception ie) {
 			 return false;
 		 }
 	

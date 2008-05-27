@@ -32,7 +32,7 @@ import uk.ac.ed.inf.Metabolic.ndomAPI.IModel;
 @RunWith(JMock.class)
 public class MetabolicSBMLExportAdapterTest {
 	Mockery mockery = new JUnit4Mockery();
-	static boolean canRun;
+	static boolean isLibSBMLLoaded;
 	static File aFile;
 	
 	/**
@@ -64,7 +64,7 @@ public class MetabolicSBMLExportAdapterTest {
 	
 	@BeforeClass 
     public static void loadNativeLibraries () throws Exception {
-    	canRun = LibSBMLConfigManager.configure();
+    	isLibSBMLLoaded = LibSBMLConfigManager.configure();
     	//overrides application code
     	TestSBMLLoader.overrideSingleton( new LibSBMLLoader(){
     		public boolean loadLibrary() {
