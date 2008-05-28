@@ -8,11 +8,8 @@ import org.jmock.integration.junit4.JMock;
 import org.jmock.integration.junit4.JUnit4Mockery;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.sbml.libsbml.Model;
-import org.sbml.libsbml.SBMLDocument;
 
 import uk.ac.ed.inf.Metabolic.ndomAPI.ICompartment;
 
@@ -21,12 +18,8 @@ public class CompartmentAnnotationBuilderTest {
     AnnotationBuilder builder;
     Mockery mockery = new JUnit4Mockery();
 	final ICompartment comp = mockery.mock(ICompartment.class);
-	static boolean canRun;
-	@BeforeClass 
-    public static void loadNativeLibraries () throws Exception {
-    	canRun = LibSBMLConfigManager.configure();
-    	
-    }
+	
+   
 	@Before
 	public void setUp() throws Exception {
 		builder = new CompartmentAnnotationBuilder(comp);
@@ -47,12 +40,6 @@ public class CompartmentAnnotationBuilderTest {
 		
 	}
 	
-	@Test
-	public void testspecies(){
-		SBMLDocument doc = new SBMLDocument();
-		Model m = doc.createModel();
-		System.out.println(m.getListOfSpecies().size());
-		
-	}
+
 
 }

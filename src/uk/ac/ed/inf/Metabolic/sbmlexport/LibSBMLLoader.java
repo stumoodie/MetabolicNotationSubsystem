@@ -2,7 +2,6 @@ package uk.ac.ed.inf.Metabolic.sbmlexport;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 
  class LibSBMLLoader {
@@ -21,6 +20,7 @@ import java.io.InputStream;
    }
    
    public boolean loadLibrary () {
+	  System.out.println(System.getProperty("java.home"));
 	     String os = System.getProperty("os.name");
 	     if(os.contains("win") || os.contains("Win")){
 	    	 os="win32";

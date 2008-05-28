@@ -73,6 +73,7 @@ public class MacromoleculeAnnotationBuilderTest {
 		assertTrue(s.contains(UNIPROT));
 		assertTrue(s.contains(GOTERM));
 		assertFalse(s.contains("hasPart"));
+		System.out.println(System.getProperty("java.version"));
 	}
 	
 	
