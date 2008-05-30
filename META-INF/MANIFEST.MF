@@ -3,11 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: MetabolicContext Plug-in
 Bundle-SymbolicName: uk.ac.ed.inf.csb.Metabolic;singleton:=true
 Bundle-Version: 1.0.0
+Bundle-ClassPath: .,sbmlj.jar,os/
 Bundle-Activator: uk.ac.ed.inf.metaboliccontext.plugin.Activator
-Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime,
- org.pathwayeditor.application;bundle-version="0.8.1"
+Require-Bundle: org.eclipse.ui,org.eclipse.core.runtime,org.pathwayeditor.application;bundle-version="0.8.1"
 Eclipse-LazyStart: true
-Bundle-ClassPath: .,
- sbmlj.jar,
- os/
