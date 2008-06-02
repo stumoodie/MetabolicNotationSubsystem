@@ -7,6 +7,7 @@ import org.sbml.libsbml.Model;
 import org.sbml.libsbml.SBMLDocument;
 import org.sbml.libsbml.SBMLError;
 import org.sbml.libsbml.libsbml;
+import org.sbml.libsbml.libsbmlConstants;
 
 import uk.ac.ed.inf.Metabolic.ExportAdapterCreationException;
 import uk.ac.ed.inf.Metabolic.IExportAdapter;
@@ -46,6 +47,7 @@ class MetabolicSBMLExportAdapter<N extends IModel> implements IExportAdapter<N> 
 	    entityFactory.buildSpeciesAndCompartments(sbmlModel, model);
 		reactionFactory.buildReactions(sbmlModel, model);
 		System.out.println(libsbml.writeSBMLToString(document));
+		document.setConsistencyChecks(libsbmlConstants.LIBSBML_CAT_UNITS_CONSISTENCY, false);
 		if(document.checkConsistency() == 0)
 			isTargetCreated = true;
 		else {
