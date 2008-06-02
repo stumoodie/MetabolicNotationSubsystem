@@ -1,6 +1,6 @@
 package uk.ac.ed.inf.Metabolic.sbmlexport;
 
-import uk.ac.ed.inf.Metabolic.ndomAPI.IModelObject;
+import org.pathwayeditor.contextadapter.toolkit.ndom.IModelObject;
 
 public abstract class AnnotationBuilder {
 	protected IModelObject object;

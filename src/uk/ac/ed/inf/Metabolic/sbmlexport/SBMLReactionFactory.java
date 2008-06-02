@@ -52,7 +52,7 @@ class SBMLReactionFactory implements IReactionBuilder {
 			List<IRelation>all = new ArrayList<IRelation>();
 			all.addAll(reaction.getCatalystList());
 			all.addAll(reaction.getInhibitorList());
-			all.addAll(reaction.getActovatorList());
+			all.addAll(reaction.getActivatorList());
 			for (IRelation modifier: all) {
 				ModifierSpeciesReference msr = createModifierReference(modifier);
 			    sbmlReaction.addModifier(msr);
@@ -62,7 +62,7 @@ class SBMLReactionFactory implements IReactionBuilder {
 	}
 
 	private ModifierSpeciesReference createModifierReference(IRelation modifier) {
-		ModifierSpeciesReference msr = new ModifierSpeciesReference(modifier.getId());
+		ModifierSpeciesReference msr = new ModifierSpeciesReference(modifier.getMolecule().getId());
 		
 		addRoleToNotes(msr, modifier.getRole());
 		return msr;
@@ -78,7 +78,7 @@ class SBMLReactionFactory implements IReactionBuilder {
 	}
 
 	private SpeciesReference createSpeciesReference(IRelation substrate) {
-		SpeciesReference sr = new SpeciesReference(substrate.getId(), substrate.getStoichiometry());
+		SpeciesReference sr = new SpeciesReference(substrate.getMolecule().getId(), substrate.getStoichiometry());
 		addRoleToNotes(sr, substrate.getRole());
 		return sr;
 	}
@@ -86,13 +86,14 @@ class SBMLReactionFactory implements IReactionBuilder {
      * Currently put in notes as is only string
      */
 	private void setUpKineticLaw(Reaction sbmlReaction, IReaction reaction) {
+		if(reaction.getKineticLaw()!=null && reaction.getKineticLaw().trim().length()>0){
 		KineticLaw law = sbmlReaction.createKineticLaw();
 		StringBuffer sb = new StringBuffer();
 		 sb.append("<p xmlns='http://www.w3.org/1999/xhtml'>");
-		 sb.append(reaction.getKineticLaw());
 		 sb.append("</p>");
+		 sb.append(reaction.getKineticLaw());
 		law.appendNotes(sb.toString());
-		
+		}
 	}
    
 	private boolean reactionIsEmpty(IReaction reaction) {
