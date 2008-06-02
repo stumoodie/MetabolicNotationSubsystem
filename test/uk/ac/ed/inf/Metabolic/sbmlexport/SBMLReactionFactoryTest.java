@@ -263,7 +263,10 @@ public class SBMLReactionFactoryTest {
 			{allowing(mockReaction).getDescription();will(returnValue("ReacDescription"+i));}
 			{allowing(mockReaction).getDetailedDescription();will(returnValue("ReacDetailedDescription"+i));}
 			{allowing(mockReaction).getECNumber();will(returnValue("1.1.1.1"));}
-			{allowing(mockReaction).getKineticLaw();will(returnValue("kinetic law"));}
+//			{allowing(mockReaction).getKineticLaw();will(returnValue("kinetic law"));}
+//			{allowing(mockReaction).getKineticLaw();will(returnValue("<?xml version=\"1.0\" encoding=\"UTF-8\"?><kineticLaw><math xmlns=\"http://www.w3.org/1998/Math/MathML\"> <semantics definitionURL=\"http://biomodels.net/SBO/#SBO:0000062\"> <apply> <times/> <ci>k</ci> <ci>R1</ci> <ci>R2</ci> </apply> </semantics> </math> <listOfParameters> <parameter id=\"k\" value=\"0.1\"/> </listOfParameters></kineticLaw>"));}
+			{allowing(mockReaction).getKineticLaw();will(returnValue("<math xmlns=\"http://www.w3.org/1998/Math/MathML\"> <semantics definitionURL=\"http://biomodels.net/SBO/#SBO:0000062\"> <apply> <times/> <ci>k</ci> <ci>R1</ci> <ci>R2</ci> </apply> </semantics> </math>"));}
+			{allowing(mockReaction).getParameters();will(returnValue("k=0.1;f=1e-6;"));}
 		});
 		return mockReaction;
 	}
