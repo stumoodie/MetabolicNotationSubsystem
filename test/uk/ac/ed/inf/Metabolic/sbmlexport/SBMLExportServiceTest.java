@@ -10,6 +10,7 @@ import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
 import org.jmock.integration.junit4.JUnit4Mockery;
+import org.jmock.lib.legacy.ClassImposteriser;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -21,32 +22,46 @@ import org.pathwayeditor.businessobjectsAPI.IMapObject;
 import org.pathwayeditor.businessobjectsAPI.IRootMapObject;
 import org.pathwayeditor.contextadapter.publicapi.ExportServiceException;
 import org.pathwayeditor.contextadapter.publicapi.IContext;
+import org.pathwayeditor.contextadapter.publicapi.IContextAdapterServiceProvider;
+import org.pathwayeditor.contextadapter.publicapi.IContextAdapterValidationService;
+
+import uk.ac.ed.inf.Metabolic.IExportAdapter;
+import uk.ac.ed.inf.Metabolic.MetabolicContextValidationService;
+import uk.ac.ed.inf.Metabolic.ndomAPI.IModel;
 @RunWith(JMock.class)
 public class SBMLExportServiceTest {
 
-	Mockery mockery = new JUnit4Mockery();
-	
+	private Mockery mockery = new JUnit4Mockery() {{
+		setImposteriser(ClassImposteriser.INSTANCE);
+	}};
+
 	final IContext context = mockery.mock(IContext.class);
 	final IMap map = mockery.mock(IMap.class);
 	final IRootMapObject rmo = mockery.mock(IRootMapObject.class);
 	final IMapObject child = mockery.mock(IMapObject.class);
-	
+	final IContextAdapterServiceProvider provider=mockery.mock(IContextAdapterServiceProvider.class);
 	SBMLExportService service;
     File NONEXISTENT = new File ("??");
     File EXISTENT;
     static boolean canRun = false; // check this is true b4 running export tests.
+
+	private MetabolicSBMLExportAdapter<IModel> adapter;
    
     
    //uk.ac.ed.inf.metabolic
     @BeforeClass 
     public static void loadNativeLibraries () throws Exception {
     	canRun = LibSBMLConfigManager.configure();
-    	
     }
-    @Ignore
-	@Before
+ 
+    @Before
 	public void setUp() throws Exception {
-		service = new SBMLExportService(context);
+    	mockery.checking(new Expectations(){{one(provider).getContext(); will(returnValue(context));}});
+		service = new SBMLExportService(provider){
+			IExportAdapter<IModel> getGenerator() {
+				return adapter;
+			}
+		};
 		 EXISTENT = new File ("SBMLoutput");
 		 mockery.checking(new Expectations() {
 			{one(rmo).addChild(child);}
@@ -80,21 +95,52 @@ public class SBMLExportServiceTest {
 	}
 	
 	@Test
-	public void testExportMap() throws Throwable {
+	public void testExportValidMap() throws Throwable {
 		if(!canRun){
 			fail("LibSBML not loaded");
 		}
+		final MetabolicContextValidationService validator=mockery.mock(MetabolicContextValidationService.class);
+		adapter = mockery.mock(MetabolicSBMLExportAdapter.class);
 		mockery.checking(new Expectations () {
+			{one(provider).getValidationService();will(returnValue(validator));}
+			{one(validator).setMapToValidate(map);}
+			{one(validator).validateMap();}
+			{one(validator).isReadyToValidate();will(returnValue(true));}
+			{one(validator).isMapValid();will(returnValue(true));}
 			{atLeast(1).of(map).getTheSingleRootMapObject();}
 			{will(returnValue(rmo));}
 			{ignoring(rmo);}
-		
-			
+			{ignoring(validator);}
+			{ignoring(adapter);}
 		});
 		EXISTENT.createNewFile();
         service.exportMap(map, EXISTENT);
 	}
  
+	@Test(expected=ExportServiceException.class)
+	public void testExportInvalidMap() throws Throwable {
+		if(!canRun){
+			fail("LibSBML not loaded");
+		}
+		final MetabolicContextValidationService validator=mockery.mock(MetabolicContextValidationService.class);
+		adapter = mockery.mock(MetabolicSBMLExportAdapter.class);
+		mockery.checking(new Expectations () {
+			{one(provider).getValidationService();will(returnValue(validator));}
+			{one(validator).setMapToValidate(map);}
+			{one(validator).validateMap();}
+			{one(validator).isReadyToValidate();will(returnValue(true));}
+			{one(validator).isMapValid();will(returnValue(false));}
+			{atLeast(1).of(map).getTheSingleRootMapObject();}
+			{will(returnValue(rmo));}
+			{ignoring(rmo);}
+			{ignoring(validator);}
+//			{ignoring(adapter);}
+		});
+		EXISTENT.createNewFile();
+        service.exportMap(map, EXISTENT);
+	}
+ 
+
 	@Test
 	public void testGetCode() {
 		assertEquals(service.TYPECODE, service.getCode());

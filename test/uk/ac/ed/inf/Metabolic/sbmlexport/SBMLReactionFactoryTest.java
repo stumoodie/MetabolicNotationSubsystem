@@ -25,7 +25,9 @@ import org.sbml.libsbml.SBMLDocument;
 import org.sbml.libsbml.Species;
 import org.sbml.libsbml.libsbml;
 
+import uk.ac.ed.inf.Metabolic.ndomAPI.ICompound;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IModel;
+import uk.ac.ed.inf.Metabolic.ndomAPI.IMolecule;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IReaction;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IRelation;
 @RunWith(JMock.class)
@@ -146,7 +148,7 @@ public class SBMLReactionFactoryTest {
 			{atLeast(1).of(reactions.get(0)).getSubstrateList();will(returnValue(substrates));}
 			{atLeast(1).of(reactions.get(0)).getProductList();will(returnValue(products));}
 			{atLeast(1).of(reactions.get(0)).getInhibitorList();will(returnValue(Collections.EMPTY_LIST));}
-			{atLeast(1).of(reactions.get(0)).getActovatorList();will(returnValue(Collections.EMPTY_LIST));}
+			{atLeast(1).of(reactions.get(0)).getActivatorList();will(returnValue(Collections.EMPTY_LIST));}
 			{atLeast(1).of(reactions.get(0)).getCatalystList();will(returnValue(Collections.EMPTY_LIST));}
 		});
 		
@@ -161,7 +163,7 @@ public class SBMLReactionFactoryTest {
 			{atLeast(1).of(reactions.get(0)).getSubstrateList();will(returnValue(substrates));}
 			{atLeast(1).of(reactions.get(0)).getProductList();will(returnValue(products));}
 			{atLeast(1).of(reactions.get(0)).getInhibitorList();will(returnValue(Collections.EMPTY_LIST));}
-			{atLeast(1).of(reactions.get(0)).getActovatorList();will(returnValue(activators));}
+			{atLeast(1).of(reactions.get(0)).getActivatorList();will(returnValue(activators));}
 			{atLeast(1).of(reactions.get(0)).getCatalystList();will(returnValue(Collections.EMPTY_LIST));}
 		});
 		
@@ -179,9 +181,11 @@ public class SBMLReactionFactoryTest {
 	
 	private IRelation createMockSubstrateRelation(final int i) {
 		final IRelation  substrate = mockery.mock(IRelation.class);
+		final IMolecule compound=mockery.mock(IMolecule.class);
 		mockery.checking(new Expectations () {
 			{one(substrate).getStoichiometry();will(returnValue(1));}
-			{one(substrate).getId();will(returnValue(SUB_1_ID+i));}
+			{one(substrate).getMolecule();will(returnValue(compound));}
+			{one(compound).getId();will(returnValue(SUB_1_ID+i));}
 			{one(substrate).getRole();will(returnValue("SUBSTRATE"));}
 		});
 		return substrate;
@@ -197,9 +201,11 @@ public class SBMLReactionFactoryTest {
 	
 	private IRelation createMockActivatorRelation(final int i) {
 		final IRelation  activator = mockery.mock(IRelation.class);
+		final IMolecule compound=mockery.mock(IMolecule.class);
 		mockery.checking(new Expectations () {
 			{never(activator).getStoichiometry();will(returnValue(1));}
-			{one(activator).getId();will(returnValue(ACTIVATOR_1_ID+i));}
+			{one(activator).getMolecule();will(returnValue(compound));}
+			{one(compound).getId();will(returnValue(ACTIVATOR_1_ID+i));}
 			{one(activator).getRole();will(returnValue("ACTIVATOR"));}
 		});
 		return activator;
@@ -215,9 +221,11 @@ public class SBMLReactionFactoryTest {
 	
 	private IRelation createMockProductRelation(final int i) {
 		final IRelation  product = mockery.mock(IRelation.class);
+		final IMolecule compound=mockery.mock(IMolecule.class);
 		mockery.checking(new Expectations () {
 			{one(product).getStoichiometry();will(returnValue(1));}
-			{one(product).getId();will(returnValue(PROD_1_ID +i));}
+			{one(product).getMolecule();will(returnValue(compound));}
+			{one(compound).getId();will(returnValue(PROD_1_ID +i));}
 			{one(product).getRole();will(returnValue("PRODUCT"));}
 		});
 		return product;

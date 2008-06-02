@@ -2,6 +2,8 @@ package uk.ac.ed.inf.Metabolic.ndomAPI;
 
 import java.util.List;
 
+import org.pathwayeditor.contextadapter.toolkit.ndom.IModelObject;
+
 public interface IMolecule extends IModelObject {
 	public List<IRelation> getSinkList();
 

@@ -1,6 +1,9 @@
 package uk.ac.ed.inf.Metabolic.ndomAPI;
 
 import java.util.List;
+import java.util.Set;
+
+import org.pathwayeditor.contextadapter.toolkit.ndom.IModelObject;
 
 public interface IModel extends IModelObject {
 	public List<ICompartment> getCompartmentList();
@@ -8,21 +11,21 @@ public interface IModel extends IModelObject {
 	public List<IReaction> getReactionList();
 	
 	//Defined properties dictionaries
-	public List<String> getECnumberList();
+	public Set<String> getECnumberList();
 	
-	public List<String> getSmilesList();
+	public Set<String> getSmilesList();
 	
-	public List<String> getRoleList();
+	public Set<String> getRoleList();
 	
-	public List<String> getCIDList();
+	public Set<String> getCIDList();
 
-	public List<String> getChEBIList();
+	public Set<String> getChEBIList();
 
-	public List<String> getPubChemList();
+	public Set<String> getPubChemList();
 
-	public List<String> getInChIList();
+	public Set<String> getInChIList();
 
-	public List<String> getGOTermList();
+	public Set<String> getGOTermList();
 
 /*
 //getters for object from property 
