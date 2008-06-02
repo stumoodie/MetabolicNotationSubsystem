@@ -217,7 +217,8 @@ public class MetabolicContextAdapterSyntaxService implements IContextAdapterSynt
 	  	IPropertyDefinition KineticLaw=reassignVal(getPropKineticLaw()," ",true,false);
 	 	Process.addProperty(KineticLaw);
 	 	IPropertyDefinition Reversibility=new TextPropertyDefinition("Reversibility","reversible",false,true);
-		this.Process.addProperty(Reversibility);
+		this.Process.addProperty(Reversibility);	IPropertyDefinition Parameters=new TextPropertyDefinition("Parameters"," ",false,true);
+		this.Process.addProperty(Parameters);
 	}
 	
 		private void defineParentingProcess(){

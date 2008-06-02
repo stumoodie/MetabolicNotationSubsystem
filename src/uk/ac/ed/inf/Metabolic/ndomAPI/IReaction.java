@@ -18,6 +18,8 @@ public interface IReaction extends IModelObject {
 	public String getECNumber();
 
 	public String getKineticLaw();
+	
+	public String getParameters();
 
 	public boolean isReversible();
 }

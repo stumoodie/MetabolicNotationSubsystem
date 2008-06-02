@@ -134,6 +134,7 @@ public abstract class NDOMFactory extends AbstractNDOMParser {
 		re.setDetailedDescription(mapObject.getDetailedDescription().getHTML());
 		re.setECNumber(mapObject.getPropertyByName("EC").getValue());
 		re.setKineticLaw(mapObject.getPropertyByName("KineticLaw").getValue());
+		re.setParameters(mapObject.getPropertyByName("Parameters").getValue());
 		IContextProperty revProp = mapObject.getPropertyByName("Reversibility");
 		String value = revProp.getValue();
 		re.setReversible(value);
@@ -218,6 +219,9 @@ public abstract class NDOMFactory extends AbstractNDOMParser {
 
 /*
  * $Log$
+ * Revision 1.2  2008/06/02 15:15:13  asorokin
+ * KineticLaw parameters parsing and validation
+ *
  * Revision 1.1  2008/06/02 10:31:42  asorokin
  * Reference to Service provider from all Service interfaces
  *

@@ -43,6 +43,7 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 		super.rmo();
 		name2Compound.removeFirst();
 	}
+	
 	void processProdLinks(MetabolicReaction r) {
 		if (r.isReversible()) {
 			IShape s = reaction2Shape.get(r);
@@ -272,7 +273,7 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 				if ("Compartment".equals(ot)) {
 					compartment(compartment, el);
 				} else if ("Process".equals(ot)) {
-					process(el);
+					process(compartment, el);
 				} else if ("Compound".equals(ot)) {
 					compound(compartment, el);
 				} else if ("Macromolecule".equals(ot)) {
@@ -327,8 +328,24 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 	@Override
 	protected void process(ModelObject parent, IMapObject mapObject) {
 		MetabolicReaction re = process(mapObject);
+		checkParameters(re);
 		ndom.addReaction(re);
 		reaction2Shape.put(re, (IShape) mapObject);
+	}
+
+	/**
+	 * check validity of parameter string in the process node.
+	 * Parameter string should contains set of name=value pairs separated by <code>;</code>.
+	 * RegExp:<br><code>^(\\s*\\w+\\s*=\\s*[0-9eE-+.]\\s*;)+$</code>
+	 * @param re process node;
+	 */
+	void checkParameters(MetabolicReaction re) {
+		String parameters = re.getParameters();
+		if(parameters.trim().length()>0 && 
+				!parameters.matches("^(\\s*\\w+\\s*=\\s*[0-9eE\\-+.]+\\s*;)+$")){
+//			!parameters.matches("^(\\s*\\w+\\s*=\\s*[0-9eE-+.]+\\s*;)+$")){
+			error("Invalid parameter definition"+parameters);
+		}
 	}
 
 }
@@ -336,6 +353,9 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 
 /*
  * $Log$
+ * Revision 1.2  2008/06/02 15:14:31  asorokin
+ * KineticLaw parameters parsing and validation
+ *
  * Revision 1.1  2008/06/02 10:31:42  asorokin
  * Reference to Service provider from all Service interfaces
  *

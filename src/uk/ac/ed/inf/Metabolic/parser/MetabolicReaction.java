@@ -16,6 +16,7 @@ public class MetabolicReaction  extends ModelObject implements IReaction {
 	//Properties
 	private String eCNumber;
 	private String kineticLaw;
+	private String parameters;
 	private boolean reversible;
 	
 	//Lists
@@ -172,11 +173,24 @@ public class MetabolicReaction  extends ModelObject implements IReaction {
 		return sb.toString();
 	}
 
+
+	public String getParameters() {
+		return parameters;
+	}
+
+
+	void setParameters(String parameters) {
+		this.parameters = parameters;
+	}
+
 }
 
 
 /*
  * $Log$
+ * Revision 1.2  2008/06/02 15:15:13  asorokin
+ * KineticLaw parameters parsing and validation
+ *
  * Revision 1.1  2008/06/02 10:31:42  asorokin
  * Reference to Service provider from all Service interfaces
  *
