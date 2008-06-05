@@ -7,6 +7,7 @@ import org.pathwayeditor.businessobjectsAPI.IMap;
 import org.pathwayeditor.contextadapter.publicapi.IContext;
 import org.pathwayeditor.contextadapter.publicapi.IContextAdapterServiceProvider;
 import org.pathwayeditor.contextadapter.publicapi.IContextAdapterValidationService;
+import org.pathwayeditor.contextadapter.publicapi.IValidationRuleDefinition;
 import org.pathwayeditor.contextadapter.toolkit.ndom.AbstractNDOMParser.NdomException;
 
 import uk.ac.ed.inf.Metabolic.ndomAPI.IModel;
@@ -102,10 +103,19 @@ public class MetabolicContextValidationService implements
 	public IModel getModel(){
 		return ndom;
 	}
+
+
+	public List<IValidationRuleDefinition> getRules() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
 
 /*
  * $Log$
+ * Revision 1.2  2008/06/05 22:15:49  radams
+ * added validation method
+ *
  * Revision 1.1  2008/06/02 10:31:42  asorokin
  * Reference to Service provider from all Service interfaces
  *
