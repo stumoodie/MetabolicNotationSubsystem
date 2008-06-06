@@ -1,0 +1,363 @@
+/**
+<verbatim>
+</verbatim>
+Metabolic context. That context is supposed to be used for visualisation of metabolic networks, it also suppose to be test case for SBML export.  
+<verbatim>
+New property Reversibility is added to the Process Node
+$Id$
+*/
+context uk.ac.ed.inf.Metabolic (name = "Metabolic context" descr="Basic biochemical context" version=1.0.0)
+
+/**
+</verbatim>
+EC number for reaction. It should not be used as name or ID of the reaction, rather it should come to the MIRIAM annotation of the model in form like:
+<verbatim>
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Description rdf:about="#">
+
+              <bqbiol:isVersionOf>
+		<rdf:Bag>
+			<rdf:li rdf:resource="http://www.ec-code.org/#1.1.1.1"/>
+		</rdf:Bag>
+              <bqbiol:isVersionOf>
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+
+</verbatim>
+
+
+<verbatim>
+*/
+property ECnum (name="EC" descr="Enzyme comission number" type=simple visualisable) = "-"
+
+/**
+</verbatim>
+Structure ofthe compound in SMILES/SMARTS string. Should come to notes section of species definition:
+            <html:p>SMILES: value</html:p>
+
+<verbatim>
+*/
+property Smiles (name="SMILES" descr="string representation of compound structure" type=simple)
+/**
+</verbatim>
+Cardinality of compound involved in reaction.
+<verbatim>
+*/
+property Stoich (name="STOICH" descr="Stoichiometry coefficient" type=simple visualisable)
+/**
+</verbatim>
+Role of compound in reaction. I could be Substrate, Product, activator, inhibitor, cofactor, coenzyme etc. I thould come to notes part of =speciesReference=
+element.
+<verbatim>
+*/
+property Role (name="ROLE" descr="role of compound in the process" type=simple)
+/**
+</verbatim>
+Initial concentration. It should come to =initialConcentration= aprt of =specie= definition.
+<verbatim>
+*/
+property IC (name="IC" descr="initial concentration of the compound" type=number) = "0.0"
+
+/**
+</verbatim>
+Kinetic law of the process. This property should contains proper XML subtree for  <kineticLaw> element of SBML including local paramters and their vaulues.
+
+the example could be like
+<verbatim>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <apply>
+                <minus/>
+                <apply>
+                  <times/>
+                  <ci> k1f </ci>
+                  <ci> R </ci>
+                  <ci> EGF </ci>
+                </apply>
+                <apply>
+                  <times/>
+                  <ci> k1b </ci>
+                  <ci> Ra </ci>
+                </apply>
+              </apply>
+              <ci> compartment </ci>
+            </apply>
+          </math>
+          <listOfParameters>
+            <parameter id="k1f" value="0.003"/>
+            <parameter id="k1b" value="0.06"/>
+          </listOfParameters>
+        </kineticLaw>
+</verbatim>
+In this example =math= define mathematical law and =listOfParameters= define local parameter names and values.
+<verbatim>
+*/
+property KineticLaw (name="KineticLaw" descr="MathML description of kinetic law and kinetic constants" type=simple)
+
+/**
+</verbatim>
+Compound ID in KEGG database. Generally ChEBI or PubChem should be also used
+<verbatim>
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Description rdf:about="#">
+              <bqbiol:is>
+                <rdf:Bag>
+
+                  <rdf:li rdf:resource="http://www.ebi.ac.uk/chebi/#CHEBI:28972"/>
+                  <rdf:li rdf:resource="http://www.pubchem.gov/substance/#5836"/>
+                  <rdf:li rdf:resource="http://www.iupac.org/inchi/#InChI=1/C3H8O2/c1-3(5)2-4/h3-5H,2H2,1H3/t3-/m1/s1"/>
+                  <rdf:li rdf:resource="http://www.genome.jp/kegg/compound/#C02912"/>
+                </rdf:Bag>
+              </bqbiol:is>
+            </rdf:Description>
+</verbatim>
+IN that example all four type of compound identification is provided
+<verbatim>
+*/
+property CID (name="CID" descr="compound ID in KEGG DB" type = simple )
+property ChEBI (name="ChEBI" descr="compound ID in ChEBI" type = simple )
+property PubChem (name="PubChem" descr="compound ID in PubChem DB" type = simple )
+property InChI (name="InChI" descr="Structure of compound in InChI" type = simple )
+
+/**
+</verbatim>
+Reference to GeneOntolgy record relevant for that element. COuld be used for identification of Compartments, Macromolecule functions etc.
+
+In SBML export it will come to annotation of the element in the form
+
+<verbatim>
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Description rdf:about="#">
+
+              <bqbiol:isVersionOf>
+		<rdf:Bag>
+			<rdf:li rdf:resource="http://www.geneontology.org/#GO:0046983"/>
+		</rdf:Bag>
+              <bqbiol:isVersionOf>
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+
+</verbatim>
+
+<verbatim>
+*/
+property GOTerm (name="GO term" descr="GO annotation" type = simple)
+/**
+ *
+ */
+property VarName (name="VarName" descr="Name of variable in kinetic law" type = simple)
+
+/**
+</verbatim>
+Main canvas for the diagram. It also represents default compartment in SBML.
+ <compartment id = "default" size = "1"/>
+<verbatim>
+*/
+RMO	( contains [Process, Compound, Macromolecule, Compartment])
+
+
+/**
+</verbatim>
+Compartment definition. It should come to =compartment=  definition in SBML with proper recerence to its parent in =outside= part of definition.
+If RMO is the parent then outside will be =default=:
+<verbatim>
+ <compartment id = "UUID" name="getName()" size = "1"  outside="getParent()"/>
+</verbatim>
+
+<verbatim>
+*/
+shape 	Compartment (name="Compartment" descr="Functional compartment"
+		stype = ROUNDED_RECTANGLE
+		size = [200,200]
+		GOTerm = " "
+		property Volume (name="volume" type=number )= "1.0"
+		contains [*]
+		URL = "http://www.proteinatlas.org"
+	)
+	
+/**
+Reaction element.
+*/
+shape 	Process ( name="Reaction" descr="chemical conversion of compounds"
+		stype = RECTANGLE
+		size(read-only) = [10,10]
+		lcolor = [0,0,0]
+		fcolor = [255,255,255]
+		ECnum = "-.-.-.-"
+		KineticLaw = " "
+		property Reversibility (name="Reversibility" type=simple)="reversible"
+		property Parameters (name="Parameters" type=simple)=" "
+		contains []
+	)
+
+/**
+Simple chemical compound, specie, which could be consumed or produced in the reaction.
+*/
+shape 	Compound ( name="Compound" descr="chemical entity"
+		stype = ELLIPSE
+		size = [20,20]
+		lcolor = [255,0,0]
+		fcolor = [255,255,255]
+		contains []
+		CID = " "
+		ChEBI = " "
+		PubChem = " "
+		InChI = " "
+		Smiles = " "
+		IC = "1.0"
+	)
+
+/**
+Protein, RNA or their complexes with each other or simple chemicals. It suppose to be modulator only in SBML.
+SO it can only participate with activation, inhibition and catalysis links. It should not be connected to reaction as substrate or product.
+*/
+shape 	Macromolecule (name = "Macromolecule" descr="polymer"
+		stype = ROUNDED_RECTANGLE
+		size = [20,20]
+		lcolor = [0,0,0]
+		fcolor = [255,255,255]
+		GOTerm = " "
+/*
+</verbatim>
+UNiprot Id and compound ID should be collected in description of the topmost element annotation:
+<verbatim>
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Description rdf:about="#">
+
+		<bqbiol:hasPart>
+			<rdf:Bag>
+				<rdf:li rdf:resource="http://www.uniprot.org/#P62158"/>
+				<rdf:li rdf:resource="http://www.genome.jp/kegg/compound/#C00076"/>
+			</rdf:Bag>
+		</bqbiol:hasPart>
+		</rdf:Description>
+          </rdf:RDF>
+        </annotation>
+</verbatim>
+
+<verbatim>
+*/
+		property UniProt(name="UniProt" descr="Functional compartment" type=simple)= " "
+		contains [Macromolecule, Compound]
+	)
+
+/**
+Conection between substrate and the reaction. Should be used to create 
+=speciesReference= in =listOfReactants= part of reaction definition.
+Target port will define the stoichiometry of that speciesReference, while source port will provide the role and link to specie id.
+*/
+link	Consume (name="Consumption Link" 
+		lcolor = [0,0,0]
+		source = Compound target = [Process]
+		VarName = "v1"
+		sport = NONE (stype = RECTANGLE
+			size = [0,0]
+			lcolor = [0,0,0]
+			fcolor = [255,255,255]
+			Role(visualisable) = "substrate"
+		)
+		tport = NONE (stype = RECTANGLE
+			offset = 0
+			size = [0,0]
+			lcolor = [0,0,0]
+			fcolor = [255,255,255]
+			Stoich = "1"
+		)
+	)
+	
+/**
+Conection between the reaction and the product. Should be used to create 
+=speciesReference= in =listOfProducts= part of reaction definition.
+Source port will define the stoichiometry of that speciesReference, while target port will provide the role and link to specie id.
+*/
+link	Produce (name="Production Link" 
+		lcolor = [0,0,0]
+		source = Process target = [Compound]
+		VarName = "v1"
+		sport = NONE (stype = RECTANGLE
+			size = [0,0]
+			lcolor = [0,0,0]
+			fcolor = [255,255,255]
+			offset = 2
+			Stoich = "1"
+		)
+		tport = TRIANGLE[8,8](stype = RECTANGLE
+			size = [0,0]
+			lcolor = [0,0,0]
+			fcolor = [255,255,255]
+			Role = "product"
+		)
+	)
+	
+/**
+Conection between the reaction and the activator (not the catalyst). Should be used to create 
+=modifierSpeciesReference= in =listOfModifiers= part of reaction definition.
+Source port will define the stoichiometry of that speciesReference, while target port will provide the role and link to specie id.
+*/
+link	Activation (name="Activation Link" 
+		lcolor = [0,0,0]
+		source = Compound target = [Process]
+		source = Macromolecule target = [Process]
+		VarName = "v1"
+		sport = NONE (stype = RECTANGLE
+			size = [0,0]
+			lcolor = [0,0,0]
+			fcolor = [255,255,255]
+			offset = 2
+			Stoich = "1"
+		)
+		tport = TRIANGLE (stype = RECTANGLE
+			size = [0,0]
+			lcolor = [0,0,0]
+			fcolor = [255,255,255]
+			Role = "activator"
+		)
+	)
+
+link	Catalysis (name="Catalysis Link" 
+		lcolor = [0,0,0]
+		source = Compound target = [Process]
+		source = Macromolecule target = [Process]
+		sport = NONE (stype = RECTANGLE
+			size = [0,0]
+			lcolor = [0,0,0]
+			fcolor = [255,255,255]
+			offset = 2
+			Stoich = "1"
+		)
+		tport = DIAMOND (stype = RECTANGLE
+			size = [0,0]
+			lcolor = [0,0,0]
+			fcolor = [255,255,255]
+			Role = "activator"
+		)
+	)
+
+link	Inhibition (name="Inhibition Link" 
+		lcolor = [0,0,0]
+		source = Compound target = [Process]
+		source = Macromolecule target = [Process]
+		VarName = "v1"
+		sport = NONE (stype = RECTANGLE
+			size = [0,0]
+			lcolor = [0,0,0]
+			fcolor = [255,255,255]
+			offset = 2
+			Stoich = "1"
+		)
+		tport = BAR (stype = RECTANGLE
+			size = [0,0]
+			lcolor = [0,0,0]
+			fcolor = [255,255,255]
+			Role = "inhibitor"
+		)
+	)
+//</verbatim>
