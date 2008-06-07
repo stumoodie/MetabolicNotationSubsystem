@@ -17,6 +17,7 @@ import org.jmock.integration.junit4.JUnit4Mockery;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sbml.libsbml.Model;
@@ -29,6 +30,7 @@ import uk.ac.ed.inf.Metabolic.ndomAPI.IModel;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IMolecule;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IReaction;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IRelation;
+@Ignore
 @RunWith(JMock.class)
 public class SBMLReactionFactoryTest {
     Mockery mockery = new JUnit4Mockery();
@@ -38,7 +40,7 @@ public class SBMLReactionFactoryTest {
     Model sbmlModel;
 	@BeforeClass 
     public static void loadNativeLibraries () throws Exception {
-    	canRun = LibSBMLConfigManager.configure();
+    //	canRun = LibSBMLConfigManager.configure();
     	
     }
 	@Before

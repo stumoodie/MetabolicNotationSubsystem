@@ -10,13 +10,14 @@ import org.jmock.integration.junit4.JUnit4Mockery;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sbml.libsbml.Model;
 import org.sbml.libsbml.SBMLDocument;
 
 import uk.ac.ed.inf.Metabolic.ndomAPI.IModel;
-
+@Ignore
 @RunWith(JMock.class)
 public class ModelFactoryTest {
 	Mockery mockery = new JUnit4Mockery();
@@ -26,7 +27,7 @@ public class ModelFactoryTest {
 	static boolean canRun;
 	@BeforeClass 
     public static void loadNativeLibraries () throws Exception {
-    	canRun = LibSBMLConfigManager.configure();
+   // 	canRun = LibSBMLConfigManager.configure();
     	
     }
 	

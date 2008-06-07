@@ -14,6 +14,7 @@ import org.jmock.lib.legacy.ClassImposteriser;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjectsAPI.IMap;
@@ -49,7 +50,7 @@ public class SBMLExportServiceTest {
    //uk.ac.ed.inf.metabolic
     @BeforeClass 
     public static void loadNativeLibraries () throws Exception {
-    	canRun = LibSBMLConfigManager.configure();
+    //	canRun = LibSBMLConfigManager.configure();
     }
  
     @Before
@@ -91,7 +92,7 @@ public class SBMLExportServiceTest {
 		});
         service.exportMap(map, NONEXISTENT);
 	}
-	
+	@Ignore
 	@Test
 	public void testExportValidMap() throws Throwable {
 		if(!canRun){
@@ -114,7 +115,7 @@ public class SBMLExportServiceTest {
 		EXISTENT.createNewFile();
         service.exportMap(map, EXISTENT);
 	}
- 
+    @Ignore
 	@Test(expected=ExportServiceException.class)
 	public void testExportInvalidMap() throws Throwable {
 		if(!canRun){
