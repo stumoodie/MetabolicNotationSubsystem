@@ -25,7 +25,6 @@ import org.sbml.libsbml.SBMLDocument;
 import org.sbml.libsbml.Species;
 import org.sbml.libsbml.libsbml;
 
-import uk.ac.ed.inf.Metabolic.ndomAPI.ICompound;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IModel;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IMolecule;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IReaction;
