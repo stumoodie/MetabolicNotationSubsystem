@@ -85,6 +85,9 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 		r.addProduct(rel);
 		IShape targ = el.getTarget();
 		MetabolicMolecule mol = shape2Molecule.get(targ);
+		if(mol==null){
+			error("Molecule in Production relation is not registered in the model");
+		}
 		try {
 			mol.addSource(rel);
 			String vn=rel.getVarName();
@@ -107,10 +110,17 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 
 	@Override
 	protected void substrate(ILink el, MetabolicReaction r) {
+		if(r.isReversible() && "Consume".equals(el.getObjectType().getTypeName())){
+			error("Consumption link to reversible reaction");
+			return;
+		}
 		MetabolicRelation rel = consumption(el);
 		r.addSubstrate(rel);
 		IShape targ = el.getSource();
 		MetabolicMolecule mol = shape2Molecule.get(targ);
+		if(mol==null){
+			error("Molecule in Consumption relation is not registered in the model");
+		}
 		try {
 			mol.addSink(rel);
 			String vn=rel.getVarName();
@@ -125,9 +135,15 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 	@Override
 	protected void activate(ILink el, MetabolicReaction r) {
 		MetabolicRelation rel = activation(el);
+		if(r==null){
+			error("Reaction for Activation relation is not registered in the model");
+		}
 		r.addActivator(rel);
-		IShape targ = el.getTarget();
-		MetabolicMolecule mol = shape2Molecule.get(targ);
+		IShape src = el.getSource();
+		MetabolicMolecule mol = shape2Molecule.get(src);
+		if(mol==null){
+			error("Molecule for Cativation relation is not registered in the model");
+		}
 		try {
 			mol.addActivatoryRelation(rel);
 		} catch (NdomException e) {
@@ -139,9 +155,15 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 	@Override
 	protected void inhibit(ILink el, MetabolicReaction r) {
 		MetabolicRelation rel = inhibition(el);
+		if(r==null){
+			error("Reaction for Inhibiton relation is not registered in the model");
+		}
 		r.addInhibitor(rel);
-		IShape targ = el.getTarget();
-		MetabolicMolecule mol = shape2Molecule.get(targ);
+		IShape src = el.getSource();
+		MetabolicMolecule mol = shape2Molecule.get(src);
+		if(mol==null){
+			error("Molecule for Inhibiton relation is not registered in the model");
+		}
 		try {
 			mol.addInhibitoryRelation(rel);
 		} catch (NdomException e) {
@@ -154,8 +176,11 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 	protected void catalysis(ILink el, MetabolicReaction r) {
 		MetabolicRelation rel = catalysis(el);
 		r.addCatalyst(rel);
-		IShape targ = el.getTarget();
-		MetabolicMolecule mol = shape2Molecule.get(targ);
+		IShape src = el.getSource();
+		MetabolicMolecule mol = shape2Molecule.get(src);
+		if(mol==null){
+			error("Molecule for Catalysis relation is not registered in the model");
+		}
 		try {
 			mol.addCatalyticRelation(rel);
 		} catch (NdomException e) {
@@ -353,6 +378,9 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 
 /*
  * $Log$
+ * Revision 1.3  2008/06/09 13:26:29  asorokin
+ * Bug fixes for SBML export
+ *
  * Revision 1.2  2008/06/02 15:14:31  asorokin
  * KineticLaw parameters parsing and validation
  *

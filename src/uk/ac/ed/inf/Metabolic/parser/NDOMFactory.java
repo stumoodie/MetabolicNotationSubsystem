@@ -58,14 +58,84 @@ public abstract class NDOMFactory extends AbstractNDOMParser {
 
 	protected abstract void process(ModelObject parent, IMapObject mapObject);
 
+	/**
+	 * Creates Activation relation in the model. That method creates activation relation
+	 * by invocation of {@link #activation(ILink)} method and registered this relation with 
+	 * reaction <code>r</code> and source shape,obtained from <code>el</code>.
+	 * Preconditions:<br>
+	 * <ul><li>Reaction is not <code>NULL</code></li>
+	 * <li> link <code>el</code> has non-null and registered with the model source shape
+	 * </li></ul>
+	 * 	Postconditions:<br>
+	 * <ul><li>Fully defined valid Relation object of type {@link ERelType#Activation}</li>
+	 * </ul> 
+	 * @param el non-null Link object to convert to Relation
+	 * @param r non-null reaction to register new Relation with
+	 */
 	protected abstract void activate(ILink el, MetabolicReaction r);
 
-	protected abstract void catalysis(ILink el, MetabolicReaction r);
+	/**
+	 * Creates Catalysis relation in the model. That method creates catalysis relation
+	 * by invocation of {@link #catalysis(ILink)} method and registered this relation with 
+	 * reaction <code>r</code> and source shape,obtained from <code>el</code>.
+	 * Preconditions:<br>
+	 * <ul><li>Reaction is not <code>NULL</code></li>
+	 * <li> link <code>el</code> has non-null and registered with the model source shape
+	 * </li></ul>
+	 * 	Postconditions:<br>
+	 * <ul><li>Fully defined valid Relation object of type {@link ERelType#Catalysis}</li>
+	 * </ul> 
+	 * @param el non-null Link object to convert to Relation
+	 * @param r non-null reaction to register new Relation with
+	 */
+protected abstract void catalysis(ILink el, MetabolicReaction r);
 
+	/**
+	 * Creates inhibitory relation in the model. That method creates inhibitory relation
+	 * by invocation of {@link #inhibition(ILink)} method and registered this relation with 
+	 * reaction <code>r</code> and source shape,obtained from <code>el</code>.
+	 * Preconditions:<br>
+	 * <ul><li>Reaction is not <code>NULL</code></li>
+	 * <li> link <code>el</code> has non-null and registered with the model source shape
+	 * </li></ul>
+	 * 	Postconditions:<br>
+	 * <ul><li>Fully defined valid Relation object of type {@link ERelType#Inhibition}</li>
+	 * </ul> 
+	 * @param el non-null Link object to convert to Relation
+	 * @param r non-null reaction to register new Relation with
+	 */
 	protected abstract void inhibit(ILink el, MetabolicReaction r);
 
+	/**
+	 * Creates Production relation in the model. That method creates production relation
+	 * by invocation of {@link #production(ILink)} method and registered this relation with 
+	 * reaction <code>r</code> and source shape,obtained from <code>el</code>.
+	 * Preconditions:<br>
+	 * <ul><li>Reaction is not <code>NULL</code></li>
+	 * <li> link <code>el</code> has non-null and registered with the model source shape
+	 * </li></ul>
+	 * 	Postconditions:<br>
+	 * <ul><li>Fully defined valid Relation object of type {@link ERelType#Production}</li>
+	 * </ul> 
+	 * @param el non-null Link object to convert to Relation
+	 * @param r non-null reaction to register new Relation with
+	 */
 	protected abstract void products(ILink el, MetabolicReaction r);
 
+	/**
+	 * Creates Consumption relation in the model. That method creates consumption relation
+	 * by invocation of {@link #consumption(ILink)} method and registered this relation with 
+	 * reaction <code>r</code> and source shape,obtained from <code>el</code>.
+	 * Preconditions:<br>
+	 * <ul><li>Reaction is not <code>NULL</code></li>
+	 * <li> link <code>el</code> has non-null and registered with the model source shape
+	 * </li></ul>
+	 * 	Postconditions:<br>
+	 * <ul><li>Fully defined valid Relation object of type {@link ERelType#Consumption}</li>
+	 * </ul> 
+	 * @param el non-null Link object to convert to Relation
+	 * @param r non-null reaction to register new Relation with
+	 */
 	protected abstract void substrate(ILink el, MetabolicReaction r);
 
 	protected MetabolicCompartment compartment(IMapObject mapObject) {
@@ -219,6 +289,9 @@ public abstract class NDOMFactory extends AbstractNDOMParser {
 
 /*
  * $Log$
+ * Revision 1.3  2008/06/09 13:26:29  asorokin
+ * Bug fixes for SBML export
+ *
  * Revision 1.2  2008/06/02 15:15:13  asorokin
  * KineticLaw parameters parsing and validation
  *
