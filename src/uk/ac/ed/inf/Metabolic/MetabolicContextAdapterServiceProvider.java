@@ -22,7 +22,7 @@ public class MetabolicContextAdapterServiceProvider implements IContextAdapterSe
     
 	private static final String GLOBAL_ID = "uk.ac.ed.inf.Metabolic.Metabolic";
 	//private static final String GLOBAL_ID = "12635452516346262546";
-	private static final String DISPLAY_NAME = "Basic biochemical context";
+	private static final String DISPLAY_NAME = "Metabolic context";
 	private static final String NAME = "Metabolic context";
 	private static final int[] VERS = getVersion("1_0_0");
 	

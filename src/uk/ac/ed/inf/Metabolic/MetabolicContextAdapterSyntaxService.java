@@ -10,6 +10,7 @@ import org.pathwayeditor.businessobjects.constants.ShapeType;
 import org.pathwayeditor.contextadapter.publicapi.IContext;
 import org.pathwayeditor.contextadapter.publicapi.IContextAdapterServiceProvider;
 import org.pathwayeditor.contextadapter.publicapi.IContextAdapterSyntaxService;
+import org.pathwayeditor.contextadapter.publicapi.ILinkObjectType;
 import org.pathwayeditor.contextadapter.publicapi.IPropertyDefinition;
 import org.pathwayeditor.contextadapter.publicapi.IRootMapObjectType;
 import org.pathwayeditor.contextadapter.publicapi.IShapeObjectType;
@@ -22,20 +23,7 @@ import org.pathwayeditor.contextadapter.toolkit.ctxdefn.ShapeObjectType;
 import org.pathwayeditor.contextadapter.toolkit.ctxdefn.TextPropertyDefinition;
 
 public class MetabolicContextAdapterSyntaxService implements IContextAdapterSyntaxService {
-	static enum ObjectTypes {
-		Compartment{public String toString(){return "10";}},
-		Process{public String toString(){return "11";}},
-		Compound{public String toString(){return "12";}},
-		Macromolecule{public String toString(){return "13";}},
-		Consume{public String toString(){return "20";}},
-		Produce{public String toString(){return "21";}},
-		Activation{public String toString(){return "22";}},
-		Catalysis{public String toString(){return "23";}},
-		Inhibition{public String toString(){return "24";}},
 
-		ROOT_MAP_OBJECT{public String toString(){return "-10";}}
-	}
-	
 	private static int[] getRGB(String hex) {
 		hex = hex.replace("#", "");
 		int r = Integer.parseInt(hex.substring(0, 2), 16);
@@ -67,9 +55,9 @@ public class MetabolicContextAdapterSyntaxService implements IContextAdapterSynt
 	}
 	
 	private final IContext context;
-	private final Set  shapeSet = new HashSet(); 
-	private final Set  linkSet = new HashSet();
-	private final Set  propSet=new HashSet();
+	private final Set <IShapeObjectType> shapeSet = new HashSet<IShapeObjectType>(); 
+	private final Set <ILinkObjectType> linkSet = new HashSet<ILinkObjectType>();
+//	private final Set <IPropertyDefinition> propSet=new HashSet<IPropertyDefinition>();
 	
 	private RootMapObjectType rmo;
 	//shapes
@@ -101,10 +89,14 @@ public class MetabolicContextAdapterSyntaxService implements IContextAdapterSynt
 		//1_0_0
 		createRMO();
 	//shapes
-		createCompartment();
-		createProcess();
-		createCompound();
-		createMacromolecule();
+	this.Compartment= new ShapeObjectType(this.context, "Compartment",10);
+	createCompartment();
+	this.Process= new ShapeObjectType(this.context, "Process",11);
+	createProcess();
+	this.Compound= new ShapeObjectType(this.context, "Compound",12);
+	createCompound();
+	this.Macromolecule= new ShapeObjectType(this.context, "Macromolecule",13);
+	createMacromolecule();
 
 		defineParentingRMO();
 	//shapes parenting
@@ -114,7 +106,17 @@ public class MetabolicContextAdapterSyntaxService implements IContextAdapterSynt
 		defineParentingMacromolecule();
 
 	//links
-		createConsume();createProduce();createActivation();createCatalysis();createInhibition();
+	this.Consume = new LinkObjectType(this.context, "Consume",20);
+	createConsume();
+	this.Produce = new LinkObjectType(this.context, "Produce",21);
+	createProduce();
+	this.Activation = new LinkObjectType(this.context, "Activation",22);
+	createActivation();
+	this.Catalysis = new LinkObjectType(this.context, "Catalysis",23);
+	createCatalysis();
+	this.Inhibition = new LinkObjectType(this.context, "Inhibition",24);
+	createInhibition();
+
 	//shape set
 		this.shapeSet.add(this.Compartment);
 		this.shapeSet.add(this.Process);
@@ -129,19 +131,19 @@ public class MetabolicContextAdapterSyntaxService implements IContextAdapterSynt
 		return this.context;
 	}
 
-	public Set getLinkTypes() {
-		return new HashSet(this.linkSet);
+	public Set<ILinkObjectType> getLinkTypes() {
+		return new HashSet<ILinkObjectType>(this.linkSet);
 	}
 
 	public IRootMapObjectType getRootMapObjectType() {
 		return this.rmo;
 	}
 
-	public Set getShapeTypes() {
-		return new HashSet(this.shapeSet);
+	public Set<IShapeObjectType> getShapeTypes() {
+		return new HashSet<IShapeObjectType>(this.shapeSet);
 	}
 		private void createRMO(){
-			this.rmo = new RootMapObjectType(this.context, ObjectTypes.ROOT_MAP_OBJECT);
+			this.rmo= new RootMapObjectType(this.context, "ROOT_MAP_OBJECT",-10);
 		}
 		private void defineParentingRMO(){
 			HashSet<IShapeObjectType> set=new HashSet<IShapeObjectType>();
@@ -153,9 +155,6 @@ public class MetabolicContextAdapterSyntaxService implements IContextAdapterSynt
 		}
 
 	private void createCompartment(){
-	this.Compartment = new ShapeObjectType(this.context, ObjectTypes.Compartment);
-	this.Compartment.setName("Compartment");
-	//this.Compartment.setDescription("Functional compartment");
 	this.Compartment.setDescription("Functional compartment");//ment to be TypeDescription rather
 	this.Compartment.setShapeType(ShapeType.RECTANGLE);
 	this.Compartment.setFillProperty(255,255,255);
@@ -193,15 +192,12 @@ public class MetabolicContextAdapterSyntaxService implements IContextAdapterSynt
 			return this.Compartment;
 		}
 	private void createProcess(){
-	this.Process = new ShapeObjectType(this.context, ObjectTypes.Process);
-	this.Process.setName("Reaction");
-	//this.Process.setDescription("chemical conversion of compounds");
 	this.Process.setDescription("chemical conversion of compounds");//ment to be TypeDescription rather
 	this.Process.setShapeType(ShapeType.RECTANGLE);
 	this.Process.setFillProperty(255,255,255);
 	this.Process.setSize(20,20);
 	int[] lc=new int[]{0,0,0};
-	this.Process.setLineProperty(1, LineStyle.SOLID,lc[0],lc[1],lc[2]);
+	this.Process.setLineProperty(2, LineStyle.SOLID,lc[0],lc[1],lc[2]);
 	this.Process.setShapeType(ShapeType.RECTANGLE);		int[] s=new int[]{10,10};
 			this.Process.setSize(s[0],s[1]);int[] c=new int[]{255,255,255};
 	this.Process.setFillProperty(c[0],c[1],c[2]);
@@ -209,14 +205,14 @@ public class MetabolicContextAdapterSyntaxService implements IContextAdapterSynt
 	//this.Process.setShapeTypeEditable(true);
 	//this.Process.setSizeEditable(false);
 	this.Process.setLineStyleEditable(true);
-	this.Process.setLineWidthEditable(true);
+	this.Process.setLineWidthEditable(false);
 	this.Process.setLineColourEditable(true);
 	this.Process.setURL("http://");
 	 	IPropertyDefinition ECnum=reassignVal(getPropECnum(),"-.-.-.-",true,false);
 	 	Process.addProperty(ECnum);
 	  	IPropertyDefinition KineticLaw=reassignVal(getPropKineticLaw()," ",true,false);
 	 	Process.addProperty(KineticLaw);
-	 	IPropertyDefinition Reversibility=new TextPropertyDefinition("Reversibility","reversible",false,true);
+	 	IPropertyDefinition Reversibility=new TextPropertyDefinition("Reversibility","irreversible",false,true);
 		this.Process.addProperty(Reversibility);	IPropertyDefinition Parameters=new TextPropertyDefinition("Parameters"," ",false,true);
 		this.Process.addProperty(Parameters);
 	}
@@ -229,16 +225,13 @@ public class MetabolicContextAdapterSyntaxService implements IContextAdapterSynt
 			return this.Process;
 		}
 	private void createCompound(){
-	this.Compound = new ShapeObjectType(this.context, ObjectTypes.Compound);
-	this.Compound.setName("Compound");
-	//this.Compound.setDescription("chemical entity");
 	this.Compound.setDescription("chemical entity");//ment to be TypeDescription rather
 	this.Compound.setShapeType(ShapeType.RECTANGLE);
 	this.Compound.setFillProperty(255,255,255);
 	this.Compound.setSize(20,20);
 	int[] lc=new int[]{255,0,0};
 	this.Compound.setLineProperty(1, LineStyle.SOLID,lc[0],lc[1],lc[2]);
-	this.Compound.setShapeType(ShapeType.ELLIPSE);		int[] s=new int[]{20,20};
+	this.Compound.setShapeType(ShapeType.ELLIPSE);		int[] s=new int[]{60,40};
 			this.Compound.setSize(s[0],s[1]);int[] c=new int[]{255,255,255};
 	this.Compound.setFillProperty(c[0],c[1],c[2]);
 	this.Compound.setFillEditable(true);
@@ -271,9 +264,6 @@ public class MetabolicContextAdapterSyntaxService implements IContextAdapterSynt
 			return this.Compound;
 		}
 	private void createMacromolecule(){
-	this.Macromolecule = new ShapeObjectType(this.context, ObjectTypes.Macromolecule);
-	this.Macromolecule.setName("Macromolecule");
-	//this.Macromolecule.setDescription("polymer");
 	this.Macromolecule.setDescription("polymer");//ment to be TypeDescription rather
 	this.Macromolecule.setShapeType(ShapeType.RECTANGLE);
 	this.Macromolecule.setFillProperty(255,255,255);
@@ -312,13 +302,13 @@ public class MetabolicContextAdapterSyntaxService implements IContextAdapterSynt
 	
 	private void createConsume(){
 	HashSet<IShapeObjectType> set=null;
-	this.Consume= new LinkObjectType(this.context, ObjectTypes.Consume);
 	int[] lc=new int[]{0,0,0};
 	this.Consume.setLineProperty(1, LineStyle.SOLID,lc[0],lc[1],lc[2]);
 	this.Consume.setName("Consumption Link");
 	this.Consume.setLineColourEditable(true);
 	this.Consume.setLineStyleEditable(true);
 	this.Consume.setLineWidthEditable(true);
+	this.Consume.setUrl("http://");
 	 	IPropertyDefinition VarName=reassignVal(getPropVarName(),"v1",true,false);
 	 	Consume.addProperty(VarName);
 	 
@@ -347,8 +337,6 @@ public class MetabolicContextAdapterSyntaxService implements IContextAdapterSynt
 	 	IPropertyDefinition Stoich=reassignVal(getPropStoich(),"1",true,false);
 	 	tport.addProperty(Stoich);
 	 
-	//this.Consume.setDetailedDescription(detailedDescription);
-	this.Consume.setUrl("http://");
 	set=new HashSet<IShapeObjectType>();
 	set.addAll(Arrays.asList(new IShapeObjectType[]{this.Process}));
 	for (IShapeObjectType tgt : set) {
@@ -362,13 +350,13 @@ public class MetabolicContextAdapterSyntaxService implements IContextAdapterSynt
 	}
 	private void createProduce(){
 	HashSet<IShapeObjectType> set=null;
-	this.Produce= new LinkObjectType(this.context, ObjectTypes.Produce);
 	int[] lc=new int[]{0,0,0};
 	this.Produce.setLineProperty(1, LineStyle.SOLID,lc[0],lc[1],lc[2]);
 	this.Produce.setName("Production Link");
 	this.Produce.setLineColourEditable(true);
 	this.Produce.setLineStyleEditable(true);
 	this.Produce.setLineWidthEditable(true);
+	this.Produce.setUrl("http://");
 	 	IPropertyDefinition VarName=reassignVal(getPropVarName(),"v1",true,false);
 	 	Produce.addProperty(VarName);
 	 
@@ -397,8 +385,6 @@ public class MetabolicContextAdapterSyntaxService implements IContextAdapterSynt
 	 	IPropertyDefinition Role=reassignVal(getPropRole(),"product",true,false);
 	 	tport.addProperty(Role);
 	 
-	//this.Produce.setDetailedDescription(detailedDescription);
-	this.Produce.setUrl("http://");
 	set=new HashSet<IShapeObjectType>();
 	set.addAll(Arrays.asList(new IShapeObjectType[]{this.Compound}));
 	for (IShapeObjectType tgt : set) {
@@ -412,13 +398,13 @@ public class MetabolicContextAdapterSyntaxService implements IContextAdapterSynt
 	}
 	private void createActivation(){
 	HashSet<IShapeObjectType> set=null;
-	this.Activation= new LinkObjectType(this.context, ObjectTypes.Activation);
 	int[] lc=new int[]{0,0,0};
 	this.Activation.setLineProperty(1, LineStyle.SOLID,lc[0],lc[1],lc[2]);
 	this.Activation.setName("Activation Link");
 	this.Activation.setLineColourEditable(true);
 	this.Activation.setLineStyleEditable(true);
 	this.Activation.setLineWidthEditable(true);
+	this.Activation.setUrl("http://");
 	 	IPropertyDefinition VarName=reassignVal(getPropVarName(),"v1",true,false);
 	 	Activation.addProperty(VarName);
 	 
@@ -436,7 +422,7 @@ public class MetabolicContextAdapterSyntaxService implements IContextAdapterSynt
 	 	IPropertyDefinition Stoich=reassignVal(getPropStoich(),"1",true,false);
 	 	sport.addProperty(Stoich);
 	 tport.setOffset(0);//to set default offset value
-	tport.getLinkEndDecorator().setDecorator(ArrowheadStyle.TRIANGLE, 10,10);
+	tport.getLinkEndDecorator().setDecorator(ArrowheadStyle.ARROW, 10,10);
 	tport.getTerminusDecorator().setDecoratorType(ShapeType.RECTANGLE);
 	tport.getTerminusDecorator().setSize(0,0);
 	int[] ctport=new int[]{255,255,255};
@@ -447,8 +433,6 @@ public class MetabolicContextAdapterSyntaxService implements IContextAdapterSynt
 	 	IPropertyDefinition Role=reassignVal(getPropRole(),"activator",true,false);
 	 	tport.addProperty(Role);
 	 
-	//this.Activation.setDetailedDescription(detailedDescription);
-	this.Activation.setUrl("http://");
 	set=new HashSet<IShapeObjectType>();
 	set.addAll(Arrays.asList(new IShapeObjectType[]{this.Process}));
 	for (IShapeObjectType tgt : set) {
@@ -467,13 +451,13 @@ public class MetabolicContextAdapterSyntaxService implements IContextAdapterSynt
 	}
 	private void createCatalysis(){
 	HashSet<IShapeObjectType> set=null;
-	this.Catalysis= new LinkObjectType(this.context, ObjectTypes.Catalysis);
 	int[] lc=new int[]{0,0,0};
 	this.Catalysis.setLineProperty(1, LineStyle.SOLID,lc[0],lc[1],lc[2]);
 	this.Catalysis.setName("Catalysis Link");
 	this.Catalysis.setLineColourEditable(true);
 	this.Catalysis.setLineStyleEditable(true);
 	this.Catalysis.setLineWidthEditable(true);
+	this.Catalysis.setUrl("http://");
 	LinkEndDefinition sport=this.Catalysis.getLinkSource();
 	LinkEndDefinition tport=this.Catalysis.getLinkTarget();
 	sport.setOffset(2);
@@ -499,8 +483,6 @@ public class MetabolicContextAdapterSyntaxService implements IContextAdapterSynt
 	 	IPropertyDefinition Role=reassignVal(getPropRole(),"activator",true,false);
 	 	tport.addProperty(Role);
 	 
-	//this.Catalysis.setDetailedDescription(detailedDescription);
-	this.Catalysis.setUrl("http://");
 	set=new HashSet<IShapeObjectType>();
 	set.addAll(Arrays.asList(new IShapeObjectType[]{this.Process}));
 	for (IShapeObjectType tgt : set) {
@@ -519,13 +501,13 @@ public class MetabolicContextAdapterSyntaxService implements IContextAdapterSynt
 	}
 	private void createInhibition(){
 	HashSet<IShapeObjectType> set=null;
-	this.Inhibition= new LinkObjectType(this.context, ObjectTypes.Inhibition);
 	int[] lc=new int[]{0,0,0};
 	this.Inhibition.setLineProperty(1, LineStyle.SOLID,lc[0],lc[1],lc[2]);
 	this.Inhibition.setName("Inhibition Link");
 	this.Inhibition.setLineColourEditable(true);
 	this.Inhibition.setLineStyleEditable(true);
 	this.Inhibition.setLineWidthEditable(true);
+	this.Inhibition.setUrl("http://");
 	 	IPropertyDefinition VarName=reassignVal(getPropVarName(),"v1",true,false);
 	 	Inhibition.addProperty(VarName);
 	 
@@ -554,8 +536,6 @@ public class MetabolicContextAdapterSyntaxService implements IContextAdapterSynt
 	 	IPropertyDefinition Role=reassignVal(getPropRole(),"inhibitor",true,false);
 	 	tport.addProperty(Role);
 	 
-	//this.Inhibition.setDetailedDescription(detailedDescription);
-	this.Inhibition.setUrl("http://");
 	set=new HashSet<IShapeObjectType>();
 	set.addAll(Arrays.asList(new IShapeObjectType[]{this.Process}));
 	for (IShapeObjectType tgt : set) {
