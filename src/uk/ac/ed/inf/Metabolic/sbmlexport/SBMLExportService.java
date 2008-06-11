@@ -10,6 +10,8 @@ import org.pathwayeditor.contextadapter.publicapi.ExportServiceException;
 import org.pathwayeditor.contextadapter.publicapi.IContext;
 import org.pathwayeditor.contextadapter.publicapi.IContextAdapterExportService;
 import org.pathwayeditor.contextadapter.publicapi.IContextAdapterServiceProvider;
+import org.pathwayeditor.contextadapter.publicapi.IValidationReport;
+import org.pathwayeditor.contextadapter.publicapi.IValidationReportItem;
 
 import uk.ac.ed.inf.Metabolic.ExportAdapterCreationException;
 import uk.ac.ed.inf.Metabolic.IExportAdapter;
@@ -62,13 +64,11 @@ public class SBMLExportService implements IContextAdapterExportService {
 			IModel ndom = null;
 			if (validator.isReadyToValidate()) {
 				validator.validateMap();
-				if(!validator.isMapValid()){
-					List<String> r=validator.getValidationReport();
-					StringBuffer sb=new StringBuffer("Map is not valid:\n");
-					for(String s:r){
-						sb.append(s).append("\n");
-					}
-					throw new ExportServiceException(sb.toString());
+				IValidationReport report =validator.getValidationReport();
+				if(!report.isMapValid()){
+					String sb="Map is not valid:\n";
+					
+					throw new ExportServiceException(sb, report);
 				}else{
 					ndom=validator.getModel();
 				}

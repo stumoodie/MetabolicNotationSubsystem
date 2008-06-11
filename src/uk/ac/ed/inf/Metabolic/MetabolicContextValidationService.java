@@ -4,11 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.pathwayeditor.businessobjectsAPI.IMap;
+import org.pathwayeditor.businessobjectsAPI.IMapObject;
 import org.pathwayeditor.contextadapter.publicapi.IContext;
 import org.pathwayeditor.contextadapter.publicapi.IContextAdapterServiceProvider;
 import org.pathwayeditor.contextadapter.publicapi.IContextAdapterValidationService;
+import org.pathwayeditor.contextadapter.publicapi.IValidationReport;
+import org.pathwayeditor.contextadapter.publicapi.IValidationReportItem;
 import org.pathwayeditor.contextadapter.publicapi.IValidationRuleDefinition;
+import org.pathwayeditor.contextadapter.publicapi.IValidationReportItem.Severity;
+import org.pathwayeditor.contextadapter.publicapi.IValidationRuleDefinition.RuleLevel;
 import org.pathwayeditor.contextadapter.toolkit.ndom.AbstractNDOMParser.NdomException;
+import org.pathwayeditor.contextadapter.toolkit.validation.DefaultValidationReport;
+import org.pathwayeditor.contextadapter.toolkit.validation.ValidationReportItem;
+import org.pathwayeditor.contextadapter.toolkit.validation.ValidationRuleDefinition;
 
 import uk.ac.ed.inf.Metabolic.ndomAPI.IModel;
 import uk.ac.ed.inf.Metabolic.parser.MetabolicNDOMFactory;
@@ -16,18 +24,23 @@ import uk.ac.ed.inf.Metabolic.parser.MetabolicNDOMFactory;
 public class MetabolicContextValidationService implements
 		IContextAdapterValidationService {
 	private IContext context;
-	private List<String> validationReport=new ArrayList<String>();
+	private IValidationReport validationReport;
+	List<IValidationReportItem> reportItems;
 	private boolean beenValidated = false;
-	private boolean mapValid = true;
-	private boolean hasWarnings = false;
 	private boolean readyToValidate = false;
 	private IMap mapToValidate;
 	private IModel ndom;
 	private MetabolicNDOMFactory factory;
 	
+	IValidationRuleDefinition EXAMPLE_ERROR; 
+	IValidationRuleDefinition EXAMPLE_WARNING;
+		
+	
 	public MetabolicContextValidationService(IContextAdapterServiceProvider provider) {
 		this.serviceProvider=provider;
 		context=provider.getContext();
+            EXAMPLE_ERROR = new ValidationRuleDefinition(context, "A rule 1", "A Catefory", 1, RuleLevel.MANDATORY);
+		 EXAMPLE_WARNING = new ValidationRuleDefinition(context, "A rule 2", "A Catefory", 2, RuleLevel.GUIDELINE);
 	}
 	private IContextAdapterServiceProvider serviceProvider;
 
@@ -40,7 +53,7 @@ public class MetabolicContextValidationService implements
 		return mapToValidate;
 	}
 
-	public List<String> getValidationReport() {
+	public IValidationReport getValidationReport() {
 		return validationReport;
 	}
 
@@ -48,40 +61,48 @@ public class MetabolicContextValidationService implements
 		return beenValidated;
 	}
 
-	public boolean hasWarnings() {
-		return hasWarnings;
-	}
+	
 
 	public boolean isImplemented() {
 		return true;
 	}
 
-	public boolean isMapValid() {
-		return mapValid;
-	}
-
+	
 
 	public void validateMap() {
 		if(!isReadyToValidate()) return;
-		mapValid=true;
+		reportItems = new ArrayList<IValidationReportItem>();
 		factory = new MetabolicNDOMFactory();
 		factory.setRmo(mapToValidate.getTheSingleRootMapObject());
 		try {
 			factory.parse();
 			ndom=factory.getNdom();
 		} catch (NdomException e) {
-			mapValid=false;
-			validationReport.add("ERROR\t NdomException\t"+e.getMessage());
+			reportItems.add(new ValidationReportItem(null, EXAMPLE_ERROR, Severity.ERROR));
 		}finally{
+			IMapObject exampleShape = getEXampleShapeFromMap();
+			ValidationReportItem parent = new ValidationReportItem(exampleShape, EXAMPLE_WARNING, Severity.WARNING);
+			parent.addChildReportItem(new ValidationReportItem(null, EXAMPLE_WARNING, Severity.WARNING));
+			reportItems.add(parent);
 			copyReport();
 		}
 		beenValidated=true;
 	}
+    
+	
+	// place holder method, should be reomved once we have report generation
+	private IMapObject getEXampleShapeFromMap() {
+		if (!mapToValidate.getTheSingleRootMapObject().getChildren().isEmpty()) {
+			return mapToValidate.getTheSingleRootMapObject().getChildren().get(0);
+		}
+		return null;
+	}
+
 
 	void copyReport() {
-		mapValid&=factory.isValid();
-		validationReport.addAll(factory.getReport());
-		hasWarnings|=factory.hasWarnings();
+	//	validationReport.addAll(factory.getReport());
+		validationReport = new DefaultValidationReport(mapToValidate, reportItems);
+		
 	}
 
 	public IContext getContext() {
@@ -96,7 +117,6 @@ public class MetabolicContextValidationService implements
 		if(mapToValidate==null) throw new IllegalArgumentException("Map to be validated should not be null");
 		this.mapToValidate = mapToValidate;
 		beenValidated=false;
-		validationReport=new ArrayList<String>();
 		readyToValidate=(this.mapToValidate!=null); 
 	}
 
@@ -110,9 +130,14 @@ public class MetabolicContextValidationService implements
 		return null;
 	}
 }
+	
+	
 
 /*
  * $Log$
+ * Revision 1.3  2008/06/11 11:18:05  radams
+ * put in placeholder report generation and altered validation service exception
+ *
  * Revision 1.2  2008/06/05 22:15:49  radams
  * added validation method
  *

@@ -22,6 +22,7 @@ import org.pathwayeditor.businessobjectsAPI.IRootMapObject;
 import org.pathwayeditor.contextadapter.publicapi.ExportServiceException;
 import org.pathwayeditor.contextadapter.publicapi.IContext;
 import org.pathwayeditor.contextadapter.publicapi.IContextAdapterServiceProvider;
+import org.pathwayeditor.contextadapter.publicapi.IValidationReport;
 
 import uk.ac.ed.inf.Metabolic.IExportAdapter;
 import uk.ac.ed.inf.Metabolic.MetabolicContextValidationService;
@@ -98,13 +99,15 @@ public class SBMLExportServiceTest {
 			fail("LibSBML not loaded");
 		}
 		final MetabolicContextValidationService validator=mockery.mock(MetabolicContextValidationService.class);
+		final IValidationReport report = mockery.mock(IValidationReport.class);
 		adapter = mockery.mock(MetabolicSBMLExportAdapter.class);
 		mockery.checking(new Expectations () {
 			{one(provider).getValidationService();will(returnValue(validator));}
 			{one(validator).setMapToValidate(map);}
 			{one(validator).validateMap();}
 			{one(validator).isReadyToValidate();will(returnValue(true));}
-			{one(validator).isMapValid();will(returnValue(true));}
+			{one(validator).getValidationReport();will(returnValue(report));}
+			{one(report).isMapValid();will(returnValue(true));}
 			{atLeast(1).of(map).getTheSingleRootMapObject();}
 			{will(returnValue(rmo));}
 			{ignoring(rmo);}
@@ -121,13 +124,15 @@ public class SBMLExportServiceTest {
 			fail("LibSBML not loaded");
 		}
 		final MetabolicContextValidationService validator=mockery.mock(MetabolicContextValidationService.class);
+		final IValidationReport report = mockery.mock(IValidationReport.class);
 		adapter = mockery.mock(MetabolicSBMLExportAdapter.class);
 		mockery.checking(new Expectations () {
 			{one(provider).getValidationService();will(returnValue(validator));}
 			{one(validator).setMapToValidate(map);}
 			{one(validator).validateMap();}
 			{one(validator).isReadyToValidate();will(returnValue(true));}
-			{one(validator).isMapValid();will(returnValue(false));}
+			{one(validator).getValidationReport();will(returnValue(report));}
+			{one(report).isMapValid();will(returnValue(false));}
 			{atLeast(1).of(map).getTheSingleRootMapObject();}
 			{will(returnValue(rmo));}
 			{ignoring(rmo);}
