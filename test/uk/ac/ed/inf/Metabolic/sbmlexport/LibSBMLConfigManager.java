@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+
+
 public class LibSBMLConfigManager {
 	
 	private static boolean isWindows() {
@@ -32,6 +34,8 @@ public class LibSBMLConfigManager {
 		 try{ 
 			 String path = getPath();
 			 if(isWindows()) {
+				 System.load(path + "libexpat.dll");
+				 System.load(path + "libsbml.dll");
 				 System.load(path + "sbmlj.dll");
     	    
 				 return true;
