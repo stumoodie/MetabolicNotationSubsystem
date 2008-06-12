@@ -6,7 +6,7 @@ Metabolic context. That context is supposed to be used for visualisation of meta
 New property Reversibility is added to the Process Node
 $Id$
 */
-context uk.ac.ed.inf.Metabolic (name = "Metabolic context" descr="Basic biochemical context" version=1.0.0)
+context uk.ac.ed.inf.Metabolic (name = "Metabolic context" descr="Basic biochemical context" version=1.1.0)
 
 /**
 </verbatim>
@@ -192,7 +192,7 @@ shape 	Process ( name="Reaction" descr="chemical conversion of compounds"
 		fcolor = [255,255,255]
 		ECnum = "-.-.-.-"
 		KineticLaw = " "
-		property Reversibility (name="Reversibility" type=simple)="reversible"
+		property Reversibility (name="Reversibility" type=simple)="irreversible"
 		property Parameters (name="Parameters" type=simple)=" "
 		contains []
 	)
@@ -289,7 +289,7 @@ link	Produce (name="Production Link"
 			offset = 2
 			Stoich = "1"
 		)
-		tport = TRIANGLE[8,8](stype = RECTANGLE
+		tport = TRIANGLE[5,5](stype = RECTANGLE
 			size = [0,0]
 			lcolor = [0,0,0]
 			fcolor = [255,255,255]
@@ -314,7 +314,7 @@ link	Activation (name="Activation Link"
 			offset = 2
 			Stoich = "1"
 		)
-		tport = TRIANGLE (stype = RECTANGLE
+		tport = ARROW (stype = RECTANGLE
 			size = [0,0]
 			lcolor = [0,0,0]
 			fcolor = [255,255,255]
