@@ -10,10 +10,12 @@ import org.pathwayeditor.businessobjects.constants.ShapeType;
 import org.pathwayeditor.contextadapter.publicapi.IContext;
 import org.pathwayeditor.contextadapter.publicapi.IContextAdapterServiceProvider;
 import org.pathwayeditor.contextadapter.publicapi.IContextAdapterSyntaxService;
+import org.pathwayeditor.contextadapter.publicapi.ILabelDefinition;
 import org.pathwayeditor.contextadapter.publicapi.ILinkObjectType;
 import org.pathwayeditor.contextadapter.publicapi.IPropertyDefinition;
 import org.pathwayeditor.contextadapter.publicapi.IRootMapObjectType;
 import org.pathwayeditor.contextadapter.publicapi.IShapeObjectType;
+import org.pathwayeditor.contextadapter.toolkit.ctxdefn.DefaultLabelDefinition;
 import org.pathwayeditor.contextadapter.toolkit.ctxdefn.FormattedTextPropertyDefinition;
 import org.pathwayeditor.contextadapter.toolkit.ctxdefn.LinkEndDefinition;
 import org.pathwayeditor.contextadapter.toolkit.ctxdefn.LinkObjectType;
@@ -41,16 +43,19 @@ public class MetabolicContextAdapterSyntaxService implements IContextAdapterSynt
 	
 	private static TextPropertyDefinition reassignVal(TextPropertyDefinition prop,String val,boolean isEdit,boolean isVis){
 		TextPropertyDefinition newP=new TextPropertyDefinition(prop.getName(),val,(prop.isVisualisable() | isVis),(prop.isEditable()&isEdit));
+		if(newP.isVisualisable())newP.setAppearance(prop.getAppearance());
 		return newP;
 	}
 	
 	private static FormattedTextPropertyDefinition reassignVal(FormattedTextPropertyDefinition prop,String val,boolean isEdit,boolean isVis){
 		FormattedTextPropertyDefinition newP=new FormattedTextPropertyDefinition(prop.getName(),val,(prop.isVisualisable() | isVis),(prop.isEditable()&isEdit));
+		if(newP.isVisualisable())newP.setAppearance(prop.getAppearance());
 		return newP;
 	}
 	
 	private static NumberPropertyDefinition reassignVal(NumberPropertyDefinition prop,String val,boolean isEdit,boolean isVis){
 		NumberPropertyDefinition newP=new NumberPropertyDefinition(prop.getName(),val,(prop.isVisualisable() | isVis),(prop.isEditable()&isEdit));
+		if(newP.isVisualisable())newP.setAppearance(prop.getAppearance());
 		return newP;
 	}
 	
@@ -555,7 +560,9 @@ public class MetabolicContextAdapterSyntaxService implements IContextAdapterSynt
 	
 
 	private IPropertyDefinition getPropECnum(){
-		IPropertyDefinition ECnum=new TextPropertyDefinition("EC","-",true,true);
+		TextPropertyDefinition ECnum=new TextPropertyDefinition("EC","-",true,true);
+		ILabelDefinition label=new DefaultLabelDefinition(false,false);
+		ECnum.setAppearance(label);
 		return ECnum;
 	}
 	private IPropertyDefinition getPropSmiles(){
@@ -563,11 +570,15 @@ public class MetabolicContextAdapterSyntaxService implements IContextAdapterSynt
 		return Smiles;
 	}
 	private IPropertyDefinition getPropStoich(){
-		IPropertyDefinition Stoich=new TextPropertyDefinition("STOICH"," ",true,true);
+		TextPropertyDefinition Stoich=new TextPropertyDefinition("STOICH"," ",true,true);
+		ILabelDefinition label=new DefaultLabelDefinition(false,true);
+		Stoich.setAppearance(label);
 		return Stoich;
 	}
 	private IPropertyDefinition getPropRole(){
-		IPropertyDefinition Role=new TextPropertyDefinition("ROLE"," ",false,true);
+		TextPropertyDefinition Role=new TextPropertyDefinition("ROLE"," ",false,true);
+		ILabelDefinition label=new DefaultLabelDefinition(false,false);
+		Role.setAppearance(label);
 		return Role;
 	}
 	private IPropertyDefinition getPropIC(){
