@@ -78,11 +78,11 @@ public class MetabolicContextValidationService implements
 			factory.parse();
 			ndom=factory.getNdom();
 		} catch (NdomException e) {
-			reportItems.add(new ValidationReportItem(null, EXAMPLE_ERROR, Severity.ERROR));
+			reportItems.add(new ValidationReportItem(null, EXAMPLE_ERROR, Severity.ERROR, "specific description1"));
 		}finally{
 			IMapObject exampleShape = getEXampleShapeFromMap();
-			ValidationReportItem parent = new ValidationReportItem(exampleShape, EXAMPLE_WARNING, Severity.WARNING);
-			parent.addChildReportItem(new ValidationReportItem(null, EXAMPLE_WARNING, Severity.WARNING));
+			ValidationReportItem parent = new ValidationReportItem(exampleShape, EXAMPLE_WARNING, Severity.WARNING,"specific description2");
+			parent.addChildReportItem(new ValidationReportItem(null, EXAMPLE_WARNING, Severity.ERROR,"specific description2"));
 			reportItems.add(parent);
 			copyReport();
 		}
@@ -135,6 +135,9 @@ public class MetabolicContextValidationService implements
 
 /*
  * $Log$
+ * Revision 1.4  2008/06/16 14:53:16  radams
+ * add string message to error reporting
+ *
  * Revision 1.3  2008/06/11 11:18:05  radams
  * put in placeholder report generation and altered validation service exception
  *
