@@ -1,7 +1,9 @@
 package uk.ac.ed.inf.Metabolic;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import org.pathwayeditor.businessobjectsAPI.IMap;
 import org.pathwayeditor.businessobjectsAPI.IMapObject;
@@ -10,11 +12,17 @@ import org.pathwayeditor.contextadapter.publicapi.IContextAdapterServiceProvider
 import org.pathwayeditor.contextadapter.publicapi.IContextAdapterValidationService;
 import org.pathwayeditor.contextadapter.publicapi.IValidationReport;
 import org.pathwayeditor.contextadapter.publicapi.IValidationReportItem;
+import org.pathwayeditor.contextadapter.publicapi.IValidationRuleConfig;
 import org.pathwayeditor.contextadapter.publicapi.IValidationRuleDefinition;
 import org.pathwayeditor.contextadapter.publicapi.IValidationReportItem.Severity;
 import org.pathwayeditor.contextadapter.publicapi.IValidationRuleDefinition.RuleLevel;
 import org.pathwayeditor.contextadapter.toolkit.ndom.AbstractNDOMParser.NdomException;
 import org.pathwayeditor.contextadapter.toolkit.validation.DefaultValidationReport;
+import org.pathwayeditor.contextadapter.toolkit.validation.IRuleStore;
+import org.pathwayeditor.contextadapter.toolkit.validation.IRuleValidationReportBuilder;
+import org.pathwayeditor.contextadapter.toolkit.validation.IValidationRuleLoader;
+import org.pathwayeditor.contextadapter.toolkit.validation.RuleStore;
+import org.pathwayeditor.contextadapter.toolkit.validation.RuleValidationReportBuilder;
 import org.pathwayeditor.contextadapter.toolkit.validation.ValidationReportItem;
 import org.pathwayeditor.contextadapter.toolkit.validation.ValidationRuleDefinition;
 
@@ -88,6 +96,26 @@ public class MetabolicContextValidationService implements
 		}
 		beenValidated=true;
 	}
+	
+	// this is a replacement for validationMap() when  the validator is completed.
+	public void validateMap2 () {
+	if(!isReadyToValidate()) return;
+	 // replace with own context-specific rule loader 
+	 IValidationRuleLoader loader = new IValidationRuleLoader () {
+		public Set<IValidationRuleConfig> loadRules() {
+			return Collections.emptySet();
+		} 
+	 };
+	 IRuleStore store = new RuleStore(loader);
+	 IRuleValidationReportBuilder reportBuilder = new RuleValidationReportBuilder(store, mapToValidate);
+     
+	 // something like this doesn't exist yet but parsing framework needs to go in here.
+	 // validator = new Validator(reportBuilder);
+	 // validator.doValidation
+	 
+	 reportBuilder.createValidationReport();
+	validationReport = reportBuilder.getValidationReport();
+	}
     
 	
 	// place holder method, should be reomved once we have report generation
@@ -135,6 +163,9 @@ public class MetabolicContextValidationService implements
 
 /*
  * $Log$
+ * Revision 1.5  2008/06/17 13:24:21  radams
+ * added example method for new report generation
+ *
  * Revision 1.4  2008/06/16 14:53:16  radams
  * add string message to error reporting
  *
