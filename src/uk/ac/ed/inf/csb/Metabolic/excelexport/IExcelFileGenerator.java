@@ -1,3 +1,4 @@
+
 package uk.ac.ed.inf.csb.Metabolic.excelexport;
 
 import java.io.File;
@@ -5,12 +6,22 @@ import java.io.IOException;
 
 import uk.ac.ed.inf.Metabolic.ndomAPI.IModel;
 
+	/**
+	 * Thin interface handles the export of a given Metabolic NDOM to an excel formated file. The exact format of the
+	 * file is taken from a predefined template. The interface is rensposible for providing the set of methods to the subclasses
+	 * that will load the template, construct a new Excel Document and fill the document with data that is extracted from the 
+	 * Metabolic NDOM provided.
+	 * Both the NDOM and the path of the template file should be passed on the constructor of any subclass of this interface.
+	 * 
+	 * @author ntsorman
+	 *
+	 */
 interface IExcelFileGenerator {
 	
 	/**
 	 * Performs a validation check on the loaded template. This is done to safeguard us for using a false or 
 	 * inappropriately loaded template file. 
-	 * @return true if the template is valid
+	 * @return true if the template is valid, false otherwise.
 	 */
 	boolean isTemplateValid () ;
 	
@@ -31,7 +42,7 @@ interface IExcelFileGenerator {
 	 * file location is valid.
 	 * @throws IllegalStateException thrown if <code>isTemplateValid() == false</code>.
 	 */
-	void createNewWorkbook ();
+	void createNewWorkbook () throws IllegalStateException;
 	
 	/**
 	 * Tests if the workbook has been created.
@@ -40,47 +51,40 @@ interface IExcelFileGenerator {
 	boolean wasWorkBookCreated();
 	
 	/**
-	 * Populate the Model worksheet with **What Data? Nikos you should say what data is being written
-	 *  here**. The workbook must be created before this method id called. 
+	 * Populate the Model worksheet with the data that is extracted from the Metabolic NMOD and has to do with the 
+	 *  Map Details and the Compartments. The workbook must be created before this method is called. 
 	 * @throws IllegalStateException thrown if <code>wasWorkBookCreated() == false</code>.
 	 */
-	void populateModelPage ();
+	void populateModelPage () throws IllegalStateException;
 	
 	/**
-	 * Responsible for the insertion of data from the model to the Model page of the template.
-	 * In order for this method to complete needs an already instantiated model and a valid workbook.
-	 * @throws IllegalStateException in the case that the validation of the template fails.
-	 * @throws NullPointerException in the case that the model is null.
+	 * Populate the Compound worksheet with the data that is extracted from the Metabolic NMOD and has to do with the 
+	 *  Compounds. The workbook must be created before this method is called. 
+	 * @throws IllegalStateException thrown if <code>wasWorkBookCreated() == false</code>.
 	 */
-	void populateCompoundPage () throws IllegalStateException, NullPointerException ;
+	void populateCompoundPage () throws IllegalStateException ;
 	
 	/**
-	 * Responsible for the insertion of data from the model to the Model page of the template.
-	 * In order for this method to complete needs an already instantiated model and a valid workbook.
-	 * @throws IllegalStateException in the case that the validation of the template fails.
-	 * @throws NullPointerException in the case that the model is null.
+	 * Populate the Macromolecule worksheet with the data that is extracted from the Metabolic NMOD and has to do with the 
+	 *  Macromolecule. The workbook must be created before this method is called. 
+	 * @throws IllegalStateException thrown if <code>wasWorkBookCreated() == false</code>.
 	 */
-	void populateMacromoleculePage () throws IllegalStateException, NullPointerException ;
+	void populateMacromoleculePage () throws IllegalStateException ;
 	
 	/**
-	 * Responsible for the insertion of data from the model to the Model page of the template.
-	 * In order for this method to complete needs an already instantiated model and a valid workbook.
-	 * @throws IllegalStateException in the case that the validation of the template fails.
-	 * @throws NullPointerException in the case that the model is null.
+	 * Populate the Reactions worksheet with the data that is extracted from the Metabolic NMOD and has to do with the 
+	 *  Reactions. The workbook must be created before this method is called. 
+	 * @throws IllegalStateException thrown if <code>wasWorkBookCreated() == false</code>.
 	 */
-	void populateReactionsPage () throws IllegalStateException, NullPointerException ;
+	void populateReactionsPage () throws IllegalStateException ;
 	
 	/**
-	 * Writes the workbook in the given file. The target cannot be null. 
- 	// ***** What happens if the target is null ***
+	 * Writes the workbook in the given file. The target file cannot be null. 
  	 * @param target the file in which the workbook is going to be written in.
-	// ** No the workbook need not be populated so we don't need this exception **
-	 * @throws IllegalStateException is thrown in the case that the workbook is not populated.
-	// ***  What does invalid mean? ***
-	 * @throws IllegalArgumentException in the case the target is invalid.
-	 * @throws IOException  	** DOCUMENT THIS EXCEPTION **
+	 * @throws IllegalArgumentException in the case the target is null.
+	 * @throws IOException in the case there was an error while writing the file.
 	 */
-	void saveWorkBook ( File target ) throws IllegalStateException, IllegalArgumentException,  IOException ;
+	void saveWorkBook ( File target ) throws IllegalArgumentException,  IOException ;
 	
 
 }
