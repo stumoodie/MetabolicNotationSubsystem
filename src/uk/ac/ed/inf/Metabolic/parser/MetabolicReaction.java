@@ -6,8 +6,6 @@ import java.util.List;
 
 import org.pathwayeditor.contextadapter.toolkit.ndom.ModelObject;
 
-import uk.ac.ed.inf.Metabolic.ndomAPI.ICompound;
-import uk.ac.ed.inf.Metabolic.ndomAPI.IMolecule;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IReaction;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IRelation;
 
@@ -188,6 +186,9 @@ public class MetabolicReaction  extends ModelObject implements IReaction {
 
 /*
  * $Log$
+ * Revision 1.3  2008/06/20 22:48:19  radams
+ * imports
+ *
  * Revision 1.2  2008/06/02 15:15:13  asorokin
  * KineticLaw parameters parsing and validation
  *

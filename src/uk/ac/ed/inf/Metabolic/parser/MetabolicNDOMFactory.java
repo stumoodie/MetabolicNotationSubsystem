@@ -14,9 +14,6 @@ import org.pathwayeditor.businessobjectsAPI.IRootMapObject;
 import org.pathwayeditor.businessobjectsAPI.IShape;
 import org.pathwayeditor.businessobjectsAPI.Location;
 import org.pathwayeditor.contextadapter.toolkit.ndom.ModelObject;
-import org.pathwayeditor.contextadapter.toolkit.ndom.AbstractNDOMParser.NdomException;
-
-import uk.ac.ed.inf.Metabolic.ndomAPI.ERelType;
 
 public class MetabolicNDOMFactory extends NDOMFactory {
 
@@ -378,6 +375,9 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 
 /*
  * $Log$
+ * Revision 1.4  2008/06/20 22:48:19  radams
+ * imports
+ *
  * Revision 1.3  2008/06/09 13:26:29  asorokin
  * Bug fixes for SBML export
  *

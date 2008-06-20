@@ -3,8 +3,6 @@ package uk.ac.ed.inf.Metabolic.parser;
 import java.util.Collections;
 import java.util.List;
 
-import org.pathwayeditor.contextadapter.toolkit.ndom.IModelObject;
-
 import uk.ac.ed.inf.Metabolic.ndomAPI.ICompound;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IRelation;
 
@@ -174,6 +172,9 @@ public class MetabolicCompound extends MetabolicMolecule  implements ICompound {
 
 /*
  * $Log$
+ * Revision 1.2  2008/06/20 22:48:19  radams
+ * imports
+ *
  * Revision 1.1  2008/06/02 10:31:42  asorokin
  * Reference to Service provider from all Service interfaces
  *

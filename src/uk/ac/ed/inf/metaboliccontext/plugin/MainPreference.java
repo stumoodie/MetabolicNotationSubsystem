@@ -6,7 +6,6 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
 import uk.ac.ed.inf.Metabolic.MetabolicContextAdapterServiceProvider;
-import uk.ac.ed.inf.metaboliccontext.plugin.Activator;
 
 public class MainPreference extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
 	public MainPreference (){

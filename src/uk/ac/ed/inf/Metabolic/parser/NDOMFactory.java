@@ -1,11 +1,10 @@
 package uk.ac.ed.inf.Metabolic.parser;
 
-import java.util.HashMap;
 import java.util.List;
+
 import org.pathwayeditor.businessobjectsAPI.IContextProperty;
 import org.pathwayeditor.businessobjectsAPI.ILink;
 import org.pathwayeditor.businessobjectsAPI.IMapObject;
-import org.pathwayeditor.businessobjectsAPI.IPort;
 import org.pathwayeditor.businessobjectsAPI.IRootMapObject;
 import org.pathwayeditor.contextadapter.toolkit.ndom.AbstractNDOMParser;
 import org.pathwayeditor.contextadapter.toolkit.ndom.ModelObject;
@@ -289,6 +288,9 @@ protected abstract void catalysis(ILink el, MetabolicReaction r);
 
 /*
  * $Log$
+ * Revision 1.4  2008/06/20 22:48:19  radams
+ * imports
+ *
  * Revision 1.3  2008/06/09 13:26:29  asorokin
  * Bug fixes for SBML export
  *

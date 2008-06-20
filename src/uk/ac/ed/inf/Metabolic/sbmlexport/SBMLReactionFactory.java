@@ -11,7 +11,6 @@ import org.sbml.libsbml.Parameter;
 import org.sbml.libsbml.Reaction;
 import org.sbml.libsbml.SBase;
 import org.sbml.libsbml.SpeciesReference;
-import org.sbml.libsbml.XMLInputStream;
 import org.sbml.libsbml.libsbml;
 
 import uk.ac.ed.inf.Metabolic.ndomAPI.IModel;
