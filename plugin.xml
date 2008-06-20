@@ -6,8 +6,22 @@
          name="Metabolic context plugin"
          point="org.pathwayeditor.application.contextAdapters">
       <context
-            class="uk.ac.ed.inf.Metabolic.MetabolicContextAdapterServiceProvider">
+            class="uk.ac.ed.inf.Metabolic.MetabolicContextServiceProviderLoader">
       </context>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="uk.ac.ed.inf.csb.Metabolic.main"
+            class="uk.ac.ed.inf.metaboliccontext.plugin.ValidationRulePreferences"
+            id="uk.ac.ed.inf.csb.Metabolic.main.validationRuleConfiguration"
+            name="Validation Rule Config">
+      </page>
+      <page
+            class="uk.ac.ed.inf.Metabolic.ui.MainPreference"
+            id="uk.ac.ed.inf.csb.Metabolic.main"
+            name="Metabolic Context Adapter">
+      </page>
    </extension>
 
 </plugin>
