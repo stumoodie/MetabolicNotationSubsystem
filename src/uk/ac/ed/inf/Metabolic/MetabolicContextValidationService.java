@@ -11,13 +11,13 @@ import org.pathwayeditor.contextadapter.publicapi.IContextAdapterValidationServi
 import org.pathwayeditor.contextadapter.publicapi.IValidationReport;
 import org.pathwayeditor.contextadapter.publicapi.IValidationReportItem;
 import org.pathwayeditor.contextadapter.publicapi.IValidationRuleConfig;
+import org.pathwayeditor.contextadapter.publicapi.IValidationRuleConfigurer;
 import org.pathwayeditor.contextadapter.publicapi.IValidationRuleDefinition;
+import org.pathwayeditor.contextadapter.publicapi.IValidationRuleStore;
 import org.pathwayeditor.contextadapter.publicapi.IValidationReportItem.Severity;
 import org.pathwayeditor.contextadapter.publicapi.IValidationRuleDefinition.RuleLevel;
 import org.pathwayeditor.contextadapter.toolkit.ndom.AbstractNDOMParser.NdomException;
 import org.pathwayeditor.contextadapter.toolkit.validation.DefaultValidationReport;
-import org.pathwayeditor.contextadapter.toolkit.validation.IDefaultValidationRuleConfigLoader;
-import org.pathwayeditor.contextadapter.toolkit.validation.IRuleStore;
 import org.pathwayeditor.contextadapter.toolkit.validation.IRuleValidationReportBuilder;
 import org.pathwayeditor.contextadapter.toolkit.validation.RuleStore;
 import org.pathwayeditor.contextadapter.toolkit.validation.RuleValidationReportBuilder;
@@ -38,7 +38,8 @@ public class MetabolicContextValidationService implements
 	private IModel ndom;
 	private MetabolicNDOMFactory factory;
 	
-	private IRuleConfigurer configurer;
+	private IValidationRuleConfigurer configurer;
+	private IValidationRuleStore ruleStore;
 	
 	// placeholders until we have REAL rules defined.
 	IValidationRuleDefinition EXAMPLE_ERROR; 
@@ -50,6 +51,7 @@ public class MetabolicContextValidationService implements
 		context=provider.getContext();
             EXAMPLE_ERROR = new ValidationRuleDefinition(context, "A rule 1", "A Catefory", 1, RuleLevel.MANDATORY);
 		 EXAMPLE_WARNING = new ValidationRuleDefinition(context, "A rule 2", "A Catefory", 2, RuleLevel.GUIDELINE);
+		 
 	}
 	private IContextAdapterServiceProvider serviceProvider;
 
@@ -80,12 +82,9 @@ public class MetabolicContextValidationService implements
 
 	public void validateMap() {
 		if(!isReadyToValidate()) return;
-		 IRuleStore store = RuleStore.instance();
-		 if(!(store.isInitialized())){
-			 store.initializeStore(new DefaultRuleLoader());
-		 }
-		 configureRulesFromUserPreferences(store);
-		 for(IValidationRuleConfig config: store.getAllRuleConfigurations()){
+		
+		 configureRulesFromUserPreferences(ruleStore);
+		 for(IValidationRuleConfig config: ruleStore.getAllRuleConfigurations()){
 			 System.out.println(config+"\n\n");
 		 }
 		reportItems = new ArrayList<IValidationReportItem>();
@@ -106,18 +105,14 @@ public class MetabolicContextValidationService implements
 		beenValidated=true;
 	}
 	
-	public void setRuleConfigurer(IRuleConfigurer configurer) {
+	public void setRuleConfigurer(IValidationRuleConfigurer configurer) {
 		this.configurer = configurer;
 	}
 	
 	// this is a replacement for validationMap() when  the validator is completed.
 	public void validateMap2 () {
 	if(!isReadyToValidate()) return;
-	 IRuleStore store = RuleStore.instance();
-	 if(!(store.isInitialized())){
-		 store.initializeStore(new DefaultRuleLoader());
-	 }
-	 IRuleValidationReportBuilder reportBuilder = new RuleValidationReportBuilder(store, mapToValidate);
+	 IRuleValidationReportBuilder reportBuilder = new RuleValidationReportBuilder(ruleStore, mapToValidate);
      
 	 // something like this doesn't exist yet but parsing framework needs to go in here.
 	 // validator = new Validator(reportBuilder);
@@ -128,7 +123,7 @@ public class MetabolicContextValidationService implements
 	}
     
 	
-	private void configureRulesFromUserPreferences(IRuleStore store) {
+	private void configureRulesFromUserPreferences(IValidationRuleStore store) {
 		if(configurer != null){
 			configurer.configureRules(store.getConfigurableRules());
 		}
@@ -156,7 +151,7 @@ public class MetabolicContextValidationService implements
 	}
 
 	public boolean isReadyToValidate() {
-		return readyToValidate;
+		return readyToValidate && ruleStore.isInitialized();
 	}
 
 	public void setMapToValidate(IMap mapToValidate) {
@@ -169,11 +164,20 @@ public class MetabolicContextValidationService implements
 	public IModel getModel(){
 		return ndom;
 	}
+	public void initRuleStore() {
+	 ruleStore = new RuleStore();
+	 ruleStore.initializeStore(new DefaultRuleLoader());
+	}
 
 
 	public List<IValidationRuleDefinition> getRules() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+	public IValidationRuleStore getRuleStore() {
+		return ruleStore;
 	}
 }
 	
@@ -181,6 +185,9 @@ public class MetabolicContextValidationService implements
 
 /*
  * $Log$
+ * Revision 1.7  2008/06/20 22:52:31  radams
+ * initialisation removed from constructor
+ *
  * Revision 1.6  2008/06/20 13:54:52  radams
  * 1st commit of preference handling mechanism
  *
