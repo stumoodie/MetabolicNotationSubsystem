@@ -1,9 +1,7 @@
 package uk.ac.ed.inf.Metabolic;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 import org.pathwayeditor.businessobjectsAPI.IMap;
 import org.pathwayeditor.businessobjectsAPI.IMapObject;
@@ -18,9 +16,9 @@ import org.pathwayeditor.contextadapter.publicapi.IValidationReportItem.Severity
 import org.pathwayeditor.contextadapter.publicapi.IValidationRuleDefinition.RuleLevel;
 import org.pathwayeditor.contextadapter.toolkit.ndom.AbstractNDOMParser.NdomException;
 import org.pathwayeditor.contextadapter.toolkit.validation.DefaultValidationReport;
+import org.pathwayeditor.contextadapter.toolkit.validation.IDefaultValidationRuleConfigLoader;
 import org.pathwayeditor.contextadapter.toolkit.validation.IRuleStore;
 import org.pathwayeditor.contextadapter.toolkit.validation.IRuleValidationReportBuilder;
-import org.pathwayeditor.contextadapter.toolkit.validation.IValidationRuleLoader;
 import org.pathwayeditor.contextadapter.toolkit.validation.RuleStore;
 import org.pathwayeditor.contextadapter.toolkit.validation.RuleValidationReportBuilder;
 import org.pathwayeditor.contextadapter.toolkit.validation.ValidationReportItem;
@@ -40,6 +38,9 @@ public class MetabolicContextValidationService implements
 	private IModel ndom;
 	private MetabolicNDOMFactory factory;
 	
+	private IRuleConfigurer configurer;
+	
+	// placeholders until we have REAL rules defined.
 	IValidationRuleDefinition EXAMPLE_ERROR; 
 	IValidationRuleDefinition EXAMPLE_WARNING;
 		
@@ -79,6 +80,14 @@ public class MetabolicContextValidationService implements
 
 	public void validateMap() {
 		if(!isReadyToValidate()) return;
+		 IRuleStore store = RuleStore.instance();
+		 if(!(store.isInitialized())){
+			 store.initializeStore(new DefaultRuleLoader());
+		 }
+		 configureRulesFromUserPreferences(store);
+		 for(IValidationRuleConfig config: store.getAllRuleConfigurations()){
+			 System.out.println(config+"\n\n");
+		 }
 		reportItems = new ArrayList<IValidationReportItem>();
 		factory = new MetabolicNDOMFactory();
 		factory.setRmo(mapToValidate.getTheSingleRootMapObject());
@@ -97,16 +106,17 @@ public class MetabolicContextValidationService implements
 		beenValidated=true;
 	}
 	
+	public void setRuleConfigurer(IRuleConfigurer configurer) {
+		this.configurer = configurer;
+	}
+	
 	// this is a replacement for validationMap() when  the validator is completed.
 	public void validateMap2 () {
 	if(!isReadyToValidate()) return;
-	 // replace with own context-specific rule loader 
-	 IValidationRuleLoader loader = new IValidationRuleLoader () {
-		public Set<IValidationRuleConfig> loadRules() {
-			return Collections.emptySet();
-		} 
-	 };
-	 IRuleStore store = new RuleStore(loader);
+	 IRuleStore store = RuleStore.instance();
+	 if(!(store.isInitialized())){
+		 store.initializeStore(new DefaultRuleLoader());
+	 }
 	 IRuleValidationReportBuilder reportBuilder = new RuleValidationReportBuilder(store, mapToValidate);
      
 	 // something like this doesn't exist yet but parsing framework needs to go in here.
@@ -118,6 +128,14 @@ public class MetabolicContextValidationService implements
 	}
     
 	
+	private void configureRulesFromUserPreferences(IRuleStore store) {
+		if(configurer != null){
+			configurer.configureRules(store.getConfigurableRules());
+		}
+		
+	}
+
+
 	// place holder method, should be reomved once we have report generation
 	private IMapObject getEXampleShapeFromMap() {
 		if (!mapToValidate.getTheSingleRootMapObject().getChildren().isEmpty()) {
@@ -163,6 +181,9 @@ public class MetabolicContextValidationService implements
 
 /*
  * $Log$
+ * Revision 1.6  2008/06/20 13:54:52  radams
+ * 1st commit of preference handling mechanism
+ *
  * Revision 1.5  2008/06/17 13:24:21  radams
  * added example method for new report generation
  *

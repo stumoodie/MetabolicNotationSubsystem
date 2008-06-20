@@ -21,11 +21,12 @@ import uk.ac.ed.inf.Metabolic.sbmlexport.SBMLExportService;
 
 public class MetabolicContextAdapterServiceProvider implements IContextAdapterServiceProvider {
     
-	private static final String GLOBAL_ID = "uk.ac.ed.inf.Metabolic.Metabolic";
+	// made public for access within plugin
+	public static final String GLOBAL_ID = "uk.ac.ed.inf.Metabolic.Metabolic";
 	//private static final String GLOBAL_ID = "12635452516346262546";
-	private static final String DISPLAY_NAME = "Metabolic context";
+	public static final String DISPLAY_NAME = "Metabolic context";
 	private static final String NAME = "Metabolic context";
-	private static final int[] VERS = getVersion("1_0_0");
+	public static final int[] VERS = getVersion("1_0_0");
 	
 	private static int[] getVersion(String ver) {
 		String[] l = ver.split("_");
@@ -39,9 +40,13 @@ public class MetabolicContextAdapterServiceProvider implements IContextAdapterSe
 	private IContext context;
 	private Set<IContextAdapterExportService> exportServices = new HashSet<IContextAdapterExportService>();
 	private MetabolicContextValidationService validationService;
+	private static IContextAdapterServiceProvider instance;
 	
-	public MetabolicContextAdapterServiceProvider() {
-	
+	/**
+	 * Service providers should be instantiated but accessed through getInstance
+	 */
+	private MetabolicContextAdapterServiceProvider() {
+	   
 		this.context = new GeneralContext(GLOBAL_ID, DISPLAY_NAME, NAME,
 				VERS[0], VERS[1], VERS[2]);
 		this.syntaxService = new MetabolicContextAdapterSyntaxService(this);
@@ -49,10 +54,19 @@ public class MetabolicContextAdapterServiceProvider implements IContextAdapterSe
 		this.validationService=new MetabolicContextValidationService(this);
 	}
 	
+	public static IContextAdapterServiceProvider getInstance() {
+		if(instance == null){
+			instance= new MetabolicContextAdapterServiceProvider();
+		}
+		return instance;
+	}
+	
 
-	public IContext getContext() {
+	 public IContext getContext() {
 		return this.context;
 	}
+	
+	
     /**
      * Returns an unmodifiable collection of export services
      */
