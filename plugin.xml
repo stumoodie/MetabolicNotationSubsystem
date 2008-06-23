@@ -18,7 +18,7 @@
             name="Validation Rule Config">
       </page>
       <page
-            class="uk.ac.ed.inf.Metabolic.ui.MainPreference"
+            class="uk.ac.ed.inf.metaboliccontext.plugin.MainPreference"
             id="uk.ac.ed.inf.csb.Metabolic.main"
             name="Metabolic Context Adapter">
       </page>
