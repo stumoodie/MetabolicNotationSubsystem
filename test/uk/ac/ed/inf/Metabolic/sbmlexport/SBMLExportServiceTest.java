@@ -22,8 +22,11 @@ import org.pathwayeditor.businessobjectsAPI.IRootMapObject;
 import org.pathwayeditor.contextadapter.publicapi.ExportServiceException;
 import org.pathwayeditor.contextadapter.publicapi.IContext;
 import org.pathwayeditor.contextadapter.publicapi.IContextAdapterServiceProvider;
+import org.pathwayeditor.contextadapter.publicapi.IContextAdapterValidationService;
 import org.pathwayeditor.contextadapter.publicapi.IValidationReport;
+import org.pathwayeditor.contextadapter.toolkit.validation.AbstractContextValidationService;
 
+import uk.ac.ed.inf.Metabolic.DefaultRuleLoader;
 import uk.ac.ed.inf.Metabolic.IExportAdapter;
 import uk.ac.ed.inf.Metabolic.MetabolicContextValidationService;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IModel;
@@ -39,12 +42,29 @@ public class SBMLExportServiceTest {
 	final IRootMapObject rmo = mockery.mock(IRootMapObject.class);
 	final IMapObject child = mockery.mock(IMapObject.class);
 	final IContextAdapterServiceProvider provider=mockery.mock(IContextAdapterServiceProvider.class);
+	final IModel model = mockery.mock(IModel.class);
 	SBMLExportService service;
+	SBMLExportServiceTSS serviceTSS;
     File NONEXISTENT = new File ("??");
     File EXISTENT;
     static boolean canRun = false; // check this is true b4 running export tests.
 
 	private MetabolicSBMLExportAdapter<IModel> adapter;
+	
+	class SBMLExportServiceTSS extends SBMLExportService {
+
+		public SBMLExportServiceTSS(IContextAdapterServiceProvider provider) {
+			super(provider);
+			// TODO Auto-generated constructor stub
+		}
+		IModel getModel(IContextAdapterValidationService validator) {
+			return model;
+		}
+		IExportAdapter<IModel> getGenerator() {
+			return adapter;
+		}
+		
+	}
    
     
    //uk.ac.ed.inf.metabolic
@@ -55,12 +75,9 @@ public class SBMLExportServiceTest {
  
     @Before
 	public void setUp() throws Exception {
-    	mockery.checking(new Expectations(){{one(provider).getContext(); will(returnValue(context));}});
-		service = new SBMLExportService(provider){
-			IExportAdapter<IModel> getGenerator() {
-				return adapter;
-			}
-		};
+    	mockery.checking(new Expectations(){{atLeast(1).of(provider).getContext(); will(returnValue(context));}});
+		serviceTSS = new SBMLExportServiceTSS(provider);
+		service = serviceTSS;
 		 EXISTENT = new File ("SBMLoutput");
 		 mockery.checking(new Expectations() {
 			{one(rmo).addChild(child);}
@@ -98,20 +115,20 @@ public class SBMLExportServiceTest {
 		if(!canRun){
 			fail("LibSBML not loaded");
 		}
-		final MetabolicContextValidationService validator=mockery.mock(MetabolicContextValidationService.class);
+		final IContextAdapterValidationService validator= mockery.mock(IContextAdapterValidationService.class);
 		final IValidationReport report = mockery.mock(IValidationReport.class);
 		adapter = mockery.mock(MetabolicSBMLExportAdapter.class);
 		mockery.checking(new Expectations () {
-			{one(provider).getValidationService();will(returnValue(validator));}
 			{one(validator).setMapToValidate(map);}
-			{one(validator).validateMap();}
 			{one(validator).isReadyToValidate();will(returnValue(true));}
+			{one(validator).validateMap();}
 			{one(validator).getValidationReport();will(returnValue(report));}
+			{one(provider).getValidationService();will(returnValue(validator));}
 			{one(report).isMapValid();will(returnValue(true));}
 			{atLeast(1).of(map).getTheSingleRootMapObject();}
 			{will(returnValue(rmo));}
 			{ignoring(rmo);}
-			{ignoring(validator);}
+		    //{ignoring(validator);}
 			{ignoring(adapter);}
 		});
 		EXISTENT.createNewFile();
@@ -123,7 +140,7 @@ public class SBMLExportServiceTest {
 		if(!canRun){
 			fail("LibSBML not loaded");
 		}
-		final MetabolicContextValidationService validator=mockery.mock(MetabolicContextValidationService.class);
+		final IContextAdapterValidationService validator= mockery.mock(IContextAdapterValidationService.class);
 		final IValidationReport report = mockery.mock(IValidationReport.class);
 		adapter = mockery.mock(MetabolicSBMLExportAdapter.class);
 		mockery.checking(new Expectations () {
