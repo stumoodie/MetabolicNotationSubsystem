@@ -20,15 +20,10 @@ import org.pathwayeditor.contextadapter.toolkit.validation.ValidationRuleDefinit
  *
  */
 public class DefaultRuleLoader implements IDefaultValidationRuleConfigLoader {
-	static IValidationRuleDefinition def1;
-	static IValidationRuleDefinition def2;
-	static IValidationRuleDefinition def3;
-	static IValidationRuleDefinition def4;
+	static final int ERROR_ID = 1000;
+	static IValidationRuleDefinition def1, def2, def3, def4,ERROR;
 	
-	static IValidationRuleConfig config1;
-	static IValidationRuleConfig config2;
-	static IValidationRuleConfig config3;
-	static IValidationRuleConfig config4;
+	static IValidationRuleConfig config1 ,config2, config3, config4, ERROR_CONFIG;
 	static IContext context;
 	static {
 		context = MetabolicContextAdapterServiceProvider.getInstance().getContext();
@@ -36,11 +31,13 @@ public class DefaultRuleLoader implements IDefaultValidationRuleConfigLoader {
 		def2 = new ValidationRuleDefinition(context, "Rule 2", "Type", 2, RuleLevel.OPTIONAL);
 		def3 = new ValidationRuleDefinition(context, "Rule 3", "Graph", 3, RuleLevel.GUIDELINE);
 		def4 = new ValidationRuleDefinition(context, "Rule 4 with quite a long name", "Graph", 4, RuleLevel.GUIDELINE);
+		ERROR = new ValidationRuleDefinition(context, "Exception!", "Graph", ERROR_ID, RuleLevel.MANDATORY);
 		
 		config1 = new ValidationRuleConfig(def1, true, true);// must be run, error
 		config2 = new ValidationRuleConfig(def2, true, true); // must be run, error
 		config3 = new ValidationRuleConfig(def3, true, false); // must be run, warning
 		config4 = new ValidationRuleConfig(def4, false, true); // not run, error
+		ERROR_CONFIG = new ValidationRuleConfig(def4, true, true); // not run, error
 		
 	}
 

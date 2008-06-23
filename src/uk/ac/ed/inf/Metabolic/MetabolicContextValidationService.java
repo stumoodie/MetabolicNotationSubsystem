@@ -1,190 +1,67 @@
 package uk.ac.ed.inf.Metabolic;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.pathwayeditor.businessobjectsAPI.IMap;
-import org.pathwayeditor.businessobjectsAPI.IMapObject;
-import org.pathwayeditor.contextadapter.publicapi.IContext;
 import org.pathwayeditor.contextadapter.publicapi.IContextAdapterServiceProvider;
-import org.pathwayeditor.contextadapter.publicapi.IContextAdapterValidationService;
-import org.pathwayeditor.contextadapter.publicapi.IValidationReport;
-import org.pathwayeditor.contextadapter.publicapi.IValidationReportItem;
-import org.pathwayeditor.contextadapter.publicapi.IValidationRuleConfig;
-import org.pathwayeditor.contextadapter.publicapi.IValidationRuleConfigurer;
 import org.pathwayeditor.contextadapter.publicapi.IValidationRuleDefinition;
-import org.pathwayeditor.contextadapter.publicapi.IValidationRuleStore;
-import org.pathwayeditor.contextadapter.publicapi.IValidationReportItem.Severity;
-import org.pathwayeditor.contextadapter.publicapi.IValidationRuleDefinition.RuleLevel;
+import org.pathwayeditor.contextadapter.toolkit.ndom.AbstractNDOMParser;
 import org.pathwayeditor.contextadapter.toolkit.ndom.AbstractNDOMParser.NdomException;
-import org.pathwayeditor.contextadapter.toolkit.validation.DefaultValidationReport;
+import org.pathwayeditor.contextadapter.toolkit.validation.AbstractContextValidationService;
 import org.pathwayeditor.contextadapter.toolkit.validation.IRuleValidationReportBuilder;
-import org.pathwayeditor.contextadapter.toolkit.validation.RuleStore;
-import org.pathwayeditor.contextadapter.toolkit.validation.RuleValidationReportBuilder;
-import org.pathwayeditor.contextadapter.toolkit.validation.ValidationReportItem;
-import org.pathwayeditor.contextadapter.toolkit.validation.ValidationRuleDefinition;
 
 import uk.ac.ed.inf.Metabolic.ndomAPI.IModel;
 import uk.ac.ed.inf.Metabolic.parser.MetabolicNDOMFactory;
 
-public class MetabolicContextValidationService implements
-		IContextAdapterValidationService {
-	private IContext context;
-	private IValidationReport validationReport;
-	List<IValidationReportItem> reportItems;
-	private boolean beenValidated = false;
-	private boolean readyToValidate = false;
-	private IMap mapToValidate;
+public class MetabolicContextValidationService extends AbstractContextValidationService {
+
 	private IModel ndom;
-	private MetabolicNDOMFactory factory;
-	
-	private IValidationRuleConfigurer configurer;
-	private IValidationRuleStore ruleStore;
-	
-	// placeholders until we have REAL rules defined.
-	IValidationRuleDefinition EXAMPLE_ERROR; 
-	IValidationRuleDefinition EXAMPLE_WARNING;
-		
 	
 	public MetabolicContextValidationService(IContextAdapterServiceProvider provider) {
-		this.serviceProvider=provider;
-		context=provider.getContext();
-            EXAMPLE_ERROR = new ValidationRuleDefinition(context, "A rule 1", "A Catefory", 1, RuleLevel.MANDATORY);
-		 EXAMPLE_WARNING = new ValidationRuleDefinition(context, "A rule 2", "A Catefory", 2, RuleLevel.GUIDELINE);
-		 
+		super(provider);
 	}
-	private IContextAdapterServiceProvider serviceProvider;
-
-	public IContextAdapterServiceProvider getServiceProvider() {
-		return serviceProvider;
-	}
-
-
-	public IMap getMapBeingValidated() {
-		return mapToValidate;
-	}
-
-	public IValidationReport getValidationReport() {
-		return validationReport;
-	}
-
-	public boolean hasMapBeenValidated() {
-		return beenValidated;
-	}
-
-	
 
 	public boolean isImplemented() {
 		return true;
 	}
 
-	
-
-	public void validateMap() {
-		if(!isReadyToValidate()) return; // or throw exception??
-		
-		 configureRulesFromUserPreferences();
-		 for(IValidationRuleConfig config: ruleStore.getAllRuleConfigurations()){
-			 System.out.println(config+"\n\n");
-		 }
-		reportItems = new ArrayList<IValidationReportItem>();
-		factory = new MetabolicNDOMFactory();
-		factory.setRmo(mapToValidate.getTheSingleRootMapObject());
-		try {
-			factory.parse();
-			ndom=factory.getNdom();
-		} catch (NdomException e) {
-			reportItems.add(new ValidationReportItem(null, EXAMPLE_ERROR, Severity.ERROR, "specific description1"));
-		}finally{
-			IMapObject exampleShape = getEXampleShapeFromMap();
-			ValidationReportItem parent = new ValidationReportItem(exampleShape, EXAMPLE_WARNING, Severity.WARNING,"specific description2");
-			parent.addChildReportItem(new ValidationReportItem(null, EXAMPLE_WARNING, Severity.ERROR,"specific description2"));
-			reportItems.add(parent);
-			copyReport();
-		}
-		beenValidated=true;
-	}
-	
-	public void setRuleConfigurer(IValidationRuleConfigurer configurer) {
-		this.configurer = configurer;
-	}
-	
-	// this is a replacement for validationMap() when  the validator is completed.
-	public void validateMap2 () {
-	if(!isReadyToValidate()) return;
-	 IRuleValidationReportBuilder reportBuilder = new RuleValidationReportBuilder(ruleStore, mapToValidate);
-     
-	 // something like this doesn't exist yet but parsing framework needs to go in here.
-	 // validator = new Validator(reportBuilder);
-	 // validator.doValidation
-	 
-	 reportBuilder.createValidationReport();
-	validationReport = reportBuilder.getValidationReport();
-	}
-    
-	
-	private void configureRulesFromUserPreferences() {
-		// configurer is optional - no config = default settings
-		if(configurer != null){
-			configurer.configureRules(ruleStore.getConfigurableRules());
-		}
-		
-	}
-
-
-	// place holder method, should be reomved once we have report generation
-	private IMapObject getEXampleShapeFromMap() {
-		if (!mapToValidate.getTheSingleRootMapObject().getChildren().isEmpty()) {
-			return mapToValidate.getTheSingleRootMapObject().getChildren().get(0);
-		}
-		return null;
-	}
-
-
-	void copyReport() {
-	//	validationReport.addAll(factory.getReport());
-		validationReport = new DefaultValidationReport(mapToValidate, reportItems);
-		
-	}
-
-	public IContext getContext() {
-		return context;
-	}
-
-	public boolean isReadyToValidate() {
-		return readyToValidate && ruleStore.isInitialized();
-	}
-
-	public void setMapToValidate(IMap mapToValidate) {
-		if(mapToValidate==null) throw new IllegalArgumentException("Map to be validated should not be null");
-		this.mapToValidate = mapToValidate;
-		beenValidated=false;
-		readyToValidate=(this.mapToValidate!=null); 
-	}
-
 	public IModel getModel(){
 		return ndom;
 	}
+	/**
+	 * Must be called before validation
+	 */
 	public void initRuleStore() {
-	 ruleStore = new RuleStore();
-	 ruleStore.initializeStore(new DefaultRuleLoader());
+	 getRuleStore().initializeStore(new DefaultRuleLoader());
 	}
 
-
-	public List<IValidationRuleDefinition> getRules() {
-		return ruleStore.getAllRuleDefinitions();
+	@Override
+	protected AbstractNDOMParser createNdomFactory(IRuleValidationReportBuilder reportBuilder) {
+		return new MetabolicNDOMFactory(reportBuilder);
 	}
 
-
-	public IValidationRuleStore getRuleStore() {
-		return ruleStore;
+	@Override
+	protected void generateNdom() throws NdomException {
+		ndom=((MetabolicNDOMFactory)getFactory()).getNdom();
+		for(IValidationRuleDefinition rule: getRuleStore().getAllRuleDefinitions()){
+			getReportBuilder().setRulePassed(rule);
+		}
+		System.out.println("dom generated");
+		
 	}
+
+	@Override
+	protected void handleNdomException() {
+		getReportBuilder().setRuleFailed(null, getRuleStore().getRuleById(DefaultRuleLoader.ERROR_ID), "Major validation error");
+		
+	}
+
 }
 	
 	
 
 /*
  * $Log$
+ * Revision 1.9  2008/06/23 14:22:19  radams
+ * abstracted most of validation service to abstract class
+ *
  * Revision 1.8  2008/06/23 07:52:04  radams
  * mad echanges to allow configuration
  *
