@@ -37,10 +37,10 @@ public class DefaultRuleLoader implements IDefaultValidationRuleConfigLoader {
 		def3 = new ValidationRuleDefinition(context, "Rule 3", "Graph", 3, RuleLevel.GUIDELINE);
 		def4 = new ValidationRuleDefinition(context, "Rule 4 with quite a long name", "Graph", 4, RuleLevel.GUIDELINE);
 		
-		config1 = new ValidationRuleConfig(def1, true, true);
-		config2 = new ValidationRuleConfig(def2, true, true);
-		config3 = new ValidationRuleConfig(def3, true, false);
-		config4 = new ValidationRuleConfig(def4, false, true);
+		config1 = new ValidationRuleConfig(def1, true, true);// must be run, error
+		config2 = new ValidationRuleConfig(def2, true, true); // must be run, error
+		config3 = new ValidationRuleConfig(def3, true, false); // must be run, warning
+		config4 = new ValidationRuleConfig(def4, false, true); // not run, error
 		
 	}
 

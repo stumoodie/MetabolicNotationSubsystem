@@ -81,9 +81,9 @@ public class MetabolicContextValidationService implements
 	
 
 	public void validateMap() {
-		if(!isReadyToValidate()) return;
+		if(!isReadyToValidate()) return; // or throw exception??
 		
-		 configureRulesFromUserPreferences(ruleStore);
+		 configureRulesFromUserPreferences();
 		 for(IValidationRuleConfig config: ruleStore.getAllRuleConfigurations()){
 			 System.out.println(config+"\n\n");
 		 }
@@ -123,9 +123,10 @@ public class MetabolicContextValidationService implements
 	}
     
 	
-	private void configureRulesFromUserPreferences(IValidationRuleStore store) {
+	private void configureRulesFromUserPreferences() {
+		// configurer is optional - no config = default settings
 		if(configurer != null){
-			configurer.configureRules(store.getConfigurableRules());
+			configurer.configureRules(ruleStore.getConfigurableRules());
 		}
 		
 	}
@@ -171,8 +172,7 @@ public class MetabolicContextValidationService implements
 
 
 	public List<IValidationRuleDefinition> getRules() {
-		// TODO Auto-generated method stub
-		return null;
+		return ruleStore.getAllRuleDefinitions();
 	}
 
 
@@ -185,6 +185,9 @@ public class MetabolicContextValidationService implements
 
 /*
  * $Log$
+ * Revision 1.8  2008/06/23 07:52:04  radams
+ * mad echanges to allow configuration
+ *
  * Revision 1.7  2008/06/20 22:52:31  radams
  * initialisation removed from constructor
  *
