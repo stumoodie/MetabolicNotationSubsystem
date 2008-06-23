@@ -9,6 +9,7 @@ import org.pathwayeditor.contextadapter.publicapi.ExportServiceException;
 import org.pathwayeditor.contextadapter.publicapi.IContext;
 import org.pathwayeditor.contextadapter.publicapi.IContextAdapterExportService;
 import org.pathwayeditor.contextadapter.publicapi.IContextAdapterServiceProvider;
+import org.pathwayeditor.contextadapter.publicapi.IContextAdapterValidationService;
 import org.pathwayeditor.contextadapter.publicapi.IValidationReport;
 
 import uk.ac.ed.inf.Metabolic.ExportAdapterCreationException;
@@ -56,7 +57,7 @@ public class SBMLExportService implements IContextAdapterExportService {
 
 			generator = getGenerator();//new MetabolicSBMLExportAdapter<IModel>();
 
-			MetabolicContextValidationService validator = (MetabolicContextValidationService) serviceProvider
+			IContextAdapterValidationService validator =  serviceProvider
 					.getValidationService();
 			validator.setMapToValidate(map);
 			IModel ndom = null;
@@ -67,15 +68,15 @@ public class SBMLExportService implements IContextAdapterExportService {
 					String sb="Map is not valid:\n";
 					
 					throw new ExportServiceException(sb, report);
-				}else{
-					ndom=validator.getModel();
-				}
-				System.out.println(validator.getValidationReport());
-				System.out.println(ndom.toString());
+				}else {
+					ndom=getModel(validator);
+				
+			
 				generator.createTarget(ndom);
 				
 				fos = new FileOutputStream(exportFile);
 				generator.writeTarget(fos);
+				}
 			}
 		} catch (ExportAdapterCreationException e) {
 			throw new ExportServiceException(e);
@@ -90,6 +91,10 @@ public class SBMLExportService implements IContextAdapterExportService {
 
 		}
 
+	}
+	
+	IModel getModel(IContextAdapterValidationService validator) {
+		return ((MetabolicContextValidationService)validator).getModel();
 	}
 
 	private void checkArgs(IMap map, File exportFile)
