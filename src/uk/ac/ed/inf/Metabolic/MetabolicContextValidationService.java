@@ -33,8 +33,8 @@ public class MetabolicContextValidationService extends AbstractContextValidation
 	}
 
 	@Override
-	protected AbstractNDOMParser createNdomFactory(IRuleValidationReportBuilder reportBuilder) {
-		return new MetabolicNDOMFactory(reportBuilder);
+	protected AbstractNDOMParser createNdomFactory() {
+		return new MetabolicNDOMFactory();
 	}
 
 	@Override
@@ -59,6 +59,9 @@ public class MetabolicContextValidationService extends AbstractContextValidation
 
 /*
  * $Log$
+ * Revision 1.10  2008/06/23 14:42:35  radams
+ * added report builder to parser
+ *
  * Revision 1.9  2008/06/23 14:22:19  radams
  * abstracted most of validation service to abstract class
  *

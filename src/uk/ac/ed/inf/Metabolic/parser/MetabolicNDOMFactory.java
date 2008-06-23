@@ -32,9 +32,7 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 		super();
 	}
 
-	public MetabolicNDOMFactory(IRuleValidationReportBuilder reportBuilder) {
-		this.reportBuilder= reportBuilder;
-	}
+	
 
 	@Override
 	protected void semanticValidation() {
@@ -376,11 +374,20 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 		}
 	}
 
+	@Override
+	public void setReportBuilder(IRuleValidationReportBuilder reportBuilder) {
+		this.reportBuilder=reportBuilder;
+		
+	}
+
 }
 
 
 /*
  * $Log$
+ * Revision 1.6  2008/06/23 14:42:35  radams
+ * added report builder to parser
+ *
  * Revision 1.5  2008/06/23 14:22:34  radams
  * added report builder to parser
  *
