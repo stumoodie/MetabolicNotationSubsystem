@@ -14,6 +14,7 @@ import org.pathwayeditor.businessobjectsAPI.IRootMapObject;
 import org.pathwayeditor.businessobjectsAPI.IShape;
 import org.pathwayeditor.businessobjectsAPI.Location;
 import org.pathwayeditor.contextadapter.toolkit.ndom.ModelObject;
+import org.pathwayeditor.contextadapter.toolkit.validation.IRuleValidationReportBuilder;
 
 public class MetabolicNDOMFactory extends NDOMFactory {
 
@@ -21,6 +22,7 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 	Map<MetabolicReaction, IShape> reaction2Shape = new HashMap<MetabolicReaction, IShape>();
 	LinkedList<Map<String, MetabolicCompound>> name2Compound = new LinkedList<Map<String, MetabolicCompound>>();
 	List<ILink> prodLinks;
+	IRuleValidationReportBuilder reportBuilder;
 
 	public MetabolicNDOMFactory(IRootMapObject rmo) {
 		super(rmo);
@@ -28,6 +30,10 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 
 	public MetabolicNDOMFactory() {
 		super();
+	}
+
+	public MetabolicNDOMFactory(IRuleValidationReportBuilder reportBuilder) {
+		this.reportBuilder= reportBuilder;
 	}
 
 	@Override
@@ -375,6 +381,9 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 
 /*
  * $Log$
+ * Revision 1.5  2008/06/23 14:22:34  radams
+ * added report builder to parser
+ *
  * Revision 1.4  2008/06/20 22:48:19  radams
  * imports
  *
