@@ -49,7 +49,7 @@ public class SBMLExportServiceTest {
     File EXISTENT;
     static boolean canRun = false; // check this is true b4 running export tests.
 
-	private MetabolicSBMLExportAdapter<IModel> adapter;
+	private IExportAdapter<IModel> adapter;
 	
 	class SBMLExportServiceTSS extends SBMLExportService {
 
@@ -117,7 +117,7 @@ public class SBMLExportServiceTest {
 		}
 		final IContextAdapterValidationService validator= mockery.mock(IContextAdapterValidationService.class);
 		final IValidationReport report = mockery.mock(IValidationReport.class);
-		adapter = mockery.mock(MetabolicSBMLExportAdapter.class);
+		adapter = mockery.mock(IExportAdapter.class);
 		mockery.checking(new Expectations () {
 			{one(validator).setMapToValidate(map);}
 			{one(validator).isReadyToValidate();will(returnValue(true));}

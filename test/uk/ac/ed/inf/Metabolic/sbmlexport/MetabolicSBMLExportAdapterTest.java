@@ -80,8 +80,14 @@ public class MetabolicSBMLExportAdapterTest {
     
 	@Before
 	public void setUp() throws Exception {
+	//	loadNativeLibraries();
 		stubexportAdapter=new MetabolicSBMLExportAdapterTestStub();
 	    exportAdapter = new MetabolicSBMLExportAdapter<IModel>();
+		TestSBMLLoader.overrideSingleton( new LibSBMLLoader(){
+    		public boolean loadLibrary() {
+    			return true;
+    		}
+    	});
 	    aFile = new File("file");
 		
 	}
