@@ -5,7 +5,6 @@ import org.pathwayeditor.contextadapter.publicapi.IValidationRuleDefinition;
 import org.pathwayeditor.contextadapter.toolkit.ndom.AbstractNDOMParser;
 import org.pathwayeditor.contextadapter.toolkit.ndom.AbstractNDOMParser.NdomException;
 import org.pathwayeditor.contextadapter.toolkit.validation.AbstractContextValidationService;
-import org.pathwayeditor.contextadapter.toolkit.validation.IRuleValidationReportBuilder;
 
 import uk.ac.ed.inf.Metabolic.ndomAPI.IModel;
 import uk.ac.ed.inf.Metabolic.parser.MetabolicNDOMFactory;
@@ -59,6 +58,9 @@ public class MetabolicContextValidationService extends AbstractContextValidation
 
 /*
  * $Log$
+ * Revision 1.11  2008/06/24 10:07:23  radams
+ * imports
+ *
  * Revision 1.10  2008/06/23 14:42:35  radams
  * added report builder to parser
  *
