@@ -22,7 +22,6 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 	Map<MetabolicReaction, IShape> reaction2Shape = new HashMap<MetabolicReaction, IShape>();
 	LinkedList<Map<String, MetabolicCompound>> name2Compound = new LinkedList<Map<String, MetabolicCompound>>();
 	List<ILink> prodLinks;
-	IRuleValidationReportBuilder reportBuilder;
 
 	public MetabolicNDOMFactory(IRootMapObject rmo) {
 		super(rmo);
@@ -374,17 +373,16 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 		}
 	}
 
-	@Override
-	public void setReportBuilder(IRuleValidationReportBuilder reportBuilder) {
-		this.reportBuilder=reportBuilder;
-		
-	}
+	
 
 }
 
 
 /*
  * $Log$
+ * Revision 1.7  2008/06/24 10:07:40  radams
+ * moved rule builder upt oAbstractNDOM parsers
+ *
  * Revision 1.6  2008/06/23 14:42:35  radams
  * added report builder to parser
  *
