@@ -47,7 +47,7 @@ public class MetabolicContextValidationService extends AbstractContextValidation
 	}
 
 	@Override
-	protected void handleNdomException() {
+	protected void handleNdomException(NdomException e) {
 		getReportBuilder().setRuleFailed(null, getRuleStore().getRuleById(DefaultRuleLoader.ERROR_ID), "Major validation error");
 		
 	}
@@ -58,6 +58,9 @@ public class MetabolicContextValidationService extends AbstractContextValidation
 
 /*
  * $Log$
+ * Revision 1.12  2008/06/24 10:12:38  radams
+ * update handleNdom
+ *
  * Revision 1.11  2008/06/24 10:07:23  radams
  * imports
  *
