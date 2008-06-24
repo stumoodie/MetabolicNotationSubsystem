@@ -39,16 +39,13 @@ public class MetabolicContextValidationService extends AbstractContextValidation
 	@Override
 	protected void generateNdom() throws NdomException {
 		ndom=((MetabolicNDOMFactory)getFactory()).getNdom();
-		for(IValidationRuleDefinition rule: getRuleStore().getAllRuleDefinitions()){
-			getReportBuilder().setRulePassed(rule);
-		}
 		System.out.println("dom generated");
 		
 	}
-
+    final static String ERROR_MESSAGE="Major validation error";
 	@Override
 	protected void handleNdomException(NdomException e) {
-		getReportBuilder().setRuleFailed(null, getRuleStore().getRuleById(DefaultRuleLoader.ERROR_ID), "Major validation error");
+		getReportBuilder().setRuleFailed(null, getRuleStore().getRuleById(DefaultRuleLoader.ERROR_ID),ERROR_MESSAGE);
 		
 	}
 
@@ -58,6 +55,9 @@ public class MetabolicContextValidationService extends AbstractContextValidation
 
 /*
  * $Log$
+ * Revision 1.13  2008/06/24 12:56:57  radams
+ * fix for tests
+ *
  * Revision 1.12  2008/06/24 10:12:38  radams
  * update handleNdom
  *

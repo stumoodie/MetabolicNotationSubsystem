@@ -37,12 +37,12 @@ public class DefaultRuleLoader implements IDefaultValidationRuleConfigLoader {
 		config2 = new ValidationRuleConfig(def2, true, true); // must be run, error
 		config3 = new ValidationRuleConfig(def3, true, false); // must be run, warning
 		config4 = new ValidationRuleConfig(def4, false, true); // not run, error
-		ERROR_CONFIG = new ValidationRuleConfig(def4, true, true); // not run, error
+		ERROR_CONFIG = new ValidationRuleConfig(ERROR, true, true); // not run, error
 		
 	}
 
 	public Set<IValidationRuleConfig> loadDefaultRuleConfigurations() {
-		Set <IValidationRuleConfig> rc =  new HashSet<IValidationRuleConfig>(Arrays.asList(new IValidationRuleConfig[]{config1, config2, config3,config4}));
+		Set <IValidationRuleConfig> rc =  new HashSet<IValidationRuleConfig>(Arrays.asList(new IValidationRuleConfig[]{config1, config2, config3,config4, ERROR_CONFIG}));
 		return rc;
 	}
 
