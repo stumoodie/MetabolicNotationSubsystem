@@ -14,4 +14,6 @@ public interface IMolecule extends IModelObject {
 	public List<IRelation> getInhibitoryRelationList();
 
 	public List<IRelation> getCatalyticRelationList();
+	
+	public IModelObject    getParent () ;
 }

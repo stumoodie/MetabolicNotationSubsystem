@@ -1,0 +1,57 @@
+package uk.ac.ed.inf.Metabolic.excelexport;
+
+import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import uk.ac.ed.inf.Metabolic.excelexport.ExcelGenerator;
+import uk.ac.ed.inf.Metabolic.parser.TestModel;
+
+
+
+public class TemplateLoadTest {
+	
+	IExcelFileGenerator generator ;
+	TestModel NDOModel ;
+	@Before
+	public void setUp() throws Exception {
+		
+		NDOModel = new TestModel ("id", "name", "asciiName") ;
+		
+		generator = new ExcelGenerator ( NDOModel , "../uk.ac.ed.inf.csb.Metabolic/Template.xls") ;
+		
+		generator.createNewWorkbook() ;
+
+	}
+
+	@After
+	public void tearDown() throws Exception {
+	}
+	
+	@Test
+	public void testIfTemplateisValid()
+	{
+		assertTrue ( generator.isTemplateValid()) ;
+	}
+	
+	@Test
+	public void testIfWorkbookIsCreatedProperly ()
+	{
+		assertTrue ( generator.wasWorkBookCreated() ) ;
+	}
+	
+	@Test
+	public void testIfNDOMIsReturned ()
+	{
+		assertEquals ( NDOModel , generator.getMetabolicNDOM()  ) ;
+	}
+	
+	@Test
+	public void testIfPathIsReturned ()
+	{
+		assertEquals ( "../uk.ac.ed.inf.csb.Metabolic/Template.xls" ,generator.getTemplateLocation()) ;
+	}
+}

@@ -15,6 +15,7 @@ import org.pathwayeditor.contextadapter.publicapi.IValidationReport;
 import org.pathwayeditor.contextadapter.publicapi.IValidationRuleDefinition;
 import org.pathwayeditor.contextadapter.toolkit.ctxdefn.GeneralContext;
 
+import uk.ac.ed.inf.Metabolic.excelexport.ExcelExportService;
 import uk.ac.ed.inf.Metabolic.sbmlexport.SBMLExportService;
 
 
@@ -51,6 +52,7 @@ public class MetabolicContextAdapterServiceProvider implements IContextAdapterSe
 				VERS[0], VERS[1], VERS[2]);
 		this.syntaxService = new MetabolicContextAdapterSyntaxService(this);
 		exportServices.add(new SBMLExportService(this));
+		exportServices.add(new ExcelExportService(this));
 		this.validationService=new MetabolicContextValidationService(this);
 	}
 	

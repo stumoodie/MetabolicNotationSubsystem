@@ -1,5 +1,5 @@
 
-package uk.ac.ed.inf.csb.Metabolic.excelexport;
+package uk.ac.ed.inf.Metabolic.excelexport;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,8 +41,9 @@ interface IExcelFileGenerator {
 	 * Creates a new workbook based on the template provided. Requires that the template
 	 * file location is valid.
 	 * @throws IllegalStateException thrown if <code>isTemplateValid() == false</code>.
+	 * @throws IOException in the case there is an error while loading the template.
 	 */
-	void createNewWorkbook () throws IllegalStateException;
+	void createNewWorkbook () throws IllegalStateException, IOException;
 	
 	/**
 	 * Tests if the workbook has been created.
@@ -53,30 +54,26 @@ interface IExcelFileGenerator {
 	/**
 	 * Populate the Model worksheet with the data that is extracted from the Metabolic NMOD and has to do with the 
 	 *  Map Details and the Compartments. The workbook must be created before this method is called. 
-	 * @throws IllegalStateException thrown if <code>wasWorkBookCreated() == false</code>.
 	 */
-	void populateModelPage () throws IllegalStateException;
+	void populateModelPage ();
 	
 	/**
 	 * Populate the Compound worksheet with the data that is extracted from the Metabolic NMOD and has to do with the 
 	 *  Compounds. The workbook must be created before this method is called. 
-	 * @throws IllegalStateException thrown if <code>wasWorkBookCreated() == false</code>.
 	 */
-	void populateCompoundPage () throws IllegalStateException ;
+	void populateCompoundPage () ;
 	
 	/**
 	 * Populate the Macromolecule worksheet with the data that is extracted from the Metabolic NMOD and has to do with the 
 	 *  Macromolecule. The workbook must be created before this method is called. 
-	 * @throws IllegalStateException thrown if <code>wasWorkBookCreated() == false</code>.
 	 */
-	void populateMacromoleculePage () throws IllegalStateException ;
+	void populateMacromoleculePage () ;
 	
 	/**
 	 * Populate the Reactions worksheet with the data that is extracted from the Metabolic NMOD and has to do with the 
 	 *  Reactions. The workbook must be created before this method is called. 
-	 * @throws IllegalStateException thrown if <code>wasWorkBookCreated() == false</code>.
 	 */
-	void populateReactionsPage () throws IllegalStateException ;
+	void populateReactionsPage ()  ;
 	
 	/**
 	 * Writes the workbook in the given file. The target file cannot be null. 
