@@ -31,7 +31,7 @@ public class ExcelGenerator implements IExcelFileGenerator {
 	
 		this.modelProcessor = new ModelProcessor ( model );
 		this.templatePath = templatePath ;
-		this.cellManipulator = new CellManipulator () ;
+		
 	}
 
 
@@ -47,26 +47,26 @@ public class ExcelGenerator implements IExcelFileGenerator {
 			
 			HSSFRow row = sheet.createRow((short) 1+ a ) ;
 			
-			cellManipulator.putStringInRow ( row , 0 , tempCompound.getId() );
-			cellManipulator.putStringInRow ( row , 1 , tempCompound.getName() );
-			cellManipulator.putStringInRow ( row , 2 , tempCompound.getDescription() );
-			cellManipulator.putStringInRow ( row , 3 , tempCompound.getDetailedDescription() );
+			cellManipulator.putStringInNormalRow ( row , 0 , tempCompound.getId() );
+			cellManipulator.putStringInNormalRow ( row , 1 , tempCompound.getName() );
+			cellManipulator.putStringInNormalRow ( row , 2 , tempCompound.getDescription() );
+			cellManipulator.putStringInNormalRow ( row , 3 , tempCompound.getDetailedDescription() );
 			
 			if ( tempCompound.getParent().getId().equals("ROOT_MAP_OBJECT1") )
 			{
-				cellManipulator.putStringInRow ( row , 4 , "");
+				cellManipulator.putStringInNormalRow ( row , 4 , "");
 			}
 			else
 			{
-				cellManipulator.putStringInRow ( row , 4 ,  tempCompound.getParent().getId() );
+				cellManipulator.putStringInNormalRow ( row , 4 ,  tempCompound.getParent().getId() );
 			}
 			
 			cellManipulator.putDoubleInRow ( row , 5 , tempCompound.getIC() );
-			cellManipulator.putStringInRow ( row , 6 , tempCompound.getCID() );
-			cellManipulator.putStringInRow ( row , 7 , tempCompound.getChEBIId() );
-			cellManipulator.putStringInRow ( row , 8 , tempCompound.getPubChemId() );
-			cellManipulator.putStringInRow ( row , 9 , tempCompound.getInChI() );
-			cellManipulator.putStringInRow ( row , 10 , tempCompound.getSmiles() );
+			cellManipulator.putStringInNormalRow ( row , 6 , tempCompound.getCID() );
+			cellManipulator.putStringInNormalRow ( row , 7 , tempCompound.getChEBIId() );
+			cellManipulator.putStringInNormalRow ( row , 8 , tempCompound.getPubChemId() );
+			cellManipulator.putStringInNormalRow ( row , 9 , tempCompound.getInChI() );
+			cellManipulator.putStringInNormalRow ( row , 10 , tempCompound.getSmiles() );
 			cellManipulator.putIntegerInRow ( row , 11 , 100 );
 			
 		}
@@ -90,23 +90,23 @@ public class ExcelGenerator implements IExcelFileGenerator {
 			
 			if ( tempMacromolecule.getParent().getId().equals("ROOT_MAP_OBJECT1") )
 			{
-				cellManipulator.putStringInRow ( row , 0 , tempMacromolecule.getId() );
-				cellManipulator.putStringInRow ( row , 1 , "" );
-				cellManipulator.putStringInRow ( row , 5 , tempMacromolecule.getParent().getId() );
+				cellManipulator.putStringInNormalRow ( row , 0 , tempMacromolecule.getId() );
+				cellManipulator.putStringInNormalRow ( row , 1 , "" );
+				cellManipulator.putStringInNormalRow ( row , 5 , tempMacromolecule.getParent().getId() );
 			}
 			else
 			{
-				cellManipulator.putStringInRow ( row , 1 , tempMacromolecule.getId() );
-				cellManipulator.putStringInRow ( row , 0 , tempMacromolecule.getParent().getId() );
-				cellManipulator.putStringInRow ( row , 5 , "" );
+				cellManipulator.putStringInNormalRow ( row , 1 , tempMacromolecule.getId() );
+				cellManipulator.putStringInNormalRow ( row , 0 , tempMacromolecule.getParent().getId() );
+				cellManipulator.putStringInNormalRow ( row , 5 , "" );
 			}			
 			
-			cellManipulator.putStringInRow ( row , 2 , tempMacromolecule.getName() );
-			cellManipulator.putStringInRow ( row , 3 , tempMacromolecule.getDescription() );
-			cellManipulator.putStringInRow ( row , 4 , tempMacromolecule.getDetailedDescription() );
+			cellManipulator.putStringInNormalRow ( row , 2 , tempMacromolecule.getName() );
+			cellManipulator.putStringInNormalRow ( row , 3 , tempMacromolecule.getDescription() );
+			cellManipulator.putStringInNormalRow ( row , 4 , tempMacromolecule.getDetailedDescription() );
 			
-			cellManipulator.putStringInRow ( row , 6 , tempMacromolecule.getGOTerm() );
-			cellManipulator.putStringInRow ( row , 7 , tempMacromolecule.getUniProt() );
+			cellManipulator.putStringInNormalRow ( row , 6 , tempMacromolecule.getGOTerm() );
+			cellManipulator.putStringInNormalRow ( row , 7 , tempMacromolecule.getUniProt() );
 			
 			StringBuffer heterogroups = new StringBuffer () ;
 			
@@ -117,10 +117,10 @@ public class ExcelGenerator implements IExcelFileGenerator {
 			
 			if ( heterogroups.length() > 0 )
 			{
-				cellManipulator.putStringInRow ( row , 8 , heterogroups.substring(2) ) ;
+				cellManipulator.putStringInNormalRow ( row , 8 , heterogroups.substring(2) ) ;
 			}
 			else
-				cellManipulator.putStringInRow ( row , 8 , "") ;
+				cellManipulator.putStringInNormalRow ( row , 8 , "") ;
 				
 		}
 
@@ -135,9 +135,9 @@ public class ExcelGenerator implements IExcelFileGenerator {
 		
 		HSSFRow titleRow = sheet.createRow((short)1);
 		
-		cellManipulator.putStringInRow ( titleRow , 1 , modelProcessor.getModel().getName() );
-		cellManipulator.putStringInRow ( titleRow , 2 , modelProcessor.getModel().getDescription() );
-		cellManipulator.putStringInRow ( titleRow , 3 , modelProcessor.getModel().getDetailedDescription() );
+		cellManipulator.putStringInHeaderRow ( titleRow , 1 , modelProcessor.getModel().getName() );
+		cellManipulator.putStringInHeaderRow ( titleRow , 2 , modelProcessor.getModel().getDescription() );
+		cellManipulator.putStringInHeaderRow ( titleRow , 3 , modelProcessor.getModel().getDetailedDescription() );
 		
 		
 		for ( int a = 0 ; a < compartments.size() ; a ++)
@@ -146,11 +146,11 @@ public class ExcelGenerator implements IExcelFileGenerator {
 			
 			HSSFRow row = sheet.createRow((short) 5 + a);
 			
-			cellManipulator.putStringInRow ( row , 0 , temp.getId() );
-			cellManipulator.putStringInRow ( row , 1 , temp.getName() );
-			cellManipulator.putStringInRow ( row , 2 , temp.getDescription() );
-			cellManipulator.putStringInRow ( row , 3 , temp.getDetailedDescription() );
-			cellManipulator.putStringInRow ( row , 4 , temp.getGOTerm() );
+			cellManipulator.putStringInNormalRow ( row , 0 , temp.getId() );
+			cellManipulator.putStringInNormalRow ( row , 1 , temp.getName() );
+			cellManipulator.putStringInNormalRow ( row , 2 , temp.getDescription() );
+			cellManipulator.putStringInNormalRow ( row , 3 , temp.getDetailedDescription() );
+			cellManipulator.putStringInNormalRow ( row , 4 , temp.getGOTerm() );
 			
 		}
 
@@ -169,9 +169,9 @@ public class ExcelGenerator implements IExcelFileGenerator {
 			
 			HSSFRow row = sheet.createRow((short) 1 + a);
 			
-			cellManipulator.putStringInRow ( row , 0 , tempReaction.getId() );
-			cellManipulator.putStringInRow ( row , 1 , tempReaction.getDescription() );
-			cellManipulator.putStringInRow ( row , 2 , tempReaction.getDetailedDescription() );
+			cellManipulator.putStringInNormalRow ( row , 0 , tempReaction.getId() );
+			cellManipulator.putStringInNormalRow ( row , 1 , tempReaction.getDescription() );
+			cellManipulator.putStringInNormalRow ( row , 2 , tempReaction.getDetailedDescription() );
 			
 			
 			StringBuffer subratePartOfReactionIds = new StringBuffer () ;
@@ -238,12 +238,12 @@ public class ExcelGenerator implements IExcelFileGenerator {
 			if ( tempReaction.isReversible()  )
 				connector = " <=> " ;
 
-			cellManipulator.putStringInRow ( row , 3 , subratePartOfReactionString + connector +  productsPartOfReactionString );
-			cellManipulator.putStringInRow ( row , 4 , subratePartOfReactionStringIds + connector +  productsPartOfReactionStringIds );
+			cellManipulator.putStringInNormalRow ( row , 3 , subratePartOfReactionString + connector +  productsPartOfReactionString );
+			cellManipulator.putStringInNormalRow ( row , 4 , subratePartOfReactionStringIds + connector +  productsPartOfReactionStringIds );
 			
-			cellManipulator.putStringInRow ( row , 5 , tempReaction.getECNumber() );
-			cellManipulator.putStringInRow ( row , 6 , tempReaction.getKineticLaw() );
-			cellManipulator.putStringInRow ( row , 7 , tempReaction.getParameters() );
+			cellManipulator.putStringInNormalRow ( row , 5 , tempReaction.getECNumber() );
+			cellManipulator.putStringInNormalRow ( row , 6 , tempReaction.getKineticLaw() );
+			cellManipulator.putStringInNormalRow ( row , 7 , tempReaction.getParameters() );
 			
 			StringBuffer activatorString = new StringBuffer () ;
 			
@@ -257,7 +257,7 @@ public class ExcelGenerator implements IExcelFileGenerator {
 				activatorString = activatorString.delete(0, 2) ;
 			}
 			
-			cellManipulator.putStringInRow ( row , 8 ,activatorString.toString() );
+			cellManipulator.putStringInNormalRow ( row , 8 ,activatorString.toString() );
 
 			StringBuffer inhibitorString = new StringBuffer () ;
 			
@@ -271,7 +271,7 @@ public class ExcelGenerator implements IExcelFileGenerator {
 				inhibitorString = inhibitorString.delete(0 , 2) ;
 			}
 			
-			cellManipulator.putStringInRow ( row , 9 , inhibitorString.toString() );
+			cellManipulator.putStringInNormalRow ( row , 9 , inhibitorString.toString() );
 
 			StringBuffer catalystString = new StringBuffer () ;
 			
@@ -285,7 +285,7 @@ public class ExcelGenerator implements IExcelFileGenerator {
 				catalystString = catalystString.delete(0 , 2) ;
 			}			
 			
-			cellManipulator.putStringInRow ( row , 10 , catalystString.toString() );
+			cellManipulator.putStringInNormalRow ( row , 10 , catalystString.toString() );
 			
 			
 		}
@@ -298,6 +298,8 @@ public class ExcelGenerator implements IExcelFileGenerator {
 			throw new IllegalStateException () ;
 		
 		workbook = loadTemplateFromPath() ;
+		
+		this.cellManipulator = new CellManipulator ( workbook) ;
 		
 	}
 
