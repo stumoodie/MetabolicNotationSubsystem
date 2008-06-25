@@ -22,7 +22,7 @@ public class ExcelGenerator implements IExcelFileGenerator {
 	
 	private HSSFWorkbook workbook ;
 	private ModelProcessor modelProcessor ;
-	private String templatePath ;
+	protected String templatePath ;
 	private CellManipulator cellManipulator ;
 	
 	public ExcelGenerator(IModel model , String templatePath ) throws IllegalArgumentException  {
@@ -370,7 +370,7 @@ public class ExcelGenerator implements IExcelFileGenerator {
 		return true ;
 	}
 
-	private HSSFWorkbook loadTemplateFromPath () throws IOException
+	protected HSSFWorkbook loadTemplateFromPath () throws IOException
 	{
 		InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream( templatePath ) ;
 		

@@ -1,13 +1,14 @@
 package uk.ac.ed.inf.Metabolic.excelexport;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+
+import java.io.File;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import uk.ac.ed.inf.Metabolic.excelexport.ExcelGenerator;
 import uk.ac.ed.inf.Metabolic.parser.TestModel;
 
 
@@ -19,9 +20,13 @@ public class TemplateLoadTest {
 	@Before
 	public void setUp() throws Exception {
 		
+		File file = new File ( "." ) ;
+		
+		String [] a = file.list() ;
+		
 		NDOModel = new TestModel ("id", "name", "asciiName") ;
 		
-		generator = new ExcelGenerator ( NDOModel , "../uk.ac.ed.inf.csb.Metabolic/Template.xls") ;
+		generator = new TestGenerator ( NDOModel , "Template.xls") ;
 		
 		generator.createNewWorkbook() ;
 
@@ -52,6 +57,6 @@ public class TemplateLoadTest {
 	@Test
 	public void testIfPathIsReturned ()
 	{
-		assertEquals ( "../uk.ac.ed.inf.csb.Metabolic/Template.xls" ,generator.getTemplateLocation()) ;
+		assertEquals ( "Template.xls" ,generator.getTemplateLocation()) ;
 	}
 }
