@@ -1,12 +1,13 @@
 package uk.ac.ed.inf.metaboliccontext.plugin;
 
+import java.util.Set;
+
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.pathwayeditor.application.contextadapter.uitoolkit.ValidationRulePreferences;
-import org.pathwayeditor.contextadapter.publicapi.IValidationRuleStore;
+import org.pathwayeditor.contextadapter.publicapi.IValidationRuleConfig;
 
 import uk.ac.ed.inf.Metabolic.MetabolicContextAdapterServiceProvider;
-import uk.ac.ed.inf.Metabolic.MetabolicContextValidationService;
 
 public class MetabolicValidationRulePreferences extends ValidationRulePreferences implements IWorkbenchPreferencePage {
 	
@@ -27,11 +28,20 @@ public class MetabolicValidationRulePreferences extends ValidationRulePreference
 
 
 	@Override
-	protected IValidationRuleStore getRuleStore() {
-		return ((MetabolicContextValidationService)MetabolicContextAdapterServiceProvider
+	protected Set<IValidationRuleConfig> getConfigurableRules() {
+		return MetabolicContextAdapterServiceProvider
 				         .getInstance()
-				         .getValidationService())
-				         .getRuleStore();
+				         .getValidationService()
+				         .getRuleConfigurations();
+	}
+
+
+	@Override
+	protected Set<IValidationRuleConfig> getDefaultConfigurableRules() {
+		return    MetabolicContextAdapterServiceProvider
+		         .getInstance()
+		         .getValidationService()
+		         .getDefaultRuleConfigurations();
 	}
 	
 	

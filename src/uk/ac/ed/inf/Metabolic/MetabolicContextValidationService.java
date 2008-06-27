@@ -1,7 +1,6 @@
 package uk.ac.ed.inf.Metabolic;
 
 import org.pathwayeditor.contextadapter.publicapi.IContextAdapterServiceProvider;
-import org.pathwayeditor.contextadapter.publicapi.IValidationRuleDefinition;
 import org.pathwayeditor.contextadapter.toolkit.ndom.AbstractNDOMParser;
 import org.pathwayeditor.contextadapter.toolkit.ndom.AbstractNDOMParser.NdomException;
 import org.pathwayeditor.contextadapter.toolkit.validation.AbstractContextValidationService;
@@ -26,7 +25,9 @@ public class MetabolicContextValidationService extends AbstractContextValidation
 	}
 	/**
 	 * Must be called before validation
+	 * 
 	 */
+	  // will be changed to createDefaultRuleConfigurationLoader() and initialisation done in superclass
 	public void initRuleStore() {
 	 getRuleStore().initializeStore(new DefaultRuleLoader());
 	}
@@ -49,12 +50,21 @@ public class MetabolicContextValidationService extends AbstractContextValidation
 		
 	}
 
+	
+
+	
+
+
+
 }
 	
 	
 
 /*
  * $Log$
+ * Revision 1.14  2008/06/27 13:22:15  radams
+ * adapt to validation servic einterface changes
+ *
  * Revision 1.13  2008/06/24 12:56:57  radams
  * fix for tests
  *

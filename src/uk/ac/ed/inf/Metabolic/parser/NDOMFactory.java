@@ -30,7 +30,7 @@ public abstract class NDOMFactory extends AbstractNDOMParser {
 	public NDOMFactory() {
 		super();
 	}
-
+    // coould be in abstract class??
 	public IModel getNdom() {
 		return ndom;
 	}
@@ -288,6 +288,9 @@ protected abstract void catalysis(ILink el, MetabolicReaction r);
 
 /*
  * $Log$
+ * Revision 1.5  2008/06/27 13:22:15  radams
+ * adapt to validation servic einterface changes
+ *
  * Revision 1.4  2008/06/20 22:48:19  radams
  * imports
  *

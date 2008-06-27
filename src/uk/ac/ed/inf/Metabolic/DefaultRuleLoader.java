@@ -5,10 +5,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.pathwayeditor.contextadapter.publicapi.IContext;
-import org.pathwayeditor.contextadapter.publicapi.IDefaultValidationRuleConfigLoader;
 import org.pathwayeditor.contextadapter.publicapi.IValidationRuleConfig;
 import org.pathwayeditor.contextadapter.publicapi.IValidationRuleDefinition;
 import org.pathwayeditor.contextadapter.publicapi.IValidationRuleDefinition.RuleLevel;
+import org.pathwayeditor.contextadapter.toolkit.validation.IDefaultValidationRuleConfigLoader;
 import org.pathwayeditor.contextadapter.toolkit.validation.ValidationRuleConfig;
 import org.pathwayeditor.contextadapter.toolkit.validation.ValidationRuleDefinition;
 

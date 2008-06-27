@@ -12,6 +12,7 @@ import org.pathwayeditor.contextadapter.publicapi.IContextAdapterExportService;
 import org.pathwayeditor.contextadapter.publicapi.IContextAdapterServiceProvider;
 import org.pathwayeditor.contextadapter.publicapi.IContextAdapterValidationService;
 import org.pathwayeditor.contextadapter.publicapi.IValidationReport;
+import org.pathwayeditor.contextadapter.publicapi.IValidationRuleConfig;
 import org.pathwayeditor.contextadapter.publicapi.IValidationRuleDefinition;
 import org.pathwayeditor.contextadapter.toolkit.ctxdefn.GeneralContext;
 
@@ -146,8 +147,14 @@ public class MetabolicContextAdapterServiceProvider implements IContextAdapterSe
 			return MetabolicContextAdapterServiceProvider.this;
 		}
 
-		public List<IValidationRuleDefinition> getRules() {
+		public Set<IValidationRuleConfig> getDefaultRuleConfigurations() {
 			throw new UnsupportedOperationException("Validation service has not been implemented for this context adapter");
+
+		}
+
+		public Set<IValidationRuleConfig> getRuleConfigurations() {
+			throw new UnsupportedOperationException("Validation service has not been implemented for this context adapter");
+
 		}
 		
 	}
