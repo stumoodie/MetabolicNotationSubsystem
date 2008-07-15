@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.pathwayeditor.contextadapter.toolkit.ndom.IModelObject;
+import org.pathwayeditor.contextadapter.toolkit.ndom.INdomModel;
 import org.pathwayeditor.contextadapter.toolkit.ndom.ModelObject;
-import org.pathwayeditor.contextadapter.toolkit.ndom.AbstractNDOMParser.NdomException;
+import org.pathwayeditor.contextadapter.toolkit.ndom.NdomException;
 
 import uk.ac.ed.inf.Metabolic.ndomAPI.ERelType;
 import uk.ac.ed.inf.Metabolic.ndomAPI.ICompartment;
@@ -15,7 +15,7 @@ import uk.ac.ed.inf.Metabolic.ndomAPI.IRelation;
 
 public abstract class MetabolicMolecule  extends ModelObject implements IMolecule {
 
-	private IModelObject parent;
+	private INdomModel parent;
 	protected List<IRelation> activatoryRelationList = new ArrayList<IRelation>();
 	protected List<IRelation> inhibitoryRelationList = new ArrayList<IRelation>();
 	protected List<IRelation> catalyticRelationList = new ArrayList<IRelation>();
@@ -48,7 +48,7 @@ public abstract class MetabolicMolecule  extends ModelObject implements IMolecul
 
 	boolean addActivatoryRelation(MetabolicRelation rel) throws NdomException {
 		if (rel.getType() != ERelType.Activation)
-			throw new NDOMFactory.NdomException("Expected activation, got: "
+			throw new NdomException("Expected activation, got: "
 					+ rel.getType().toString());
 		rel.setMolecule(this);
 		return activatoryRelationList.add(rel);
@@ -60,7 +60,7 @@ public abstract class MetabolicMolecule  extends ModelObject implements IMolecul
 
 	boolean addCatalyticRelation(MetabolicRelation rel) throws NdomException {
 		if (rel.getType() != ERelType.Catalysis)
-			throw new NDOMFactory.NdomException("Expected catalysis, got: "
+			throw new NdomException("Expected catalysis, got: "
 					+ rel.getType().toString());
 		rel.setMolecule(this);
 		return catalyticRelationList.add(rel);
@@ -72,7 +72,7 @@ public abstract class MetabolicMolecule  extends ModelObject implements IMolecul
 
 	boolean addInhibitoryRelation(MetabolicRelation rel) throws NdomException {
 		if (rel.getType() != ERelType.Inhibition)
-			throw new NDOMFactory.NdomException("Expected inhibition, got: "
+			throw new NdomException("Expected inhibition, got: "
 					+ rel.getType().toString());
 		rel.setMolecule(this);
 		return inhibitoryRelationList.add(rel);
@@ -84,7 +84,7 @@ public abstract class MetabolicMolecule  extends ModelObject implements IMolecul
 
 	boolean addSink(MetabolicRelation rel) throws NdomException {
 		if (rel.getType() != ERelType.Consumption)
-			throw new NDOMFactory.NdomException("Expected consumption, got: "
+			throw new NdomException("Expected consumption, got: "
 					+ rel.getType().toString());
 		rel.setMolecule(this);
 		return sinkList.add(rel);
@@ -96,7 +96,7 @@ public abstract class MetabolicMolecule  extends ModelObject implements IMolecul
 
 	boolean addSource(MetabolicRelation rel) throws NdomException {
 		if (rel.getType() != ERelType.Production)
-			throw new NDOMFactory.NdomException("Expected Production, got: "
+			throw new NdomException("Expected Production, got: "
 					+ rel.getType().toString());
 		rel.setMolecule(this);
 		return sourceList.add(rel);
@@ -106,11 +106,11 @@ public abstract class MetabolicMolecule  extends ModelObject implements IMolecul
 		return sourceList.remove(rel);
 	}
 
-	public IModelObject getParent() {
+	public INdomModel getParent() {
 		return parent;
 	}
 
-	public void setParent(IModelObject parent) {
+	public void setParent(INdomModel parent) {
 		this.parent = parent;
 	}
 
@@ -129,6 +129,9 @@ public abstract class MetabolicMolecule  extends ModelObject implements IMolecul
 
 /*
  * $Log$
+ * Revision 1.2  2008/07/15 11:14:32  smoodie
+ * Refactored so code compiles with new Toolkit framework.
+ *
  * Revision 1.1  2008/06/02 10:31:42  asorokin
  * Reference to Service provider from all Service interfaces
  *

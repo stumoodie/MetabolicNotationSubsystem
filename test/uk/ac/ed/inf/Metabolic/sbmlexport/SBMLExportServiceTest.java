@@ -24,12 +24,10 @@ import org.pathwayeditor.contextadapter.publicapi.IContext;
 import org.pathwayeditor.contextadapter.publicapi.IContextAdapterServiceProvider;
 import org.pathwayeditor.contextadapter.publicapi.IContextAdapterValidationService;
 import org.pathwayeditor.contextadapter.publicapi.IValidationReport;
-import org.pathwayeditor.contextadapter.toolkit.validation.AbstractContextValidationService;
 
-import uk.ac.ed.inf.Metabolic.DefaultRuleLoader;
 import uk.ac.ed.inf.Metabolic.IExportAdapter;
-import uk.ac.ed.inf.Metabolic.MetabolicContextValidationService;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IModel;
+
 @RunWith(JMock.class)
 public class SBMLExportServiceTest {
 
@@ -110,6 +108,7 @@ public class SBMLExportServiceTest {
         service.exportMap(map, NONEXISTENT);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testExportValidMap() throws Throwable {
 		if(!canRun){
@@ -135,6 +134,7 @@ public class SBMLExportServiceTest {
         service.exportMap(map, EXISTENT);
 	}
  
+	@SuppressWarnings("unchecked")
 	@Test(expected=ExportServiceException.class)
 	public void testExportInvalidMap() throws Throwable {
 		if(!canRun){

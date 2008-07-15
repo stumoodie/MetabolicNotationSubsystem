@@ -3,8 +3,6 @@ package uk.ac.ed.inf.Metabolic.excelexport;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.io.File;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,9 +18,9 @@ public class TemplateLoadTest {
 	@Before
 	public void setUp() throws Exception {
 		
-		File file = new File ( "." ) ;
+//		File file = new File ( "." ) ;
 		
-		String [] a = file.list() ;
+//		String [] a = file.list() ;
 		
 		NDOModel = new TestModel ("id", "name", "asciiName") ;
 		

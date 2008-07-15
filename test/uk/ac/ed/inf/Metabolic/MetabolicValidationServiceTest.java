@@ -1,6 +1,7 @@
 package uk.ac.ed.inf.Metabolic;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.jmock.Expectations;
@@ -15,10 +16,8 @@ import org.junit.runner.RunWith;
 import org.pathwayeditor.contextadapter.publicapi.IContext;
 import org.pathwayeditor.contextadapter.publicapi.IContextAdapterServiceProvider;
 import org.pathwayeditor.contextadapter.publicapi.IContextAdapterValidationService;
-import org.pathwayeditor.contextadapter.toolkit.ndom.AbstractNDOMParser.NdomException;
+import org.pathwayeditor.contextadapter.toolkit.ndom.NdomException;
 import org.pathwayeditor.contextadapter.toolkit.validation.IRuleValidationReportBuilder;
-
-import uk.ac.ed.inf.Metabolic.parser.NDOMFactory;
 
 @RunWith(JMock.class)
 public class MetabolicValidationServiceTest {

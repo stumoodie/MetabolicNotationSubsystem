@@ -1,19 +1,15 @@
 package uk.ac.ed.inf.metaboliccontext.plugin;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.pathwayeditor.contextadapter.publicapi.IValidationRuleConfig;
-import org.pathwayeditor.contextadapter.toolkit.validation.IValidationRuleStore;
 
 import uk.ac.ed.inf.Metabolic.MetabolicContextAdapterServiceProvider;
 import uk.ac.ed.inf.Metabolic.MetabolicContextValidationService;

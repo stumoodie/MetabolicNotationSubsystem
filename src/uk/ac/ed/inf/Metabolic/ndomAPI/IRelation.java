@@ -1,8 +1,8 @@
 package uk.ac.ed.inf.Metabolic.ndomAPI;
 
-import org.pathwayeditor.contextadapter.toolkit.ndom.IModelObject;
+import org.pathwayeditor.contextadapter.toolkit.ndom.INdomModel;
 
-public interface IRelation extends IModelObject {
+public interface IRelation extends INdomModel{
 	public String getRole();
 
 	public int getStoichiometry();

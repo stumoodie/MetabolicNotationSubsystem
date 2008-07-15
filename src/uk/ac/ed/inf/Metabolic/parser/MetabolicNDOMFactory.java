@@ -2,7 +2,6 @@ package uk.ac.ed.inf.Metabolic.parser;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +13,7 @@ import org.pathwayeditor.businessobjectsAPI.IRootMapObject;
 import org.pathwayeditor.businessobjectsAPI.IShape;
 import org.pathwayeditor.businessobjectsAPI.Location;
 import org.pathwayeditor.contextadapter.toolkit.ndom.ModelObject;
-import org.pathwayeditor.contextadapter.toolkit.validation.IRuleValidationReportBuilder;
+import org.pathwayeditor.contextadapter.toolkit.ndom.NdomException;
 
 public class MetabolicNDOMFactory extends NDOMFactory {
 
@@ -47,10 +46,10 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 	void processProdLinks(MetabolicReaction r) {
 		if (r.isReversible()) {
 			IShape s = reaction2Shape.get(r);
-			Set<ILink> substr = new HashSet<ILink>();
-			Set<ILink> prod = new HashSet<ILink>();
+//			Set<ILink> substr = new HashSet<ILink>();
+//			Set<ILink> prod = new HashSet<ILink>();
 			Location srcLoc = null;
-			double srcAngle;
+//			double srcAngle;
 			for (ILink l : prodLinks) {
 				if (srcLoc == null) {
 					// first link
@@ -380,6 +379,9 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 
 /*
  * $Log$
+ * Revision 1.8  2008/07/15 11:14:32  smoodie
+ * Refactored so code compiles with new Toolkit framework.
+ *
  * Revision 1.7  2008/06/24 10:07:40  radams
  * moved rule builder upt oAbstractNDOM parsers
  *

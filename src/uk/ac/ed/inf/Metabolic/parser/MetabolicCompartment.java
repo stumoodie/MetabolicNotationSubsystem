@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.pathwayeditor.contextadapter.toolkit.ndom.ModelObject;
-import org.pathwayeditor.contextadapter.toolkit.ndom.AbstractNDOMParser.NdomException;
+import org.pathwayeditor.contextadapter.toolkit.ndom.NdomException;
 
 import uk.ac.ed.inf.Metabolic.ndomAPI.ICompartment;
 import uk.ac.ed.inf.Metabolic.ndomAPI.ICompound;
@@ -140,6 +140,9 @@ public class MetabolicCompartment extends ModelObject implements ICompartment {
 
 /*
  * $Log$
+ * Revision 1.2  2008/07/15 11:14:32  smoodie
+ * Refactored so code compiles with new Toolkit framework.
+ *
  * Revision 1.1  2008/06/02 10:31:41  asorokin
  * Reference to Service provider from all Service interfaces
  *

@@ -2,11 +2,13 @@ package uk.ac.ed.inf.Metabolic;
 
 import org.pathwayeditor.contextadapter.publicapi.IContextAdapterServiceProvider;
 import org.pathwayeditor.contextadapter.toolkit.ndom.AbstractNDOMParser;
-import org.pathwayeditor.contextadapter.toolkit.ndom.AbstractNDOMParser.NdomException;
-import org.pathwayeditor.contextadapter.toolkit.validation.AbstractContextValidationService;
+import org.pathwayeditor.contextadapter.toolkit.ndom.NdomException;
+import org.pathwayeditor.contextadapter.toolkit.validation.IValidationRuleStore;
+import org.pathwayeditor.contextadapter.toolkit.validation.RuleStore;
 
 import uk.ac.ed.inf.Metabolic.ndomAPI.IModel;
 import uk.ac.ed.inf.Metabolic.parser.MetabolicNDOMFactory;
+import uk.ac.ed.inf.Metabolic.validation.AbstractContextValidationService;
 
 public class MetabolicContextValidationService extends AbstractContextValidationService {
 
@@ -23,13 +25,10 @@ public class MetabolicContextValidationService extends AbstractContextValidation
 	public IModel getModel(){
 		return ndom;
 	}
-	/**
-	 * Must be called before validation
-	 * 
-	 */
-	  // will be changed to createDefaultRuleConfigurationLoader() and initialisation done in superclass
+
+	// will be changed to createDefaultRuleConfigurationLoader() and initialisation done in superclass
 	public void initRuleStore() {
-	 getRuleStore().initializeStore(new DefaultRuleLoader());
+		// not used now
 	}
 
 	@Override
@@ -50,6 +49,11 @@ public class MetabolicContextValidationService extends AbstractContextValidation
 		
 	}
 
+	@Override
+	public IValidationRuleStore getRuleStore() {
+		return RuleStore.getInstance(new DefaultRuleLoader());
+	}
+
 	
 
 	
@@ -62,6 +66,9 @@ public class MetabolicContextValidationService extends AbstractContextValidation
 
 /*
  * $Log$
+ * Revision 1.15  2008/07/15 11:14:32  smoodie
+ * Refactored so code compiles with new Toolkit framework.
+ *
  * Revision 1.14  2008/06/27 13:22:15  radams
  * adapt to validation servic einterface changes
  *

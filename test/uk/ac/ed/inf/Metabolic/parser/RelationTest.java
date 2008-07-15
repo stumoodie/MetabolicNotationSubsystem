@@ -9,7 +9,7 @@ import static org.junit.Assert.assertNotNull;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.pathwayeditor.contextadapter.toolkit.ndom.AbstractNDOMParser.NdomException;
+import org.pathwayeditor.contextadapter.toolkit.ndom.NdomException;
 
 import uk.ac.ed.inf.Metabolic.ndomAPI.ERelType;
 
@@ -69,6 +69,9 @@ public class RelationTest {
 
 /*
  * $Log$
+ * Revision 1.2  2008/07/15 11:14:32  smoodie
+ * Refactored so code compiles with new Toolkit framework.
+ *
  * Revision 1.1  2008/06/02 10:32:56  asorokin
  * NDOM facility
  *

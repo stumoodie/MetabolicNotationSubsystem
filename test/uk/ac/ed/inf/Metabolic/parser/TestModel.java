@@ -1,6 +1,6 @@
 package uk.ac.ed.inf.Metabolic.parser;
 
-import org.pathwayeditor.contextadapter.toolkit.ndom.AbstractNDOMParser.NdomException;
+import org.pathwayeditor.contextadapter.toolkit.ndom.NdomException;
 
 public class TestModel extends MetabolicModel 
 {

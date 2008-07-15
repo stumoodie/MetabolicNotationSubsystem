@@ -3,7 +3,6 @@ package uk.ac.ed.inf.Metabolic.parser;
 import java.util.Collections;
 import java.util.List;
 
-import uk.ac.ed.inf.Metabolic.ndomAPI.ICompartment;
 import uk.ac.ed.inf.Metabolic.ndomAPI.ICompound;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IRelation;
 
@@ -173,6 +172,9 @@ public class MetabolicCompound extends MetabolicMolecule  implements ICompound {
 
 /*
  * $Log$
+ * Revision 1.4  2008/07/15 11:14:32  smoodie
+ * Refactored so code compiles with new Toolkit framework.
+ *
  * Revision 1.3  2008/06/25 10:41:01  ntsorman
  * Excel Export service for the Metabolic Context
  *

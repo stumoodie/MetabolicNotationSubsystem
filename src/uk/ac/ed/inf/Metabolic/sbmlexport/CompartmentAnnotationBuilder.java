@@ -1,13 +1,14 @@
 package uk.ac.ed.inf.Metabolic.sbmlexport;
 
-import org.pathwayeditor.contextadapter.toolkit.ndom.IModelObject;
+import org.pathwayeditor.contextadapter.toolkit.ndom.INdomModel;
 
 import uk.ac.ed.inf.Metabolic.ndomAPI.ICompartment;
+
 
  class CompartmentAnnotationBuilder extends AnnotationBuilder {
 	private ICompartment compartment;
 	CompartmentAnnotationBuilder(ICompartment comp) {
-		super((IModelObject)comp);
+		super((INdomModel)comp);
 		this.compartment=comp;
 	}
 	

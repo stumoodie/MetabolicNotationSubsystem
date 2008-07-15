@@ -69,55 +69,55 @@ public class ModelProcessor {
 		return macromolecules ;
 	}
 	
-	private List<IRelation> giveActivatoryRelations() {
-		if ( model == null )
-			throw new NullPointerException () ;
-		
-		ArrayList<ICompound> compounds = new ArrayList<ICompound> ( giveCompounds() );
-		
-		ArrayList<IRelation> activatoryReactions = new ArrayList<IRelation> () ;
-		
-		for ( int a = 0 ; a < compounds.size() ; a ++)
-		{
-			ICompound tempCompound = compounds.get(a) ;
-			
-			activatoryReactions.addAll(tempCompound.getActivatoryRelationList()) ;
-		}
-		
-		return activatoryReactions ;
-	}
+//	private List<IRelation> giveActivatoryRelations() {
+//		if ( model == null )
+//			throw new NullPointerException () ;
+//		
+//		ArrayList<ICompound> compounds = new ArrayList<ICompound> ( giveCompounds() );
+//		
+//		ArrayList<IRelation> activatoryReactions = new ArrayList<IRelation> () ;
+//		
+//		for ( int a = 0 ; a < compounds.size() ; a ++)
+//		{
+//			ICompound tempCompound = compounds.get(a) ;
+//			
+//			activatoryReactions.addAll(tempCompound.getActivatoryRelationList()) ;
+//		}
+//		
+//		return activatoryReactions ;
+//	}
+//	
+//	private List<IRelation> giveCatalyticRelations() {
+//		if ( model == null )
+//			throw new NullPointerException () ;
+//		
+//		ArrayList<ICompound> compounds = new ArrayList<ICompound> ( giveCompounds() );
+//		
+//		ArrayList<IRelation> catalyticRelation = new ArrayList<IRelation> () ;
+//		
+//		for ( int a = 0 ; a < compounds.size() ; a ++)
+//		{	
+//			catalyticRelation.addAll(compounds.get(a).getCatalyticRelationList()) ;
+//		}
+//		
+//		return catalyticRelation ;
+//	}
 	
-	private List<IRelation> giveCatalyticRelations() {
-		if ( model == null )
-			throw new NullPointerException () ;
-		
-		ArrayList<ICompound> compounds = new ArrayList<ICompound> ( giveCompounds() );
-		
-		ArrayList<IRelation> catalyticRelation = new ArrayList<IRelation> () ;
-		
-		for ( int a = 0 ; a < compounds.size() ; a ++)
-		{	
-			catalyticRelation.addAll(compounds.get(a).getCatalyticRelationList()) ;
-		}
-		
-		return catalyticRelation ;
-	}
-	
-	private List<IRelation> giveInhibitoryRelations() {
-		if ( model == null )
-			throw new NullPointerException () ;
-		
-		ArrayList<ICompound> compounds = new ArrayList<ICompound> ( giveCompounds() );
-		
-		ArrayList<IRelation> inhibitoryRelation = new ArrayList<IRelation> () ;
-		
-		for ( int a = 0 ; a < compounds.size() ; a ++)
-		{			
-			inhibitoryRelation.addAll(compounds.get(a).getInhibitoryRelationList()) ;
-		}
-		
-		return inhibitoryRelation ;
-	}
+//	private List<IRelation> giveInhibitoryRelations() {
+//		if ( model == null )
+//			throw new NullPointerException () ;
+//		
+//		ArrayList<ICompound> compounds = new ArrayList<ICompound> ( giveCompounds() );
+//		
+//		ArrayList<IRelation> inhibitoryRelation = new ArrayList<IRelation> () ;
+//		
+//		for ( int a = 0 ; a < compounds.size() ; a ++)
+//		{			
+//			inhibitoryRelation.addAll(compounds.get(a).getInhibitoryRelationList()) ;
+//		}
+//		
+//		return inhibitoryRelation ;
+//	}
 	
 	private List<IRelation> giveSinkList() {
 		if ( model == null )

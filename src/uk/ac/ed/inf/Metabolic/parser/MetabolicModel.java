@@ -7,17 +7,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.pathwayeditor.contextadapter.toolkit.ndom.IModelObject;
-import org.pathwayeditor.contextadapter.toolkit.ndom.AbstractNDOMParser.NdomException;
+import org.pathwayeditor.contextadapter.toolkit.ndom.NdomException;
 
 import uk.ac.ed.inf.Metabolic.ndomAPI.ICompartment;
 import uk.ac.ed.inf.Metabolic.ndomAPI.ICompound;
-import uk.ac.ed.inf.Metabolic.ndomAPI.IMacromolecule;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IModel;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IReaction;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IRelation;
 
-public class MetabolicModel implements IModel,IModelObject {
+public class MetabolicModel implements IModel {
 
 	private String description="";
 	private String detailedDescription="";
@@ -46,7 +44,7 @@ public class MetabolicModel implements IModel,IModelObject {
 	private Map<String, List<IReaction>> reactionByEC = new HashMap<String, List<IReaction>>();
 
 	// Macromolecules
-	private Map<String, IMacromolecule> macromoleculeByGO = new HashMap<String, IMacromolecule>();
+//	private Map<String, IMacromolecule> macromoleculeByGO = new HashMap<String, IMacromolecule>();
 
 	public MetabolicModel(String id, String name, String asciiName) {
 		this.id = id;
@@ -139,7 +137,7 @@ public class MetabolicModel implements IModel,IModelObject {
 			ICompartment l = compartmentByGO.get(go);
 			if (null != l) {
 				if (!l.equals(e))
-					throw new NDOMFactory.NdomException(
+					throw new NdomException(
 							"Multiple Compartments with the same Identity: "
 									+ go);
 			}
@@ -302,6 +300,9 @@ public class MetabolicModel implements IModel,IModelObject {
 
 /*
  * $Log$
+ * Revision 1.2  2008/07/15 11:14:32  smoodie
+ * Refactored so code compiles with new Toolkit framework.
+ *
  * Revision 1.1  2008/06/02 10:31:42  asorokin
  * Reference to Service provider from all Service interfaces
  *

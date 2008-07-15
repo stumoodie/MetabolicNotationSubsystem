@@ -12,11 +12,11 @@ public class CellManipulator {
 	
 	private HSSFCellStyle style ;
 	private HSSFCellStyle headerStyle ;
-	private HSSFWorkbook workbook ;
+//	private HSSFWorkbook workbook ;
 	
 	public CellManipulator ( HSSFWorkbook workbook )
 	{
-		this.workbook = workbook ;
+//		this.workbook = workbook ;
 		style = workbook.createCellStyle() ;
 		
 		style.setBorderBottom(HSSFCellStyle.BORDER_THIN) ;

@@ -8,6 +8,7 @@ import org.pathwayeditor.businessobjectsAPI.IMapObject;
 import org.pathwayeditor.businessobjectsAPI.IRootMapObject;
 import org.pathwayeditor.contextadapter.toolkit.ndom.AbstractNDOMParser;
 import org.pathwayeditor.contextadapter.toolkit.ndom.ModelObject;
+import org.pathwayeditor.contextadapter.toolkit.ndom.NdomException;
 
 import uk.ac.ed.inf.Metabolic.ndomAPI.ERelType;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IModel;
@@ -288,6 +289,9 @@ protected abstract void catalysis(ILink el, MetabolicReaction r);
 
 /*
  * $Log$
+ * Revision 1.6  2008/07/15 11:14:32  smoodie
+ * Refactored so code compiles with new Toolkit framework.
+ *
  * Revision 1.5  2008/06/27 13:22:15  radams
  * adapt to validation servic einterface changes
  *

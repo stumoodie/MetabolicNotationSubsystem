@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import uk.ac.ed.inf.Metabolic.ndomAPI.ICompartment;
 import uk.ac.ed.inf.Metabolic.ndomAPI.ICompound;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IMacromolecule;
-import uk.ac.ed.inf.Metabolic.ndomAPI.IMolecule;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IRelation;
 
 public class MetabolicMacromolecule extends MetabolicMolecule implements IMacromolecule {
@@ -104,6 +102,9 @@ public class MetabolicMacromolecule extends MetabolicMolecule implements IMacrom
 
 /*
  * $Log$
+ * Revision 1.3  2008/07/15 11:14:32  smoodie
+ * Refactored so code compiles with new Toolkit framework.
+ *
  * Revision 1.2  2008/06/25 10:41:01  ntsorman
  * Excel Export service for the Metabolic Context
  *

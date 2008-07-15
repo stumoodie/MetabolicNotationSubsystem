@@ -2,9 +2,9 @@ package uk.ac.ed.inf.Metabolic.ndomAPI;
 
 import java.util.List;
 
-import org.pathwayeditor.contextadapter.toolkit.ndom.IModelObject;
+import org.pathwayeditor.contextadapter.toolkit.ndom.INdomModel;
 
-public interface IReaction extends IModelObject {
+public interface IReaction extends INdomModel {
 	public List<IRelation> getSubstrateList();
 
 	public List<IRelation> getProductList();

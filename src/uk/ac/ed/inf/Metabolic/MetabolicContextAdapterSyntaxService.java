@@ -26,13 +26,13 @@ import org.pathwayeditor.contextadapter.toolkit.ctxdefn.TextPropertyDefinition;
 
 public class MetabolicContextAdapterSyntaxService implements IContextAdapterSyntaxService {
 
-	private static int[] getRGB(String hex) {
-		hex = hex.replace("#", "");
-		int r = Integer.parseInt(hex.substring(0, 2), 16);
-		int g = Integer.parseInt(hex.substring(2, 4), 16);
-		int b = Integer.parseInt(hex.substring(4), 16);
-		return new int[] { r, g, b };
-	}
+//	private static int[] getRGB(String hex) {
+//		hex = hex.replace("#", "");
+//		int r = Integer.parseInt(hex.substring(0, 2), 16);
+//		int g = Integer.parseInt(hex.substring(2, 4), 16);
+//		int b = Integer.parseInt(hex.substring(4), 16);
+//		return new int[] { r, g, b };
+//	}
 
 	private static IPropertyDefinition reassignVal(IPropertyDefinition prop,String val,boolean isEdit,boolean isVis){
 		if( prop instanceof TextPropertyDefinition) return reassignVal((TextPropertyDefinition) prop,val,isEdit,isVis);

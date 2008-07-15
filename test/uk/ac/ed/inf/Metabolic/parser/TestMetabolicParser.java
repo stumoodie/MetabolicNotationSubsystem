@@ -3,7 +3,9 @@
  */
 package uk.ac.ed.inf.Metabolic.parser;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.jmock.Expectations;
 import org.jmock.Mockery;
@@ -13,10 +15,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.pathwayeditor.businessobjectsAPI.IMapObject;
 import org.pathwayeditor.businessobjectsAPI.IRootMapObject;
-import org.pathwayeditor.contextadapter.toolkit.ndom.AbstractNDOMParser;
-import org.pathwayeditor.contextadapter.toolkit.ndom.ModelObject;
 
 /**
  * $Id$
@@ -190,6 +189,9 @@ public class TestMetabolicParser {
 
 /*
  * $Log$
+ * Revision 1.2  2008/07/15 11:14:32  smoodie
+ * Refactored so code compiles with new Toolkit framework.
+ *
  * Revision 1.1  2008/06/02 15:14:00  asorokin
  * *** empty log message ***
  *
