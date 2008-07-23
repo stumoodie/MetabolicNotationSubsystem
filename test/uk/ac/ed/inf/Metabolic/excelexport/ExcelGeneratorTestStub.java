@@ -9,9 +9,9 @@ import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 
 import uk.ac.ed.inf.Metabolic.ndomAPI.IModel;
 
-public class TestGenerator extends ExcelGenerator {
+public class ExcelGeneratorTestStub extends ExcelGenerator {
 
-	public TestGenerator(IModel model, String templatePath)
+	public ExcelGeneratorTestStub(IModel model, String templatePath)
 			throws IllegalArgumentException {
 		super(model, templatePath);
 

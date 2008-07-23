@@ -1,8 +1,8 @@
 package uk.ac.ed.inf.Metabolic.parser;
 
-public class TestMacromolecule extends MetabolicMacromolecule {
+public class MacromoleculeTestDouble extends MetabolicMacromolecule {
 
-	public TestMacromolecule(String id, String name,
+	public MacromoleculeTestDouble(String id, String name,
 			String asciiName) {
 		super(id, name, asciiName);
 	}

@@ -2,10 +2,10 @@ package uk.ac.ed.inf.Metabolic.parser;
 
 import uk.ac.ed.inf.Metabolic.ndomAPI.IRelation;
 
-public class TestCompound extends MetabolicCompound 
+public class CompoundTestDouble extends MetabolicCompound 
 {
 
-	public TestCompound(String id, String name, String asciiName) {
+	public CompoundTestDouble(String id, String name, String asciiName) {
 		super(id, name, asciiName);
 		// TODO Auto-generated constructor stub
 	}

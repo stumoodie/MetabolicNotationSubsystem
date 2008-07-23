@@ -3,7 +3,7 @@ package uk.ac.ed.inf.Metabolic.parser;
 import org.pathwayeditor.contextadapter.toolkit.ndom.NdomException;
 
 
-public class TestCompartment extends MetabolicCompartment {
+public class MetabolicCompartmentTestStub extends MetabolicCompartment {
 
 	public boolean addChildCompartment(MetabolicCompartment e) throws NdomException {
 		return super.addChildCompartment(e);
@@ -17,7 +17,7 @@ public class TestCompartment extends MetabolicCompartment {
 		return super.addMacromolecule(e);
 	}
 
-	public TestCompartment(String id, String name, String asciiName,
+	public MetabolicCompartmentTestStub(String id, String name, String asciiName,
 			MetabolicModel m) {
 		super(id, name, asciiName, m);
 	}

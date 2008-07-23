@@ -1,9 +1,9 @@
 package uk.ac.ed.inf.Metabolic.parser;
 
-public class TestReaction extends MetabolicReaction 
+public class ReactionTestDouble extends MetabolicReaction 
 {
 
-	public TestReaction(String id, String name, String asciiName) {
+	public ReactionTestDouble(String id, String name, String asciiName) {
 		super(id, name, asciiName);
 	}
 

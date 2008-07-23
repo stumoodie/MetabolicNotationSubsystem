@@ -2,10 +2,10 @@ package uk.ac.ed.inf.Metabolic.parser;
 
 import org.pathwayeditor.contextadapter.toolkit.ndom.NdomException;
 
-public class TestModel extends MetabolicModel 
+public class ModelTestDouble extends MetabolicModel 
 {
 
-	public TestModel(String id, String name, String asciiName) {
+	public ModelTestDouble(String id, String name, String asciiName) {
 		super(id, name, asciiName);
 	}
 

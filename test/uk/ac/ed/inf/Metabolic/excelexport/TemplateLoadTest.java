@@ -7,14 +7,14 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import uk.ac.ed.inf.Metabolic.parser.TestModel;
+import uk.ac.ed.inf.Metabolic.parser.ModelTestDouble;
 
 
 
 public class TemplateLoadTest {
 	
 	IExcelFileGenerator generator ;
-	TestModel NDOModel ;
+	ModelTestDouble NDOModel ;
 	@Before
 	public void setUp() throws Exception {
 		
@@ -22,9 +22,9 @@ public class TemplateLoadTest {
 		
 //		String [] a = file.list() ;
 		
-		NDOModel = new TestModel ("id", "name", "asciiName") ;
+		NDOModel = new ModelTestDouble ("id", "name", "asciiName") ;
 		
-		generator = new TestGenerator ( NDOModel , "Template.xls") ;
+		generator = new ExcelGeneratorTestStub ( NDOModel , "Template.xls") ;
 		
 		generator.createNewWorkbook() ;
 
