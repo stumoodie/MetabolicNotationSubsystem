@@ -66,7 +66,7 @@ public class MetabolicSBMLExportAdapterTest {
     public static void loadNativeLibraries () throws Exception {
     	isLibSBMLLoaded = LibSBMLConfigManager.configure();
     	//overrides application code
-    	TestSBMLLoader.overrideSingleton( new LibSBMLLoader(){
+    	SBMLLoaderTestStub.overrideSingleton( new LibSBMLLoader(){
     		public boolean loadLibrary() {
     			return true;
     		}
@@ -83,7 +83,7 @@ public class MetabolicSBMLExportAdapterTest {
 	//	loadNativeLibraries();
 		stubexportAdapter=new MetabolicSBMLExportAdapterTestStub();
 	    exportAdapter = new MetabolicSBMLExportAdapter<IModel>();
-		TestSBMLLoader.overrideSingleton( new LibSBMLLoader(){
+		SBMLLoaderTestStub.overrideSingleton( new LibSBMLLoader(){
     		public boolean loadLibrary() {
     			return true;
     		}

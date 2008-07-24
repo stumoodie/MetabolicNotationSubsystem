@@ -71,9 +71,10 @@ public class EntittyBuilderTest {
 			
 		});
 		entityFactory.buildSpeciesAndCompartments(sbmlModel, model);
-		assertEquals(2, sbmlModel.getListOfCompartments().size());
-		assertEquals(0,doc.checkL2v3Compatibility());
-		assertEquals(0,doc.checkConsistency());
+		System.out.println(sbmlModel.getListOfCompartments().size());
+		assertEquals(2L, sbmlModel.getListOfCompartments().size());
+		assertEquals(0L,doc.checkL2v3Compatibility());
+		assertEquals(0L,doc.checkConsistency());
 		
 	}
 	
@@ -99,9 +100,9 @@ public class EntittyBuilderTest {
 		});
 		
 		entityFactory.buildSpeciesAndCompartments(sbmlModel, model);
-		assertEquals(3, sbmlModel.getListOfCompartments().size());
-		assertEquals(0,doc.checkL2v3Compatibility());
-		assertEquals(0,doc.checkConsistency());
+		assertEquals(3L, sbmlModel.getListOfCompartments().size());
+		assertEquals(0L,doc.checkL2v3Compatibility());
+		assertEquals(0L,doc.checkConsistency());
 		
 	}
 	
@@ -123,9 +124,9 @@ public class EntittyBuilderTest {
 			
 		});
 		entityFactory.buildSpeciesAndCompartments(sbmlModel, model);
-		assertEquals(1, sbmlModel.getListOfSpecies().size());
-		assertEquals(0,doc.checkL2v3Compatibility());
-		assertEquals(0,doc.checkConsistency());
+		assertEquals(1L, sbmlModel.getListOfSpecies().size());
+		assertEquals(0L,doc.checkL2v3Compatibility());
+		assertEquals(0L,doc.checkConsistency());
 		
 	}
 	
@@ -149,9 +150,9 @@ public class EntittyBuilderTest {
 			
 		});
 		entityFactory.buildSpeciesAndCompartments(sbmlModel, model);
-		assertEquals(1, sbmlModel.getListOfSpecies().size());
-		assertEquals(0,doc.checkL2v3Compatibility());
-		assertEquals(0,doc.checkConsistency());
+		assertEquals(1L, sbmlModel.getListOfSpecies().size());
+		assertEquals(0L,doc.checkL2v3Compatibility());
+		assertEquals(0L,doc.checkConsistency());
 		
 	}
 	
@@ -176,9 +177,9 @@ public class EntittyBuilderTest {
 			
 		});
 		entityFactory.buildSpeciesAndCompartments(sbmlModel, model);
-	assertEquals(1, sbmlModel.getListOfSpecies().size());
-	assertEquals(0,doc.checkL2v3Compatibility());
-	assertEquals(0,doc.checkConsistency());
+	assertEquals(1L, sbmlModel.getListOfSpecies().size());
+	assertEquals(0L,doc.checkL2v3Compatibility());
+	assertEquals(0L,doc.checkConsistency());
 	
 		
 		

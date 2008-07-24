@@ -81,8 +81,8 @@ public class SBMLReactionFactoryTest {
 		});
 		
 		reactionBuilder.buildReactions(sbmlModel, model);
-		assertEquals(0,sbmlModel.getListOfReactions().size());
-		assertEquals(0,doc.checkL2v3Compatibility());
+		assertEquals(0L,sbmlModel.getListOfReactions().size());
+		assertEquals(0L,doc.checkL2v3Compatibility());
 		
 	}
 	
@@ -96,13 +96,13 @@ public class SBMLReactionFactoryTest {
 		setUpExpectationsForReactionWithNoModifiers(model, reactions);
 		
 		reactionBuilder.buildReactions(sbmlModel, model);
-		assertEquals(1,sbmlModel.getListOfReactions().size());
+		assertEquals(1L,sbmlModel.getListOfReactions().size());
 		assertTrue(SBMLVerificationUtilities.getSubstrateByIndex(sbmlModel,0,0).getSpecies().contains(SUB_1_ID));
 		assertTrue(SBMLVerificationUtilities.getProductByIndex(sbmlModel,0,0).getSpecies().contains(PROD_1_ID));
 		assertTrue(SBMLVerificationUtilities.getProductByIndex(sbmlModel,0,0).getSpecies().contains(PROD_1_ID));
 		assertTrue(SBMLVerificationUtilities.getReactionByIndex(sbmlModel,0).getReversible());
-		assertEquals(0,((Reaction)sbmlModel.getListOfReactions().get(0)).getListOfModifiers().size());
-		assertEquals(0,doc.checkL2v3Compatibility());
+		assertEquals(0L,((Reaction)sbmlModel.getListOfReactions().get(0)).getListOfModifiers().size());
+		assertEquals(0L,doc.checkL2v3Compatibility());
 		
 	}
 	
@@ -116,7 +116,7 @@ public class SBMLReactionFactoryTest {
 		
 		reactionBuilder.buildReactions(sbmlModel, model);
 		assertFalse(SBMLVerificationUtilities.getReactionByIndex(sbmlModel, 0).getReversible());
-		assertEquals(0,doc.checkL2v3Compatibility());
+		assertEquals(0L,doc.checkL2v3Compatibility());
 		
 		
 	}
@@ -133,8 +133,8 @@ public class SBMLReactionFactoryTest {
 		reactionBuilder.buildReactions(sbmlModel, model);
 		Reaction r = SBMLVerificationUtilities.getReactionByIndex(sbmlModel, 0);
 		assertFalse(r.getReversible());
-		assertEquals(1, r.getListOfModifiers().size());
-		assertEquals(0,doc.checkL2v3Compatibility());
+		assertEquals(1L, r.getListOfModifiers().size());
+		assertEquals(0L,doc.checkL2v3Compatibility());
 		
 		
 	}
