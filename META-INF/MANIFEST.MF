@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: MetabolicContext Plug-in
+Bundle-Name: Metabolic Context adapter
 Bundle-SymbolicName: uk.ac.ed.inf.csb.Metabolic;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-ClassPath: .,
@@ -15,3 +15,4 @@ Require-Bundle: org.eclipse.ui,
  org.pathwayeditor.application;bundle-version="0.8.1",
  org.eclipse.core.resources
 Eclipse-LazyStart: true
+Bundle-Vendor: CSB group, University of Edinburgh
