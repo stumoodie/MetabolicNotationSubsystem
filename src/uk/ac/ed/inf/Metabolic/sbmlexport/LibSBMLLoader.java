@@ -5,7 +5,9 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 
 class LibSBMLLoader {
-	final String[]SBML_LIBS = new String[] { "libexpat", "libsbml", "sbmlj" };
+	final static String[]SBML_WINDOWS_LIBS = new String[] { "libexpat", "libsbml", "sbmlj" };
+	final static String[]SBML_MAC_LIBS = new String[] {};// populate with names
+	
 	protected static LibSBMLLoader instance;
 
 	protected LibSBMLLoader() {
@@ -22,13 +24,19 @@ class LibSBMLLoader {
 	// this works when the app is running but not for junits. To get
 	// lib sbml for junits use LisSBMLConfigManager in the test folders
 	public boolean loadLibrary() {
+		String [] librariesToLoad = new String [0];
 		String os = System.getProperty("os.name");
 		if (os.contains("win") || os.contains("Win")) {
 			os = "win32";
+			librariesToLoad = SBML_WINDOWS_LIBS;
+		} else if (os.contains("macos") || os.contains("Macos")){
+			os = "macosx";
+			librariesToLoad = SBML_MAC_LIBS;
 		}
 		
-		for (int i = 0; i < SBML_LIBS.length; i++) {
-			String lib = System.mapLibraryName(SBML_LIBS[i]);
+		
+		for (int i = 0; i < librariesToLoad.length; i++) {
+			String lib = System.mapLibraryName(librariesToLoad[i]);
 			InputStream is = MetabolicSBMLExportAdapter.class.getResourceAsStream("/os/" + os + "/"
 					+ lib);
 			File temp = new File(System.getProperty("java.io.tmpdir") + File.separator + lib);

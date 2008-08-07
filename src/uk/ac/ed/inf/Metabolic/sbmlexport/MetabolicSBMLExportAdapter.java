@@ -37,7 +37,7 @@ class MetabolicSBMLExportAdapter<N extends IModel> implements IExportAdapter<N> 
 		if (model == null) {
 			throw new IllegalArgumentException("model is null");
 		}
-		if(!LibSBMLLoader.getInstance().loadLibrary()) {
+		if(!isLibraryLoaded && !LibSBMLLoader.getInstance().loadLibrary()) {
 			throw new ExportAdapterCreationException("Could not load libSBML - only supported on Windows at present");
 		}
 		// concession to testing
