@@ -7,7 +7,6 @@ Bundle-ClassPath: .,
  sbmlj.jar,
  os/,
  poi-3.0.2-FINAL-20080204.jar,
- Toolkit.jar,
  lib/Toolkit.jar
 Bundle-Activator: uk.ac.ed.inf.metaboliccontext.plugin.Activator
 Require-Bundle: org.eclipse.ui,
