@@ -139,7 +139,7 @@ public class MetabolicCompartment extends ModelObject implements ICompartment {
 
 
 /*
- * $Log$
+ * $Log: MetabolicCompartment.java,v $
  * Revision 1.2  2008/07/15 11:14:32  smoodie
  * Refactored so code compiles with new Toolkit framework.
  *

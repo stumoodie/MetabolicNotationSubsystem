@@ -185,7 +185,7 @@ public class MetabolicReaction  extends ModelObject implements IReaction {
 
 
 /*
- * $Log$
+ * $Log: MetabolicReaction.java,v $
  * Revision 1.3  2008/06/20 22:48:19  radams
  * imports
  *

@@ -101,7 +101,7 @@ public class MetabolicMacromolecule extends MetabolicMolecule implements IMacrom
 
 
 /*
- * $Log$
+ * $Log: MetabolicMacromolecule.java,v $
  * Revision 1.3  2008/07/15 11:14:32  smoodie
  * Refactored so code compiles with new Toolkit framework.
  *

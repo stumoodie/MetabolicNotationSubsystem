@@ -138,7 +138,7 @@ public class MetabolicRelation extends ModelObject implements IRelation {
 }
 
 /*
- * $Log$
+ * $Log: MetabolicRelation.java,v $
  * Revision 1.1  2008/06/02 10:31:42  asorokin
  * Reference to Service provider from all Service interfaces
  *
