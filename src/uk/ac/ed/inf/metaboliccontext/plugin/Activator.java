@@ -2,9 +2,9 @@ package uk.ac.ed.inf.metaboliccontext.plugin;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
+import org.pathwayeditor.contextadapter.publicapi.IContextAdapterValidationService;
 
 import uk.ac.ed.inf.Metabolic.MetabolicContextAdapterServiceProvider;
-import uk.ac.ed.inf.Metabolic.MetabolicContextValidationService;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -30,9 +30,10 @@ public class Activator extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;		
-		MetabolicContextValidationService service = (MetabolicContextValidationService) MetabolicContextAdapterServiceProvider.getInstance().getValidationService();
-	    service.setRuleConfigurer(new MetabolicValidationConfigPreferencesConfigurer());
-	    service.initRuleStore();
+//		MetabolicContextValidationService service = (MetabolicContextValidationService) MetabolicContextAdapterServiceProvider.getInstance().getValidationService();
+		IContextAdapterValidationService service = MetabolicContextAdapterServiceProvider.getInstance().getValidationService();
+		service.setRuleConfigurer(new MetabolicValidationConfigPreferencesConfigurer());
+//	    service.initRuleStore();
 	}
 
 	/*

@@ -14,7 +14,7 @@ import org.pathwayeditor.contextadapter.publicapi.IValidationReport;
 
 import uk.ac.ed.inf.Metabolic.ExportAdapterCreationException;
 import uk.ac.ed.inf.Metabolic.IExportAdapter;
-import uk.ac.ed.inf.Metabolic.MetabolicContextValidationService;
+import uk.ac.ed.inf.Metabolic.MetabolicNDOMValidationService;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IModel;
 
 public class SBMLExportService implements IContextAdapterExportService {
@@ -94,7 +94,11 @@ public class SBMLExportService implements IContextAdapterExportService {
 	}
 	
 	IModel getModel(IContextAdapterValidationService validator) {
-		return ((MetabolicContextValidationService)validator).getModel();
+		if(validator.getValidationReport().isMapValid()){
+		return (IModel) MetabolicNDOMValidationService.getInstance(serviceProvider).getNDOM();
+		}else{
+			return null;
+		}
 	}
 
 	private void checkArgs(IMap map, File exportFile)

@@ -10,9 +10,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.pathwayeditor.contextadapter.publicapi.IValidationRuleConfig;
+import org.pathwayeditor.contextadapter.toolkit.validation.ContextValidationService;
 
 import uk.ac.ed.inf.Metabolic.MetabolicContextAdapterServiceProvider;
-import uk.ac.ed.inf.Metabolic.MetabolicContextValidationService;
 
 public class MetabolicValidationRulePreferencesTest {
 	private class MetabolicValidationRulePreferencesExt extends MetabolicValidationRulePreferences {
@@ -22,13 +22,13 @@ public class MetabolicValidationRulePreferencesTest {
 
 	public MetabolicValidationRulePreferencesExt prefsTSS;
 	public MetabolicValidationRulePreferences prefs;
-	MetabolicContextValidationService validationService;
+	ContextValidationService validationService;
 
 	@Before
 	public void setUp() throws Exception {
-		validationService = (MetabolicContextValidationService) MetabolicContextAdapterServiceProvider
+		validationService = (ContextValidationService) MetabolicContextAdapterServiceProvider
 				.getInstance().getValidationService();
-		validationService.initRuleStore();
+//		validationService.initRuleStore();
 		prefsTSS = new MetabolicValidationRulePreferencesExt();
 		prefs=prefsTSS;
 	}

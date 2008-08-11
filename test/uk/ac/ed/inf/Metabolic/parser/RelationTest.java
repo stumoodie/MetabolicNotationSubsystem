@@ -68,7 +68,7 @@ public class RelationTest {
 
 
 /*
- * $Log$
+ * $Log: RelationTest.java,v $
  * Revision 1.2  2008/07/15 11:14:32  smoodie
  * Refactored so code compiles with new Toolkit framework.
  *
