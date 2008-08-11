@@ -11,10 +11,12 @@ import org.pathwayeditor.contextadapter.publicapi.ExportServiceException;
 import org.pathwayeditor.contextadapter.publicapi.IContext;
 import org.pathwayeditor.contextadapter.publicapi.IContextAdapterExportService;
 import org.pathwayeditor.contextadapter.publicapi.IContextAdapterServiceProvider;
+import org.pathwayeditor.contextadapter.publicapi.IContextAdapterValidationService;
 import org.pathwayeditor.contextadapter.publicapi.IValidationReport;
+import org.pathwayeditor.contextadapter.toolkit.validation.ContextValidationService;
 
 import uk.ac.ed.inf.Metabolic.ExportAdapterCreationException;
-import uk.ac.ed.inf.Metabolic.MetabolicContextValidationService;
+import uk.ac.ed.inf.Metabolic.MetabolicNDOMValidationService;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IModel;
 
 public class ExcelExportService implements IContextAdapterExportService {
@@ -57,8 +59,11 @@ FileOutputStream fos = null;
 try {
 	checkArgs(map, exportFile);
 
-	MetabolicContextValidationService validator = (MetabolicContextValidationService) serviceProvider
-			.getValidationService();
+//	MetabolicContextValidationService validator = (MetabolicContextValidationService) serviceProvider
+//			.getValidationService();
+	
+	ContextValidationService validator = (ContextValidationService) serviceProvider
+	.getValidationService();
 	validator.setMapToValidate(map);
 	IModel ndom = null;
 	if (validator.isReadyToValidate()) {
@@ -69,7 +74,7 @@ try {
 			
 			throw new ExportServiceException(sb, report);
 		}else{
-			ndom=validator.getModel();
+			ndom=getModel(validator);
 		}
 		System.out.println(validator.getValidationReport());
 		System.out.println(ndom.toString());
@@ -109,6 +114,14 @@ try {
 }
 
 }
+
+	IModel getModel(IContextAdapterValidationService validator) {
+		if(validator.getValidationReport().isMapValid()){
+		return (IModel) MetabolicNDOMValidationService.getInstance(serviceProvider).getNDOM();
+		}else{
+			return null;
+		}
+	}
 
 	private void checkArgs(IMap map, File exportFile)
 			throws ExportServiceException, IOException {
