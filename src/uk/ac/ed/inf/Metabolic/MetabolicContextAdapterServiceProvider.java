@@ -13,6 +13,7 @@ import org.pathwayeditor.contextadapter.publicapi.IContextAdapterConversionServi
 import org.pathwayeditor.contextadapter.publicapi.IContextAdapterServiceProvider;
 import org.pathwayeditor.contextadapter.publicapi.IContextAdapterValidationService;
 import org.pathwayeditor.contextadapter.toolkit.ctxdefn.GeneralContext;
+import org.pathwayeditor.contextadapter.toolkit.validation.ContextValidationService;
 
 import uk.ac.ed.inf.Metabolic.excelexport.ExcelExportService;
 import uk.ac.ed.inf.Metabolic.sbmlexport.SBMLExportService;
@@ -39,7 +40,7 @@ public class MetabolicContextAdapterServiceProvider implements IContextAdapterSe
 	private MetabolicContextAdapterSyntaxService syntaxService;
 	private IContext context;
 	private Set<IContextAdapterExportService> exportServices = new HashSet<IContextAdapterExportService>();
-	private MetabolicContextValidationService validationService;
+	private IContextAdapterValidationService validationService;
 	private static IContextAdapterServiceProvider instance;
 	
 	/**
@@ -52,7 +53,8 @@ public class MetabolicContextAdapterServiceProvider implements IContextAdapterSe
 		this.syntaxService = new MetabolicContextAdapterSyntaxService(this);
 		exportServices.add(new SBMLExportService(this));
 		exportServices.add(new ExcelExportService(this));
-		this.validationService=new MetabolicContextValidationService(this);
+		MetabolicNDOMValidationService ndomVal = MetabolicNDOMValidationService.getInstance(this);
+		this.validationService=new ContextValidationService(this,ndomVal);;
 	}
 	
 	public static IContextAdapterServiceProvider getInstance() {
