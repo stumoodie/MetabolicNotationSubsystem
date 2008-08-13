@@ -11,8 +11,7 @@ public class LibSBMLConfigManager {
 	private static boolean isWindows() {
 		return System.getProperty("os.name").indexOf("Win") != -1;
 	}
-	static int i;
-	static boolean isLoaded;
+	
 
 	private static String getPath() throws Exception {
 		InputStream is = LibSBMLConfigManager.class.getResourceAsStream("PathToNativeSBMLLibraries.setUp");
