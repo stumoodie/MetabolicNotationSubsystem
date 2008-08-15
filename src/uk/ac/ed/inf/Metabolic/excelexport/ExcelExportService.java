@@ -21,7 +21,7 @@ import uk.ac.ed.inf.Metabolic.ndomAPI.IModel;
 
 public class ExcelExportService implements IContextAdapterExportService {
 
-	String DISPLAY_NAME = "Excel export";
+	String DISPLAY_NAME = "Excel Export";
 
 	String RECOMMENDED_SUFFIX = "xls";
 	
