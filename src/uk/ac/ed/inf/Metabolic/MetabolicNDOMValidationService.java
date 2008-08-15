@@ -1,10 +1,8 @@
 package uk.ac.ed.inf.Metabolic;
 
 import org.pathwayeditor.businessobjectsAPI.IMap;
-import org.pathwayeditor.contextadapter.publicapi.IContext;
 import org.pathwayeditor.contextadapter.publicapi.IContextAdapterServiceProvider;
 import org.pathwayeditor.contextadapter.publicapi.IValidationReport;
-import org.pathwayeditor.contextadapter.toolkit.ndom.AbstractNDOMParser;
 import org.pathwayeditor.contextadapter.toolkit.ndom.INDOMValidationService;
 import org.pathwayeditor.contextadapter.toolkit.ndom.INdomModel;
 import org.pathwayeditor.contextadapter.toolkit.ndom.NdomException;
@@ -31,18 +29,18 @@ public class MetabolicNDOMValidationService implements INDOMValidationService {
 
 	private NDOMFactory factory;
 	private RuleValidationReportBuilder reportBuilder;
-	private IContextAdapterServiceProvider provider;
-	private IContext context;
+//	private IContextAdapterServiceProvider provider;
+//	private IContext context;
 	private IMap map;
 	private boolean readyToValidate;
 	private boolean validated;
 	private IValidationReport validationReport;
-	private IValidationRuleStore ruleStore;
+//	private IValidationRuleStore ruleStore;
 	private boolean ndomCreated;
 	
 	private MetabolicNDOMValidationService(IContextAdapterServiceProvider provider) {
-		this.provider=provider;
-		this.context        = provider.getContext();
+//		this.provider=provider;
+//		this.context        = provider.getContext();
 	}
 
 	public IMap getMapBeingValidated() {

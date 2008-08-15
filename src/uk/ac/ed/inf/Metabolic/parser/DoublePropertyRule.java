@@ -3,7 +3,6 @@ package uk.ac.ed.inf.Metabolic.parser;
 import org.pathwayeditor.businessobjectsAPI.IMapObject;
 import org.pathwayeditor.contextadapter.publicapi.IValidationRuleDefinition;
 import org.pathwayeditor.contextadapter.toolkit.validation.IRuleValidationReportBuilder;
-import org.pathwayeditor.contextadapter.toolkit.validation.ValidationRuleDefinition;
 
 /**
  * <br>$Id:$
