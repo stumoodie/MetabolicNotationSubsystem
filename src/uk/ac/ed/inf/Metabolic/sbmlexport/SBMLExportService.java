@@ -19,7 +19,7 @@ import uk.ac.ed.inf.Metabolic.ndomAPI.IModel;
 
 public class SBMLExportService implements IContextAdapterExportService {
 
-	String DISPLAY_NAME = "SBML exportL2v3";
+	String DISPLAY_NAME = "SBML export L2v3";
 
 	String RECOMMENDED_SUFFIX = "sbml";
 
