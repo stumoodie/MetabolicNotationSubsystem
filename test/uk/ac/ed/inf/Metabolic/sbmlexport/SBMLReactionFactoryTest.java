@@ -193,14 +193,14 @@ public class SBMLReactionFactoryTest {
 	private List<IRelation> getMockProductRelations (int num) {
 		List<IRelation> rc = new ArrayList<IRelation>();
 		for (int i = 0; i< num; i++) {
-			rc.add(createMockProductRelation(i));
+			rc.add(createMockProductRelation(i, "product" + i, "compound" + i));
 		}
 		return rc;
 	}
 	
-	private IRelation createMockActivatorRelation(final int i) {
-		final IRelation  activator = mockery.mock(IRelation.class);
-		final IMolecule compound=mockery.mock(IMolecule.class);
+	private IRelation createMockActivatorRelation(final int i, String activatorName, String compoundName) {
+		final IRelation  activator = mockery.mock(IRelation.class, activatorName);
+		final IMolecule compound=mockery.mock(IMolecule.class, compoundName);
 		mockery.checking(new Expectations () {
 			{never(activator).getStoichiometry();will(returnValue(1));}
 			{one(activator).getMolecule();will(returnValue(compound));}
@@ -213,14 +213,14 @@ public class SBMLReactionFactoryTest {
 	private List<IRelation> getMockActivatorRelations (int num) {
 		List<IRelation> rc = new ArrayList<IRelation>();
 		for (int i = 0; i< num; i++) {
-			rc.add(createMockActivatorRelation(i));
+			rc.add(createMockActivatorRelation(i, "activator" + i, "activatorCompound" + i));
 		}
 		return rc;
 	}
 	
-	private IRelation createMockProductRelation(final int i) {
-		final IRelation  product = mockery.mock(IRelation.class);
-		final IMolecule compound=mockery.mock(IMolecule.class);
+	private IRelation createMockProductRelation(final int i, String relationName, String compoundName) {
+		final IRelation  product = mockery.mock(IRelation.class, "relationName");
+		final IMolecule compound=mockery.mock(IMolecule.class, compoundName);
 		mockery.checking(new Expectations () {
 			{one(product).getStoichiometry();will(returnValue(1));}
 			{one(product).getMolecule();will(returnValue(compound));}

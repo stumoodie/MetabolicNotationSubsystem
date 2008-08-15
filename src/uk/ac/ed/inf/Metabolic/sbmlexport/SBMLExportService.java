@@ -108,7 +108,9 @@ public class SBMLExportService implements IContextAdapterExportService {
 				|| map.getTheSingleRootMapObject() == null) {
 			throw new IllegalArgumentException("Arguments must not be null");
 		}
-		exportFile.createNewFile();
+// this will create an empty file before opening an input stream creates a new one and over writes it later
+		// not really necessary
+//		exportFile.createNewFile();
 
 		if (!exportFile.canWrite()) {
 			throw new ExportServiceException("File " + exportFile

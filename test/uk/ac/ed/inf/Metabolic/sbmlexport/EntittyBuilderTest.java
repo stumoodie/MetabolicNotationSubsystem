@@ -188,7 +188,7 @@ public class EntittyBuilderTest {
 	private List<ICompartment> setUpCompartmentExpectations(int startID, int numCompartments) {
 	    List<ICompartment> rc = new ArrayList<ICompartment>();
 	    for (int i=startID; i<startID +numCompartments; i++){
-	    	ICompartment mock = getMockCompartment(i);
+	    	ICompartment mock = getMockCompartment(i, "compartment" + i);
 	    	rc.add(mock);
 	    }
 	    return rc;
@@ -196,8 +196,8 @@ public class EntittyBuilderTest {
 	}
 	
 	
-	ICompartment getMockCompartment(final int i) {
-		final ICompartment compound = mockery.mock(ICompartment.class);
+	ICompartment getMockCompartment(final int i, String name) {
+		final ICompartment compound = mockery.mock(ICompartment.class, name);
 		mockery.checking(new Expectations () {
 			{atLeast(1).of(compound).getId();will(returnValue("CompID" + i));}
 			{atLeast(1).of(compound).getASCIIName();will(returnValue("CompAsciiName" +i));}

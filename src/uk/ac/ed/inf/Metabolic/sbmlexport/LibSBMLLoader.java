@@ -6,7 +6,7 @@ import java.io.InputStream;
 
 class LibSBMLLoader {
 	final static String[]SBML_WINDOWS_LIBS = new String[] { "libexpat", "libsbml", "sbmlj" };
-	final static String[]SBML_MAC_LIBS = new String[] {};// populate with names
+	final static String[]SBML_MAC_LIBS = new String[] { "libexpat.1.5.0", "libsbml", "sbmlj" };// populate with names
 	
 	protected static LibSBMLLoader instance;
 

@@ -21,6 +21,8 @@ import uk.ac.ed.inf.Metabolic.MetabolicContextAdapterServiceProvider;
 
 @RunWith(JMock.class)
 public class TestDoublePropertyRule {
+	private static final double ASSERT_DOUBLE_DELTA = 0.0001;
+
 	Mockery mockery = new JUnit4Mockery();
 
 	DoublePropertyRule rule;
@@ -55,7 +57,7 @@ public class TestDoublePropertyRule {
 		});
 		rule.setObject(imo);
 		assertTrue(rule.validate(report));
-		assertEquals("Double value",1.0, rule.getValue());
+		assertEquals("Double value",1.0, rule.getValue(), ASSERT_DOUBLE_DELTA);
 	}
 
 	@Test

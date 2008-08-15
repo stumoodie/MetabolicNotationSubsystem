@@ -2,26 +2,17 @@
 <classpath>
 	<classpathentry excluding="uk/ac/ed/inf/Metabolic/validation/IDefaultValidationRuleConfigLoader.java|uk/ac/ed/inf/Metabolic/validation/IRuleValidationReportBuilder.java|uk/ac/ed/inf/Metabolic/validation/IValidationRuleStore.java|uk/ac/ed/inf/Metabolic/validation/RuleStore.java|uk/ac/ed/inf/Metabolic/validation/ValidationReportItem.java|uk/ac/ed/inf/Metabolic/validation/ValidationRuleConfig.java|uk/ac/ed/inf/Metabolic/validation/ValidationRuleDefinition.java|uk/ac/ed/inf/Metabolic/validation/RuleValidationReportBuilder.java|uk/ac/ed/inf/Metabolic/validation/DefaultValidationReport.java" kind="src" path="src"/>
 	<classpathentry kind="src" path="test"/>
-	<classpathentry exported="true" kind="lib" path="lib/Toolkit.jar"/>
-	<classpathentry kind="lib" path="sbmlj.jar"/>
-	<classpathentry kind="lib" path="poi-3.0.2-FINAL-20080204.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="lib" path="poi-3.0.2-FINAL-20080204.jar"/>
 	<classpathentry kind="lib" path="lib/junit4.4/junit-4.4.jar"/>
 	<classpathentry kind="lib" path="lib/jmock-2.4.0/cglib-nodep-2.1_3.jar"/>
 	<classpathentry kind="lib" path="lib/jmock-2.4.0/hamcrest-core-1.1.jar"/>
 	<classpathentry kind="lib" path="lib/jmock-2.4.0/hamcrest-library-1.1.jar"/>
 	<classpathentry kind="lib" path="lib/jmock-2.4.0/objenesis-1.0.jar"/>
-	<classpathentry kind="lib" path="lib/jmock-2.4.0/cglib-2.1_3-src.jar"/>
-	<classpathentry kind="lib" path="jmock-2.2.0-jars/jmock-2.2.0/cglib-2.1_3-src.jar"/>
-	<classpathentry kind="lib" path="jmock-2.2.0-jars/jmock-2.2.0/cglib-nodep-2.1_3.jar"/>
-	<classpathentry kind="lib" path="jmock-2.2.0-jars/jmock-2.2.0/hamcrest-core-1.1.jar"/>
-	<classpathentry kind="lib" path="jmock-2.2.0-jars/jmock-2.2.0/hamcrest-library-1.1.jar"/>
-	<classpathentry kind="lib" path="jmock-2.2.0-jars/jmock-2.2.0/jmock-2.2.0.jar"/>
-	<classpathentry kind="lib" path="jmock-2.2.0-jars/jmock-2.2.0/jmock-junit3-2.2.0.jar"/>
-	<classpathentry kind="lib" path="jmock-2.2.0-jars/jmock-2.2.0/jmock-junit4-2.2.0.jar"/>
-	<classpathentry kind="lib" path="jmock-2.2.0-jars/jmock-2.2.0/jmock-legacy-2.2.0.jar"/>
-	<classpathentry kind="lib" path="jmock-2.2.0-jars/jmock-2.2.0/objenesis-1.0.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="lib/jmock-2.4.0/jmock-2.4.0.jar"/>
+	<classpathentry kind="lib" path="libsbmlj.jar"/>
+	<classpathentry kind="lib" path="lib/jmock-2.4.0/jmock-junit4-2.4.0.jar"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Toolkit"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
