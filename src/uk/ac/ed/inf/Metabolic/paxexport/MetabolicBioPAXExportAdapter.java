@@ -1,6 +1,5 @@
 package uk.ac.ed.inf.Metabolic.paxexport;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
@@ -29,9 +28,9 @@ public class MetabolicBioPAXExportAdapter<N extends IModel>  implements IExportA
 		try {
 			exp.convertToOWL(paxModel, stream);
 		} catch (IllegalAccessException e) {
-			throw new IOException("Error in BioPAX model writing",e);
+			throw new IOException("Error in BioPAX model writing: " + e.getMessage());
 		} catch (InvocationTargetException e) {
-			throw new IOException("Error in BioPAX model writing",e);
+			throw new IOException("Error in BioPAX model writing" + e.getMessage());
 		}
 		stream.flush();
 	}

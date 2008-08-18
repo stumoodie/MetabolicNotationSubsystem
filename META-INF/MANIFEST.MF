@@ -4,9 +4,9 @@ Bundle-Name: Metabolic Context adapter
 Bundle-SymbolicName: uk.ac.ed.inf.csb.Metabolic;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-ClassPath: .,
- sbmlj.jar,
  os/,
- poi-3.0.2-FINAL-20080204.jar,
+ lib/poi-3.1-FINAL/poi-3.1-FINAL-20080629.jar,
+ lib/sbml-3.1.1/libsbmlj.jar,
  lib/Toolkit.jar,
  lib/antlr-2.7.5.jar,
  lib/jena.jar,
