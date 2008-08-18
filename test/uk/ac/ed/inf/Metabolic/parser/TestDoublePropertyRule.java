@@ -1,15 +1,15 @@
 package uk.ac.ed.inf.Metabolic.parser;
 
-import static org.junit.Assert.*;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
 
 import org.jmock.Expectations;
 import org.jmock.Mockery;
-import org.jmock.integration.junit4.JMock;
 import org.jmock.integration.junit4.JUnit4Mockery;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjectsAPI.IContextProperty;
 import org.pathwayeditor.businessobjectsAPI.IMapObject;
 import org.pathwayeditor.contextadapter.publicapi.IValidationRuleDefinition;
@@ -19,7 +19,7 @@ import org.pathwayeditor.contextadapter.toolkit.validation.ValidationRuleDefinit
 
 import uk.ac.ed.inf.Metabolic.MetabolicContextAdapterServiceProvider;
 
-@RunWith(JMock.class)
+//@RunWith(JMock.class)
 public class TestDoublePropertyRule {
 	private static final double ASSERT_DOUBLE_DELTA = 0.0001;
 
@@ -64,7 +64,7 @@ public class TestDoublePropertyRule {
 	public void testValidateWrongStringSet() {
 		rule.setObject(imo);
 		mockery.checking(new Expectations(){
-			{atLeast(1).of(imo).getPropertyByName("Prop");will(returnValue(prop));}
+			{one(imo).getPropertyByName("Prop");will(returnValue(prop));}
 			{one(prop).getValue();will(returnValue("One"));}
 			{one(report).setRuleFailed(imo, ruleDef, "Illegal double value for Prop: One");}
 		});

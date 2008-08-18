@@ -16,6 +16,7 @@ import org.pathwayeditor.contextadapter.toolkit.ctxdefn.GeneralContext;
 import org.pathwayeditor.contextadapter.toolkit.validation.ContextValidationService;
 
 import uk.ac.ed.inf.Metabolic.excelexport.ExcelExportService;
+import uk.ac.ed.inf.Metabolic.paxexport.BioPAXExportService;
 import uk.ac.ed.inf.Metabolic.sbmlexport.SBMLExportService;
 
 
@@ -53,6 +54,7 @@ public class MetabolicContextAdapterServiceProvider implements IContextAdapterSe
 		this.syntaxService = new MetabolicContextAdapterSyntaxService(this);
 		exportServices.add(new SBMLExportService(this));
 		exportServices.add(new ExcelExportService(this));
+		exportServices.add(new BioPAXExportService(this));
 		MetabolicNDOMValidationService ndomVal = MetabolicNDOMValidationService.getInstance(this);
 		this.validationService=new ContextValidationService(this,ndomVal);;
 	}

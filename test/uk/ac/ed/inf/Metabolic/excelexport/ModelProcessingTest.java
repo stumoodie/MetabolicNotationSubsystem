@@ -1,20 +1,20 @@
 package uk.ac.ed.inf.Metabolic.excelexport;
 
-import static org.junit.Assert.assertEquals;
+import  static junit.framework.Assert.*;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import uk.ac.ed.inf.Metabolic.excelexport.ModelProcessor;
 import uk.ac.ed.inf.Metabolic.ndomAPI.ERelType;
-import uk.ac.ed.inf.Metabolic.parser.MetabolicCompartment;
-import uk.ac.ed.inf.Metabolic.parser.MetabolicRelation;
-import uk.ac.ed.inf.Metabolic.parser.MetabolicCompartmentTestStub;
 import uk.ac.ed.inf.Metabolic.parser.CompoundTestDouble;
 import uk.ac.ed.inf.Metabolic.parser.MacromoleculeTestDouble;
+import uk.ac.ed.inf.Metabolic.parser.MetabolicCompartment;
+import uk.ac.ed.inf.Metabolic.parser.MetabolicCompartmentTestStub;
+import uk.ac.ed.inf.Metabolic.parser.MetabolicRelation;
 import uk.ac.ed.inf.Metabolic.parser.ModelTestDouble;
 import uk.ac.ed.inf.Metabolic.parser.ReactionTestDouble;
+
 
 
 public class ModelProcessingTest {
@@ -83,12 +83,12 @@ public class ModelProcessingTest {
 	
 	@Test
 	public void testGiveCompounds () {
-		assertEquals ( 6 , modelProcessor.giveCompounds().size() ) ;
+		assertEquals( "giveCompounds",6 , modelProcessor.giveCompounds().size() ) ;
 	}
 	
 	@Test
 	public void testGiveCompartments () {
-		assertEquals ( 3 , modelProcessor.giveCompartments().size() ) ;
+		assertEquals ( "giveCompartments",3 , modelProcessor.giveCompartments().size() ) ;
 	}
 
 	@Test
