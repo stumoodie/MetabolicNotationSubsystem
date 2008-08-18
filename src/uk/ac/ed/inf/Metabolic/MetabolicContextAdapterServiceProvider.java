@@ -6,10 +6,10 @@ import java.util.Set;
 
 import org.pathwayeditor.contextadapter.publicapi.IContext;
 import org.pathwayeditor.contextadapter.publicapi.IContextAdapterAutolayoutService;
+import org.pathwayeditor.contextadapter.publicapi.IContextAdapterConversionService;
 import org.pathwayeditor.contextadapter.publicapi.IContextAdapterExportService;
 import org.pathwayeditor.contextadapter.publicapi.IContextAdapterImportService;
 import org.pathwayeditor.contextadapter.publicapi.IContextAdapterPluginService;
-import org.pathwayeditor.contextadapter.publicapi.IContextAdapterConversionService;
 import org.pathwayeditor.contextadapter.publicapi.IContextAdapterServiceProvider;
 import org.pathwayeditor.contextadapter.publicapi.IContextAdapterValidationService;
 import org.pathwayeditor.contextadapter.toolkit.ctxdefn.GeneralContext;

@@ -1,6 +1,6 @@
 package uk.ac.ed.inf.Metabolic.excelexport;
 
-import  static junit.framework.Assert.*;
+import static junit.framework.Assert.assertEquals;
 
 import org.junit.After;
 import org.junit.Before;

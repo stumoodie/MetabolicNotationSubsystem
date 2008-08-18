@@ -13,6 +13,7 @@ import org.pathwayeditor.contextadapter.publicapi.IValidationRuleConfig;
 import org.pathwayeditor.contextadapter.publicapi.IValidationRuleConfigurer;
 import org.pathwayeditor.contextadapter.toolkit.ndom.AbstractNDOMParser;
 import org.pathwayeditor.contextadapter.toolkit.ndom.NdomException;
+import org.pathwayeditor.contextadapter.toolkit.validation.IDefaultValidationRuleConfigLoader;
 import org.pathwayeditor.contextadapter.toolkit.validation.IRuleValidationReportBuilder;
 import org.pathwayeditor.contextadapter.toolkit.validation.IValidationRuleStore;
 import org.pathwayeditor.contextadapter.toolkit.validation.RuleValidationReportBuilder;
