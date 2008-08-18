@@ -7,14 +7,11 @@ package uk.ac.ed.inf.Metabolic.paxexport;
 import java.io.FileOutputStream;
 
 import org.biopax.paxtools.impl.level3.Level3FactoryImpl;
-import org.biopax.paxtools.io.jena.JenaIOHandler;
 import org.biopax.paxtools.io.simpleIO.SimpleExporter;
-import org.biopax.paxtools.model.BioPAXFactory;
 import org.biopax.paxtools.model.Model;
 import org.biopax.paxtools.model.level3.BiochemicalReaction;
 import org.biopax.paxtools.model.level3.Level3Factory;
 import org.biopax.paxtools.model.level3.SmallMolecule;
-import org.biopax.paxtools.model.level3.SmallMoleculeReference;
 import org.biopax.paxtools.model.level3.Stoichiometry;
 import org.junit.After;
 import org.junit.AfterClass;
