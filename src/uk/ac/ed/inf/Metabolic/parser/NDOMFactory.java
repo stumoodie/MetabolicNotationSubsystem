@@ -3,6 +3,7 @@ package uk.ac.ed.inf.Metabolic.parser;
 import java.util.List;
 
 import org.pathwayeditor.businessobjectsAPI.IContextProperty;
+import org.pathwayeditor.businessobjectsAPI.ILabel;
 import org.pathwayeditor.businessobjectsAPI.ILink;
 import org.pathwayeditor.businessobjectsAPI.IMapObject;
 import org.pathwayeditor.businessobjectsAPI.IPort;
@@ -271,15 +272,17 @@ public abstract class NDOMFactory extends AbstractNDOMParser {
 			ndom.addCompartment(def);
 			List<IMapObject> ch = getRmo().getChildren();
 			for (IMapObject el : ch) {
-				String ot = el.getObjectType().getTypeName();
-				if ("Compartment".equals(ot)) {
-					compartment(def, el);
-				} else if ("Process".equals(ot)) {
-					process(def, el);
-				} else if ("Compound".equals(ot)) {
-					compound(def, el);
-				} else if ("Macromolecule".equals(ot)) {
-					macromolecule(def, el);
+				if(!(el instanceof ILabel)){
+					String ot = el.getObjectType().getTypeName();
+					if ("Compartment".equals(ot)) {
+						compartment(def, el);
+					} else if ("Process".equals(ot)) {
+						process(def, el);
+					} else if ("Compound".equals(ot)) {
+						compound(def, el);
+					} else if ("Macromolecule".equals(ot)) {
+						macromolecule(def, el);
+					}
 				}
 			}
 		} catch (NdomException e) {
