@@ -2,17 +2,34 @@
 <classpath>
 	<classpathentry excluding="uk/ac/ed/inf/Metabolic/validation/IDefaultValidationRuleConfigLoader.java|uk/ac/ed/inf/Metabolic/validation/IRuleValidationReportBuilder.java|uk/ac/ed/inf/Metabolic/validation/IValidationRuleStore.java|uk/ac/ed/inf/Metabolic/validation/RuleStore.java|uk/ac/ed/inf/Metabolic/validation/ValidationReportItem.java|uk/ac/ed/inf/Metabolic/validation/ValidationRuleConfig.java|uk/ac/ed/inf/Metabolic/validation/ValidationRuleDefinition.java|uk/ac/ed/inf/Metabolic/validation/RuleValidationReportBuilder.java|uk/ac/ed/inf/Metabolic/validation/DefaultValidationReport.java" kind="src" path="src"/>
 	<classpathentry kind="src" path="test"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="poi-3.0.2-FINAL-20080204.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/Toolkit.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
 	<classpathentry kind="lib" path="lib/junit4.4/junit-4.4.jar"/>
 	<classpathentry kind="lib" path="lib/jmock-2.4.0/cglib-nodep-2.1_3.jar"/>
 	<classpathentry kind="lib" path="lib/jmock-2.4.0/hamcrest-core-1.1.jar"/>
 	<classpathentry kind="lib" path="lib/jmock-2.4.0/hamcrest-library-1.1.jar"/>
-	<classpathentry kind="lib" path="lib/jmock-2.4.0/objenesis-1.0.jar"/>
 	<classpathentry kind="lib" path="lib/jmock-2.4.0/jmock-2.4.0.jar"/>
-	<classpathentry kind="lib" path="libsbmlj.jar"/>
 	<classpathentry kind="lib" path="lib/jmock-2.4.0/jmock-junit4-2.4.0.jar"/>
+	<classpathentry kind="lib" path="lib/jmock-2.4.0/objenesis-1.0.jar"/>
+	<classpathentry kind="lib" path="lib/sbml-3.1.1/libsbmlj.jar"/>
+	<classpathentry kind="lib" path="lib/poi-3.1-FINAL/poi-3.1-FINAL-20080629.jar"/>
+	<classpathentry kind="lib" path="lib/antlr-2.7.5.jar"/>
+	<classpathentry kind="lib" path="lib/arq-extra.jar"/>
+	<classpathentry kind="lib" path="lib/arq.jar"/>
+	<classpathentry kind="lib" path="lib/collections-generic-4.01.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging.jar"/>
+	<classpathentry kind="lib" path="lib/concurrent.jar"/>
+	<classpathentry kind="lib" path="lib/jena.jar"/>
+	<classpathentry kind="lib" path="lib/json.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-1.2.12.jar"/>
+	<classpathentry kind="lib" path="lib/lucene-core-2.3.1.jar"/>
+	<classpathentry kind="lib" path="lib/paxtools-api.zip"/>
+	<classpathentry kind="lib" path="lib/paxtools.jar"/>
+	<classpathentry kind="lib" path="lib/paxtools.zip"/>
+	<classpathentry kind="lib" path="lib/stax-api-1.0.jar"/>
+	<classpathentry kind="lib" path="lib/wstx-asl-3.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/xercesImpl.jar"/>
+	<classpathentry kind="lib" path="lib/xml-apis.jar"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/Toolkit"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
