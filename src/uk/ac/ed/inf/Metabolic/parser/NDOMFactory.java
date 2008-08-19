@@ -400,6 +400,12 @@ public abstract class NDOMFactory extends AbstractNDOMParser {
 		throw new UnsupportedOperationException ();
 	}
 
+	/**
+	 * @deprecated
+	 * @param srcLoc
+	 * @param newLoc
+	 * @return
+	 */
 	protected double getAngle(Location srcLoc, Location newLoc) {
 		throw new UnsupportedOperationException ();
 	}
