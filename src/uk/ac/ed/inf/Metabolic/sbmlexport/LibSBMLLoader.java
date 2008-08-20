@@ -5,9 +5,8 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 
 class LibSBMLLoader {
-	final static String[]SBML_WINDOWS_LIBS = new String[] { "libexpat", "libsbml", "sbmlj" };
-	final static String[]SBML_MAC_LIBS = new String[] { "libexpat.1.5.0", "libsbml", "sbmlj" };// populate with names
-	
+	final static String[]SBML_WINDOWS_LIBS = new String[] { "libexpat.dll", "libsbml.dll", "sbmlj.dll" };
+	final static String[]SBML_MAC_LIBS = new String[] { "libxml2.2.dylib", "libsbml.dylib", "libsbmlj.jnilib" };
 	protected static LibSBMLLoader instance;
 
 	protected LibSBMLLoader() {
@@ -29,17 +28,15 @@ class LibSBMLLoader {
 		if (os.contains("win") || os.contains("Win")) {
 			os = "win32";
 			librariesToLoad = SBML_WINDOWS_LIBS;
-		} else if (os.contains("macos") || os.contains("Macos")){
+		} else if (os.contains("Mac OS X")){
 			os = "macosx";
 			librariesToLoad = SBML_MAC_LIBS;
 		}
 		
 		
-		for (int i = 0; i < librariesToLoad.length; i++) {
-			String lib = System.mapLibraryName(librariesToLoad[i]);
-			InputStream is = MetabolicSBMLExportAdapter.class.getResourceAsStream("/os/" + os + "/"
-					+ lib);
-			File temp = new File(System.getProperty("java.io.tmpdir") + File.separator + lib);
+		for (String lib : librariesToLoad) {
+			InputStream is = MetabolicSBMLExportAdapter.class.getResourceAsStream("/os/" + os + "/" + lib);
+			File temp = new File(System.getProperty("java.io.tmpdir"), lib);
 
 			try {
 				temp.createNewFile();

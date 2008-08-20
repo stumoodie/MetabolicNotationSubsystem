@@ -43,7 +43,7 @@ public class SBMLExportServiceTest {
 	final IModel model = mockery.mock(IModel.class);
 	SBMLExportService service;
 	SBMLExportServiceTSS serviceTSS;
-    File NONEXISTENT = new File ("??");
+    File NONEXISTENT = new File ("/xyz/fhdg/dfhsgsf.shydfg/ABC/dgdsg");
     File EXISTENT;
     static boolean canRun = false; // check this is true b4 running export tests.
 

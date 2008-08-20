@@ -18,9 +18,9 @@ public class LibSBMLLoaderTest {
     @Test
     public void testSBMLLibsAreLoadedInTheCorrectOrder () {
     	String [] libNames = LibSBMLLoader.SBML_WINDOWS_LIBS;
-    	assertEquals("libexpat", libNames[0]);
-    	assertEquals("libsbml", libNames[1]);
-    	assertEquals("sbmlj", libNames[2]);
+    	assertEquals("libexpat.dll", libNames[0]);
+    	assertEquals("libsbml.dll", libNames[1]);
+    	assertEquals("sbmlj.dll", libNames[2]);
     }
 	
     

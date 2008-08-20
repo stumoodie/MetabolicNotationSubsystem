@@ -53,72 +53,62 @@ public class ExcelExportService implements IContextAdapterExportService {
 	 *             <li> Cannot produce valid Excel
 	 *             </ul>
 	 */
-	public void exportMap(IMap map, File exportFile)
-	throws ExportServiceException {
-FileOutputStream fos = null;
-try {
-	checkArgs(map, exportFile);
+	public void exportMap(IMap map, File exportFile) throws ExportServiceException {
+		FileOutputStream fos = null;
+		try {
+			checkArgs(map, exportFile);
 
 //	MetabolicContextValidationService validator = (MetabolicContextValidationService) serviceProvider
 //			.getValidationService();
 	
-	ContextValidationService validator = (ContextValidationService) serviceProvider
-	.getValidationService();
-	validator.setMapToValidate(map);
-	IModel ndom = null;
-	if (validator.isReadyToValidate()) {
-		validator.validateMap();
-		IValidationReport report =validator.getValidationReport();
-		if(!report.isMapValid()){
-			String sb="Map is not valid:\n";
-			
-			throw new ExportServiceException(sb, report);
-		}else{
-			ndom=getModel(validator);
-		}
-		System.out.println(validator.getValidationReport());
-		System.out.println(ndom.toString());
+			ContextValidationService validator = (ContextValidationService) serviceProvider.getValidationService();
+			validator.setMapToValidate(map);
+			IModel ndom = null;
+			validator.validateMap();
+				
+			IValidationReport report =validator.getValidationReport();
+			if(!report.isMapValid()){
+				String sb="Map is not valid:\n";
+				throw new ExportServiceException(sb, report);
+			}else{
+				ndom=getModel(validator);
+			}
+//		System.out.println(validator.getValidationReport());
+//		System.out.println(ndom.toString());
 		
-		generator = getGenerator( ndom );
+			generator = getGenerator( ndom );
 		
-		generator.createNewWorkbook();
+			generator.createNewWorkbook();
 		
-		if ( !generator.wasWorkBookCreated() )
-			throw new ExportServiceException ( "Workbook generator was not created propery" ) ;
+			if ( !generator.wasWorkBookCreated() )
+				throw new ExportServiceException ( "Workbook generator was not created propery" ) ;
 		
-		try {
-		
-		generator.populateModelPage() ;
-		generator.populateCompoundPage();
-		generator.populateReactionsPage();
-		generator.populateMacromoleculePage() ;
-		}
-		catch (IllegalStateException e)
-		{
-			throw new ExportServiceException ( "There was a problem while generating the Excel file.") ;
-		}
-		
-		generator.saveWorkBook(exportFile) ;
-	}
-} catch (ExportAdapterCreationException e) {
-	throw new ExportServiceException(e);
-} catch (IOException e) {
-	throw new ExportServiceException(e);
-} finally {
-	try {
-		if (fos != null)
-			fos.close();
-	} catch (Exception e) {
-	}
+			generator.populateModelPage();
+			generator.populateCompoundPage();
+			generator.populateReactionsPage();
+			generator.populateMacromoleculePage();
 
-}
-
-}
+			generator.saveWorkBook(exportFile);
+		} catch (ExportAdapterCreationException e) {
+			throw new ExportServiceException(e);
+		} catch (IOException e) {
+			throw new ExportServiceException(e);
+		} catch(Exception e){
+			throw new ExportServiceException(e);
+		} finally {
+			try {
+				if (fos != null)
+					fos.close();
+			} catch (Exception e) {
+			}
+		}
+	}
 
 	IModel getModel(IContextAdapterValidationService validator) {
-		if(validator.getValidationReport().isMapValid()){
-		return (IModel) MetabolicNDOMValidationService.getInstance(serviceProvider).getNDOM();
-		}else{
+		if (validator.getValidationReport().isMapValid()) {
+			return (IModel) MetabolicNDOMValidationService.getInstance(
+					serviceProvider).getNDOM();
+		} else {
 			return null;
 		}
 	}

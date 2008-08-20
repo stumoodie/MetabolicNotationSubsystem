@@ -109,11 +109,11 @@ public class SBMLExportService implements IContextAdapterExportService {
 			throw new IllegalArgumentException("Arguments must not be null");
 		}
         // yes yt is, export fails without it
-		exportFile.createNewFile();
+//		exportFile.createNewFile();
 
-		if (!exportFile.canWrite()) {
-			throw new ExportServiceException("File " + exportFile
-					+ " is not writable");
+		File parent = exportFile.getParentFile();
+		if (parent != null && !parent.canWrite()) {
+			throw new ExportServiceException("Directory " + parent	+ " is not writable");
 		}
 	}
 

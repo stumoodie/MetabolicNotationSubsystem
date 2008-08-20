@@ -69,7 +69,7 @@ public class MetabolicContextAdapterSyntaxService implements IContextAdapterSynt
 	private ShapeObjectType Compartment;
 	private ShapeObjectType Process;
 	private ShapeObjectType Compound;
-	private ShapeObjectType Macromolecule;
+//	private ShapeObjectType Macromolecule;
 
 	//links
 	private LinkObjectType Consume;
@@ -100,15 +100,15 @@ public class MetabolicContextAdapterSyntaxService implements IContextAdapterSynt
 	createProcess();
 	this.Compound= new ShapeObjectType(this.context, "Compound",12);
 	createCompound();
-	this.Macromolecule= new ShapeObjectType(this.context, "Macromolecule",13);
-	createMacromolecule();
+//	this.Macromolecule= new ShapeObjectType(this.context, "Macromolecule",13);
+//	createMacromolecule();
 
 		defineParentingRMO();
 	//shapes parenting
 		defineParentingCompartment();
 		defineParentingProcess();
 		defineParentingCompound();
-		defineParentingMacromolecule();
+//		defineParentingMacromolecule();
 
 	//links
 	this.Consume = new LinkObjectType(this.context, "Consume",20);
@@ -126,7 +126,7 @@ public class MetabolicContextAdapterSyntaxService implements IContextAdapterSynt
 		this.shapeSet.add(this.Compartment);
 		this.shapeSet.add(this.Process);
 		this.shapeSet.add(this.Compound);
-		this.shapeSet.add(this.Macromolecule);
+//		this.shapeSet.add(this.Macromolecule);
 
 	//link set
 		this.linkSet.add(this.Consume);this.linkSet.add(this.Produce);this.linkSet.add(this.Activation);this.linkSet.add(this.Catalysis);this.linkSet.add(this.Inhibition);		
@@ -152,7 +152,7 @@ public class MetabolicContextAdapterSyntaxService implements IContextAdapterSynt
 		}
 		private void defineParentingRMO(){
 			HashSet<IShapeObjectType> set=new HashSet<IShapeObjectType>();
-			set.addAll(Arrays.asList(new IShapeObjectType[]{this.Process, this.Compound, this.Macromolecule, this.Compartment}));
+			set.addAll(Arrays.asList(new IShapeObjectType[]{this.Process, this.Compound, this.Compartment}));
 			for (IShapeObjectType child : set) {
 			  this.rmo.getParentingRules().addChild(child);
 			}
@@ -186,7 +186,7 @@ public class MetabolicContextAdapterSyntaxService implements IContextAdapterSynt
 	
 		private void defineParentingCompartment(){
 			HashSet<IShapeObjectType> set=new HashSet<IShapeObjectType>();
-			set.addAll(Arrays.asList(new IShapeObjectType[]{this.Compartment, this.Process, this.Compound, this.Macromolecule}));
+			set.addAll(Arrays.asList(new IShapeObjectType[]{this.Compartment, this.Process, this.Compound}));
 			for (IShapeObjectType child : set) {
 			  this.Compartment.getParentingRules().addChild(child);
 			}
@@ -268,41 +268,41 @@ public class MetabolicContextAdapterSyntaxService implements IContextAdapterSynt
 		public ShapeObjectType getCompound(){
 			return this.Compound;
 		}
-	private void createMacromolecule(){
-	this.Macromolecule.setDescription("polymer");//ment to be TypeDescription rather
-	this.Macromolecule.setShapeType(ShapeType.RECTANGLE);
-	this.Macromolecule.setFillProperty(255,255,255);
-	this.Macromolecule.setSize(20,20);
-	int[] lc=new int[]{0,0,0};
-	this.Macromolecule.setLineProperty(1, LineStyle.SOLID,lc[0],lc[1],lc[2]);
-	this.Macromolecule.setShapeType(ShapeType.ROUNDED_RECTANGLE);		int[] s=new int[]{20,20};
-			this.Macromolecule.setSize(s[0],s[1]);int[] c=new int[]{255,255,255};
-	this.Macromolecule.setFillProperty(c[0],c[1],c[2]);
-	this.Macromolecule.setFillEditable(true);
-	//this.Macromolecule.setShapeTypeEditable(true);
-	//this.Macromolecule.setSizeEditable(true);
-	this.Macromolecule.setLineStyleEditable(true);
-	this.Macromolecule.setLineWidthEditable(true);
-	this.Macromolecule.setLineColourEditable(true);
-	this.Macromolecule.setURL("http://");
-	 	IPropertyDefinition GOTerm=reassignVal(getPropGOTerm()," ",true,false);
-	 	Macromolecule.addProperty(GOTerm);
-	 	IPropertyDefinition UniProt=new TextPropertyDefinition("UniProt"," ",false,true);
-		this.Macromolecule.addProperty(UniProt);
-	}
+//	private void createMacromolecule(){
+//	this.Macromolecule.setDescription("polymer");//ment to be TypeDescription rather
+//	this.Macromolecule.setShapeType(ShapeType.RECTANGLE);
+//	this.Macromolecule.setFillProperty(255,255,255);
+//	this.Macromolecule.setSize(20,20);
+//	int[] lc=new int[]{0,0,0};
+//	this.Macromolecule.setLineProperty(1, LineStyle.SOLID,lc[0],lc[1],lc[2]);
+//	this.Macromolecule.setShapeType(ShapeType.ROUNDED_RECTANGLE);		int[] s=new int[]{20,20};
+//			this.Macromolecule.setSize(s[0],s[1]);int[] c=new int[]{255,255,255};
+//	this.Macromolecule.setFillProperty(c[0],c[1],c[2]);
+//	this.Macromolecule.setFillEditable(true);
+//	//this.Macromolecule.setShapeTypeEditable(true);
+//	//this.Macromolecule.setSizeEditable(true);
+//	this.Macromolecule.setLineStyleEditable(true);
+//	this.Macromolecule.setLineWidthEditable(true);
+//	this.Macromolecule.setLineColourEditable(true);
+//	this.Macromolecule.setURL("http://");
+//	 	IPropertyDefinition GOTerm=reassignVal(getPropGOTerm()," ",true,false);
+//	 	Macromolecule.addProperty(GOTerm);
+//	 	IPropertyDefinition UniProt=new TextPropertyDefinition("UniProt"," ",false,true);
+//		this.Macromolecule.addProperty(UniProt);
+//	}
 	
-		private void defineParentingMacromolecule(){
-			HashSet<IShapeObjectType> set=new HashSet<IShapeObjectType>();
-			set.addAll(Arrays.asList(new IShapeObjectType[]{this.Macromolecule, this.Compound}));
-			for (IShapeObjectType child : set) {
-			  this.Macromolecule.getParentingRules().addChild(child);
-			}
-	
-		}
-	
-		public ShapeObjectType getMacromolecule(){
-			return this.Macromolecule;
-		}
+//		private void defineParentingMacromolecule(){
+//			HashSet<IShapeObjectType> set=new HashSet<IShapeObjectType>();
+//			set.addAll(Arrays.asList(new IShapeObjectType[]{this.Macromolecule, this.Compound}));
+//			for (IShapeObjectType child : set) {
+//			  this.Macromolecule.getParentingRules().addChild(child);
+//			}
+//	
+//		}
+//	
+//		public ShapeObjectType getMacromolecule(){
+//			return this.Macromolecule;
+//		}
 
 	
 	private void createConsume(){
@@ -445,9 +445,9 @@ public class MetabolicContextAdapterSyntaxService implements IContextAdapterSynt
 	}
 	set=new HashSet<IShapeObjectType>();
 	set.addAll(Arrays.asList(new IShapeObjectType[]{this.Process}));
-	for (IShapeObjectType tgt : set) {
-	  this.Activation.getLinkConnectionRules().addConnection(this.Macromolecule, tgt);
-	}
+//	for (IShapeObjectType tgt : set) {
+//	  this.Activation.getLinkConnectionRules().addConnection(this.Macromolecule, tgt);
+//	}
 	
 	}
 	
@@ -495,9 +495,9 @@ public class MetabolicContextAdapterSyntaxService implements IContextAdapterSynt
 	}
 	set=new HashSet<IShapeObjectType>();
 	set.addAll(Arrays.asList(new IShapeObjectType[]{this.Process}));
-	for (IShapeObjectType tgt : set) {
-	  this.Catalysis.getLinkConnectionRules().addConnection(this.Macromolecule, tgt);
-	}
+//	for (IShapeObjectType tgt : set) {
+//	  this.Catalysis.getLinkConnectionRules().addConnection(this.Macromolecule, tgt);
+//	}
 	
 	}
 	
@@ -548,9 +548,9 @@ public class MetabolicContextAdapterSyntaxService implements IContextAdapterSynt
 	}
 	set=new HashSet<IShapeObjectType>();
 	set.addAll(Arrays.asList(new IShapeObjectType[]{this.Process}));
-	for (IShapeObjectType tgt : set) {
-	  this.Inhibition.getLinkConnectionRules().addConnection(this.Macromolecule, tgt);
-	}
+//	for (IShapeObjectType tgt : set) {
+//	  this.Inhibition.getLinkConnectionRules().addConnection(this.Macromolecule, tgt);
+//	}
 	
 	}
 	

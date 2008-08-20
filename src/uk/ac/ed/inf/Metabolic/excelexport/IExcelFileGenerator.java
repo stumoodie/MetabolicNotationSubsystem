@@ -43,7 +43,7 @@ interface IExcelFileGenerator {
 	 * @throws IllegalStateException thrown if <code>isTemplateValid() == false</code>.
 	 * @throws IOException in the case there is an error while loading the template.
 	 */
-	void createNewWorkbook () throws IllegalStateException, IOException;
+	void createNewWorkbook () throws IOException;
 	
 	/**
 	 * Tests if the workbook has been created.
@@ -81,7 +81,7 @@ interface IExcelFileGenerator {
 	 * @throws IllegalArgumentException in the case the target is null.
 	 * @throws IOException in the case there was an error while writing the file.
 	 */
-	void saveWorkBook ( File target ) throws IllegalArgumentException,  IOException ;
+	void saveWorkBook ( File target ) throws IOException ;
 	
 
 }

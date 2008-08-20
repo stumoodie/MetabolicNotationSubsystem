@@ -46,7 +46,6 @@ class MetabolicSBMLExportAdapter<N extends IModel> implements IExportAdapter<N> 
 		Model sbmlModel = modelFactory.createSBMLModel(document, model);
 	    entityFactory.buildSpeciesAndCompartments(sbmlModel, model);
 		reactionFactory.buildReactions(sbmlModel, model);
-		System.out.println(libsbml.writeSBMLToString(document));
 		document.setConsistencyChecks(libsbmlConstants.LIBSBML_CAT_UNITS_CONSISTENCY, false);
 		if(document.checkConsistency() == 0)
 			isTargetCreated = true;
