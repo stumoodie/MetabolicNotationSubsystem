@@ -47,12 +47,13 @@ public class MetabolicRuleLoader implements IDefaultValidationRuleConfigLoader {
 //	error("Molecule in Consumption relation is not registered in the model");
 //	error("Consumption link to reversible reaction");
 
-	static final int ORPHAN_ERROR_ID=1008;
-	static IValidationRuleDefinition stoich, ic, reParam, notReg, consRev,compDef,reDef,ERROR,orphanDef;
+	static final int ORPHAN_COMPOUND_ERROR_ID=1008;
+	static final int ORPHAN_PROCESS_ERROR_ID=1009;
+	static IValidationRuleDefinition stoich, ic, reParam, notReg, consRev,compDef,reDef,ERROR,orphanCDef,orphanRDef;
 
 	private static Map<IValidationRuleDefinition, IParserRule> rules = new HashMap<IValidationRuleDefinition, IParserRule>();
 	static IValidationRuleConfig configStoich, configIC, configReparam,
-			configNotReg, configConsRev,configCompDef,configReDef,ERROR_CONFIG,configOrphanDef;
+			configNotReg, configConsRev,configCompDef,configReDef,ERROR_CONFIG,configOrphanCDef,configOrphanRDef;
 	static IContext context;
 
 	static {
@@ -68,14 +69,17 @@ public class MetabolicRuleLoader implements IDefaultValidationRuleConfigLoader {
 				RuleLevel.GUIDELINE);
 		reDef=new ValidationRuleDefinition(context,"Reaction definition discrepancy","NDOM parser",RE_DEF_ERROR_ID,
 				RuleLevel.GUIDELINE);
-		orphanDef=new ValidationRuleDefinition(context,"Orphan object","NDOM parser",ORPHAN_ERROR_ID,
+		orphanRDef=new ValidationRuleDefinition(context,"Orphan object","NDOM parser",ORPHAN_PROCESS_ERROR_ID,
+				RuleLevel.MANDATORY);
+		orphanCDef=new ValidationRuleDefinition(context,"Orphan object","NDOM parser",ORPHAN_COMPOUND_ERROR_ID,
 				RuleLevel.GUIDELINE);
 		ERROR = new ValidationRuleDefinition(context, "Exception!", "Graph",
 				ERROR_ID, RuleLevel.MANDATORY);
 
 		configNotReg = new ValidationRuleConfig(notReg, true, true); // not run,
 		configConsRev = new ValidationRuleConfig(consRev, true, true); // not run,
-		configOrphanDef = new ValidationRuleConfig(orphanDef, true, false); // not run,
+		configOrphanRDef = new ValidationRuleConfig(orphanRDef, true, true); // not run,
+		configOrphanCDef = new ValidationRuleConfig(orphanCDef, true, false); // not run,
 		// error
 		configCompDef = new ValidationRuleConfig(compDef, false, true); // not run,
 		configReDef = new ValidationRuleConfig(reDef, false, true); // not run,
@@ -126,7 +130,7 @@ public class MetabolicRuleLoader implements IDefaultValidationRuleConfigLoader {
 	public Set<IValidationRuleConfig> loadDefaultRuleConfigurations() {
 		Set<IValidationRuleConfig> rc = new HashSet<IValidationRuleConfig>(
 				Arrays.asList(new IValidationRuleConfig[] { configStoich,
-						configIC, configReparam, configNotReg, configConsRev,configCompDef,configReDef,configOrphanDef,ERROR_CONFIG }));
+						configIC, configReparam, configNotReg, configConsRev,configCompDef,configReDef,configOrphanCDef,configOrphanRDef,ERROR_CONFIG }));
 		return rc;
 	}
 

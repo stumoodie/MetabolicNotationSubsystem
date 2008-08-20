@@ -51,7 +51,7 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 
 				IValidationRuleDefinition rd = getReportBuilder()
 						.getRuleStore().getRuleById(
-								MetabolicRuleLoader.ORPHAN_ERROR_ID);
+								MetabolicRuleLoader.ORPHAN_PROCESS_ERROR_ID);
 				IShape el = reaction2Shape.get(r);
 				getReportBuilder().setRuleFailed(el, rd, "Reaction has no substrates");
 			}
@@ -59,7 +59,7 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 
 				IValidationRuleDefinition rd = getReportBuilder()
 						.getRuleStore().getRuleById(
-								MetabolicRuleLoader.ORPHAN_ERROR_ID);
+								MetabolicRuleLoader.ORPHAN_PROCESS_ERROR_ID);
 				IShape el = reaction2Shape.get(r);
 				getReportBuilder().setRuleFailed(el, rd, "Reaction has no products");
 			}
@@ -74,7 +74,7 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 			if((c.getInhibitoryRelationList().size()+c.getActivatoryRelationList().size()+c.getCatalyticRelationList().size()+c.getSinkList().size()+c.getSourceList().size())==0){
 				IValidationRuleDefinition rd = getReportBuilder()
 						.getRuleStore().getRuleById(
-								MetabolicRuleLoader.ORPHAN_ERROR_ID);
+								MetabolicRuleLoader.ORPHAN_COMPOUND_ERROR_ID);
 				getReportBuilder().setRuleFailed(el, rd, "Reaction has no products");
 				
 			}
