@@ -26,7 +26,7 @@ public class MetabolicContextAdapterServiceProvider implements IContextAdapterSe
 	// made public for access within plugin
 	public static final String GLOBAL_ID = "uk.ac.ed.inf.Metabolic.Metabolic";
 	//private static final String GLOBAL_ID = "12635452516346262546";
-	public static final String DISPLAY_NAME = "Metabolic Context";
+	public static final String DISPLAY_NAME = "Metabolic Notation";
 	private static final String NAME = "Metabolic context";
 	public static final int[] VERS = getVersion("1_0_0");
 	
