@@ -49,8 +49,10 @@ public class SBMLExportService implements IContextAdapterExportService {
 	 *             <li> Cannot produce valid SBML
 	 *             </ul>
 	 */
-	public void exportMap(IMap map, File exportFile)
-			throws ExportServiceException {
+	public void exportMap(IMap map, File exportFile) throws ExportServiceException {
+		if(map == null || exportFile == null){
+			throw new IllegalArgumentException("parameters map or exportFile canot be null");
+		}
 		FileOutputStream fos = null;
 		try {
 			checkArgs(map, exportFile);
@@ -81,6 +83,10 @@ public class SBMLExportService implements IContextAdapterExportService {
 		} catch (ExportAdapterCreationException e) {
 			throw new ExportServiceException(e);
 		} catch (IOException e) {
+			throw new ExportServiceException(e);
+		} catch (UnsatisfiedLinkError e){
+			throw new ExportServiceException(e);
+		} catch (RuntimeException e){
 			throw new ExportServiceException(e);
 		} finally {
 			try {
