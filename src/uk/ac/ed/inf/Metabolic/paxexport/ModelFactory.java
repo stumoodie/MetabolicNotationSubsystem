@@ -153,7 +153,7 @@ public class ModelFactory {
 	void addSubunit(Complex parent, IMacromolecule su) {
 		if(su.getSubunitList().size()+su.getCompoundList().size()>0){
 			for(IMacromolecule ssu:su.getSubunitList()){
-				addSubunit(parent,su);
+				addSubunit(parent,ssu);
 			}
 			for(ICompound csu:su.getCompoundList()){
 				addSubunit(parent,csu);
