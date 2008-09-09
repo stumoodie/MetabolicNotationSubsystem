@@ -18,10 +18,7 @@ import org.pathwayeditor.contextadapter.toolkit.ndom.GeometryUtils;
 import org.pathwayeditor.contextadapter.toolkit.ndom.ModelObject;
 import org.pathwayeditor.contextadapter.toolkit.ndom.NdomException;
 
-import uk.ac.ed.inf.Metabolic.excelexport.ModelProcessor;
 import uk.ac.ed.inf.Metabolic.ndomAPI.ERelType;
-import uk.ac.ed.inf.Metabolic.ndomAPI.ICompound;
-import uk.ac.ed.inf.Metabolic.ndomAPI.IModel;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IReaction;
 
 public class MetabolicNDOMFactory extends NDOMFactory {
@@ -67,7 +64,7 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 	}
 
 	void checkOrphanCompounds() {
-		ModelProcessor proc=new ModelProcessor(ndom);
+//		ModelProcessor proc=new ModelProcessor(ndom);
 		for(Entry<IShape,MetabolicMolecule> e:shape2Molecule.entrySet()){
 			IShape el=e.getKey();
 			MetabolicMolecule c=e.getValue();
