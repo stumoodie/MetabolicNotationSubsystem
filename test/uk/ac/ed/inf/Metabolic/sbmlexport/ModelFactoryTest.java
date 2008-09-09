@@ -9,7 +9,6 @@ import org.jmock.integration.junit4.JMock;
 import org.jmock.integration.junit4.JUnit4Mockery;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sbml.libsbml.Model;
@@ -23,12 +22,9 @@ public class ModelFactoryTest {
 	IModelFactory factory;
 	SBMLDocument document;
 	
-	static boolean canRun;
-	@BeforeClass 
-    public static void loadNativeLibraries () throws Exception {
-    	canRun = LibSBMLConfigManager.configure();
-    	
-    }
+	static {
+		System.loadLibrary("sbmlj");
+	}
 	
 	@Before
 	public void setUp() throws Exception {

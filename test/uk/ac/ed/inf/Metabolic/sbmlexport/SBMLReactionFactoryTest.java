@@ -3,7 +3,6 @@ package uk.ac.ed.inf.Metabolic.sbmlexport;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,7 +15,6 @@ import org.jmock.integration.junit4.JMock;
 import org.jmock.integration.junit4.JUnit4Mockery;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sbml.libsbml.Model;
@@ -33,19 +31,11 @@ import uk.ac.ed.inf.Metabolic.ndomAPI.IRelation;
 public class SBMLReactionFactoryTest {
     Mockery mockery = new JUnit4Mockery();
     IReactionBuilder reactionBuilder;
-    static boolean canRun;
     SBMLDocument doc;
     Model sbmlModel;
-	@BeforeClass 
-    public static void loadNativeLibraries () throws Exception {
-    	canRun = LibSBMLConfigManager.configure();
-    	
-    }
-	@Before
+
+    @Before
 	public void setUp() throws Exception {
-		if(!canRun) {
-			fail("LibSBML not loaded");
-		}
 		reactionBuilder= new SBMLReactionFactory();
 		createSBMLModel();
 	}

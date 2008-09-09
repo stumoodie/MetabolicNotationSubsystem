@@ -16,7 +16,6 @@ import org.jmock.integration.junit4.JUnit4Mockery;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sbml.libsbml.Compartment;
@@ -32,7 +31,7 @@ import uk.ac.ed.inf.Metabolic.ndomAPI.IModel;
 @RunWith(JMock.class)
 public class MetabolicSBMLExportAdapterTest {
 	Mockery mockery = new JUnit4Mockery();
-	static boolean isLibSBMLLoaded;
+//	static boolean isLibSBMLLoaded;
 	static File aFile;
 	
 	/**
@@ -62,17 +61,17 @@ public class MetabolicSBMLExportAdapterTest {
 		}
 	}
 	
-	@BeforeClass 
-    public static void loadNativeLibraries () throws Exception {
-    	isLibSBMLLoaded = LibSBMLConfigManager.configure();
-    	//overrides application code
-    	SBMLLoaderTestStub.overrideSingleton( new LibSBMLLoader(){
-    		public boolean loadLibrary() {
-    			return true;
-    		}
-    	});
-    	
-    }
+//	@BeforeClass 
+//    public static void loadNativeLibraries () throws Exception {
+//    	isLibSBMLLoaded = LibSBMLConfigManager.configure();
+//    	//overrides application code
+//    	SBMLLoaderTestStub.overrideSingleton( new LibSBMLLoader(){
+//    		public boolean loadLibrary() {
+//    			return true;
+//    		}
+//    	});
+//    	
+//    }
     IExportAdapter<IModel> exportAdapter;
     MetabolicSBMLExportAdapterTestStub stubexportAdapter;
     
@@ -83,11 +82,11 @@ public class MetabolicSBMLExportAdapterTest {
 	//	loadNativeLibraries();
 		stubexportAdapter=new MetabolicSBMLExportAdapterTestStub();
 	    exportAdapter = new MetabolicSBMLExportAdapter<IModel>();
-		SBMLLoaderTestStub.overrideSingleton( new LibSBMLLoader(){
-    		public boolean loadLibrary() {
-    			return true;
-    		}
-    	});
+//		SBMLLoaderTestStub.overrideSingleton( new LibSBMLLoader(){
+//    		public boolean loadLibrary() {
+//    			return true;
+//    		}
+//    	});
 	    aFile = new File("file");
 		
 	}

@@ -2,7 +2,6 @@ package uk.ac.ed.inf.Metabolic.sbmlexport;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.io.File;
 
@@ -13,7 +12,6 @@ import org.jmock.integration.junit4.JUnit4Mockery;
 import org.jmock.lib.legacy.ClassImposteriser;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjectsAPI.IMap;
@@ -45,7 +43,7 @@ public class SBMLExportServiceTest {
 	SBMLExportServiceTSS serviceTSS;
     File NONEXISTENT = new File ("/xyz/fhdg/dfhsgsf.shydfg/ABC/dgdsg");
     File EXISTENT;
-    static boolean canRun = false; // check this is true b4 running export tests.
+//    static boolean canRun = false; // check this is true b4 running export tests.
 
 	private IExportAdapter<IModel> adapter;
 	
@@ -53,7 +51,6 @@ public class SBMLExportServiceTest {
 
 		public SBMLExportServiceTSS(IContextAdapterServiceProvider provider) {
 			super(provider);
-			// TODO Auto-generated constructor stub
 		}
 		IModel getModel(IContextAdapterValidationService validator) {
 			return model;
@@ -66,10 +63,10 @@ public class SBMLExportServiceTest {
    
     
    //uk.ac.ed.inf.metabolic
-    @BeforeClass 
-    public static void loadNativeLibraries () throws Exception {
-    	canRun = LibSBMLConfigManager.configure();
-    }
+//    @BeforeClass 
+//    public static void loadNativeLibraries () throws Exception {
+//    	canRun = LibSBMLConfigManager.configure();
+//    }
  
     @Before
 	public void setUp() throws Exception {
@@ -111,9 +108,9 @@ public class SBMLExportServiceTest {
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testExportValidMap() throws Throwable {
-		if(!canRun){
-			fail("LibSBML not loaded");
-		}
+//		if(!canRun){
+//			fail("LibSBML not loaded");
+//		}
 		final IContextAdapterValidationService validator= mockery.mock(IContextAdapterValidationService.class);
 		final IValidationReport report = mockery.mock(IValidationReport.class);
 		adapter = mockery.mock(IExportAdapter.class);
@@ -137,9 +134,9 @@ public class SBMLExportServiceTest {
 	@SuppressWarnings("unchecked")
 	@Test(expected=ExportServiceException.class)
 	public void testExportInvalidMap() throws Throwable {
-		if(!canRun){
-			fail("LibSBML not loaded");
-		}
+//		if(!canRun){
+//			fail("LibSBML not loaded");
+//		}
 		final IContextAdapterValidationService validator= mockery.mock(IContextAdapterValidationService.class);
 		final IValidationReport report = mockery.mock(IValidationReport.class);
 		adapter = mockery.mock(MetabolicSBMLExportAdapter.class);

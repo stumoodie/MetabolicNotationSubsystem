@@ -14,7 +14,6 @@ import org.jmock.integration.junit4.JMock;
 import org.jmock.integration.junit4.JUnit4Mockery;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sbml.libsbml.Model;
@@ -32,18 +31,15 @@ public class EntittyBuilderTest {
     Mockery mockery = new JUnit4Mockery();
     Model sbmlModel;
     SBMLDocument doc;
-	static boolean isLibSBMLLoaded;
-	@BeforeClass 
-    public static void loadNativeLibraries () throws Exception {
-    	isLibSBMLLoaded = LibSBMLConfigManager.configure();
-    	
-    }
+
+	static {
+		System.loadLibrary("sbmlj");
+	}
+	
 	@Before
 	public void setUp() throws Exception {
-		if(!isLibSBMLLoaded)
-			fail("LibSBML not loaded");
-			entityFactory = new EntityBuilder();
-			createSBMLModel();
+		entityFactory = new EntityBuilder();
+		createSBMLModel();
 	}
 
 	private void createSBMLModel() {
