@@ -15,14 +15,11 @@ import org.junit.Test;
  *
  */
 public class TestModelFactory {
-
-	private ModelFactory mf;
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@Before
 	public void setUp() throws Exception {
-		mf=new ModelFactory();
 	}
 
 	/**
@@ -30,7 +27,6 @@ public class TestModelFactory {
 	 */
 	@After
 	public void tearDown() throws Exception {
-		mf=null;
 	}
 
 	/**
