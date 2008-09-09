@@ -14,11 +14,14 @@ import uk.ac.ed.inf.Metabolic.IExportAdapter;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IModel;
 
 class MetabolicSBMLExportAdapter<N extends IModel> implements IExportAdapter<N> {
-	static boolean isLibraryLoaded = false;
+//	static boolean isLibraryLoaded = false;
+	static boolean isLibraryLoaded = true;
 	static {  
-		
-	   isLibraryLoaded = LibSBMLLoader.getInstance().loadLibrary();
-	
+		System.loadLibrary("xml2");
+		System.loadLibrary("sbml");
+		System.loadLibrary("sbmlj");
+////	   isLibraryLoaded = LibSBMLLoader.getInstance().loadLibrary();
+//	
 	}
 	
 	final long SPATIAL_DIMENSIONS = 3;
@@ -37,9 +40,9 @@ class MetabolicSBMLExportAdapter<N extends IModel> implements IExportAdapter<N> 
 		if (model == null) {
 			throw new IllegalArgumentException("model is null");
 		}
-		if(!isLibraryLoaded && !LibSBMLLoader.getInstance().loadLibrary()) {
-			throw new ExportAdapterCreationException("Could not load libSBML - only supported on Windows at present");
-		}
+//		if(!isLibraryLoaded && !LibSBMLLoader.getInstance().loadLibrary()) {
+//			throw new ExportAdapterCreationException("Could not load libSBML - only supported on Windows at present");
+//		}
 		// concession to testing
 		if(document ==null) 
 		   document = new SBMLDocument();
