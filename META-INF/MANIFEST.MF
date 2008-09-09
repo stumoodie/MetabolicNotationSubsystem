@@ -30,3 +30,4 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.resources
 Eclipse-LazyStart: true
 Bundle-Vendor: CSB group, University of Edinburgh
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
