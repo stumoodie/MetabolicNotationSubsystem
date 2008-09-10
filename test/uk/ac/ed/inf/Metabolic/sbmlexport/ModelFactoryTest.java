@@ -23,6 +23,8 @@ public class ModelFactoryTest {
 	SBMLDocument document;
 	
 	static {
+//		System.out.println(System.getenv("PATH"));
+//		System.out.println(System.getProperty("java.library.path"));
 		System.loadLibrary("sbmlj");
 	}
 	
