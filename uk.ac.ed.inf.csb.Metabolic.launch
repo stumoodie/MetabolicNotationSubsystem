@@ -7,7 +7,8 @@
 <listEntry value="4"/>
 </listAttribute>
 <mapAttribute key="org.eclipse.debug.core.environmentVariables">
-<mapEntry key="LD_LIBRARY_PATH" value="${resource_loc:uk.ac.ed.inf.csb.Metabolic}.${target.os}.${target.arch}"/>
+<mapEntry key="LD_LIBRARY_PATH" value="${resource_loc:uk.ac.ed.inf.csb.Metabolic}.${target.os}.${target.arch}:${resource_loc:uk.ac.ed.inf.csb.Metabolic}.${target.os}"/>
+<mapEntry key="DYLD_LIBRARY_PATH" value="${resource_loc:uk.ac.ed.inf.csb.Metabolic}.${target.os}.${target.arch}:${resource_loc:uk.ac.ed.inf.csb.Metabolic}.${target.os}"/>
 </mapAttribute>
 <stringAttribute key="org.eclipse.jdt.junit.CONTAINER" value="=uk.ac.ed.inf.csb.Metabolic"/>
 <booleanAttribute key="org.eclipse.jdt.junit.KEEPRUNNING_ATTR" value="false"/>
@@ -15,5 +16,5 @@
 <stringAttribute key="org.eclipse.jdt.junit.TEST_KIND" value="org.eclipse.jdt.junit.loader.junit4"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value=""/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="uk.ac.ed.inf.csb.Metabolic"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Djava.library.path=${resource_loc:uk.ac.ed.inf.csb.Metabolic}.${target.os}.${target.arch}"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Djava.library.path=${resource_loc:uk.ac.ed.inf.csb.Metabolic}.${target.os}.${target.arch}:${resource_loc:uk.ac.ed.inf.csb.Metabolic}.${target.os}"/>
 </launchConfiguration>

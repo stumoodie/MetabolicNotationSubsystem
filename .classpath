@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="uk/ac/ed/inf/Metabolic/validation/IDefaultValidationRuleConfigLoader.java|uk/ac/ed/inf/Metabolic/validation/IRuleValidationReportBuilder.java|uk/ac/ed/inf/Metabolic/validation/IValidationRuleStore.java|uk/ac/ed/inf/Metabolic/validation/RuleStore.java|uk/ac/ed/inf/Metabolic/validation/ValidationReportItem.java|uk/ac/ed/inf/Metabolic/validation/ValidationRuleConfig.java|uk/ac/ed/inf/Metabolic/validation/ValidationRuleDefinition.java|uk/ac/ed/inf/Metabolic/validation/RuleValidationReportBuilder.java|uk/ac/ed/inf/Metabolic/validation/DefaultValidationReport.java" kind="src" path="src"/>
+	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="test"/>
 	<classpathentry exported="true" kind="lib" path="lib/Toolkit.jar" sourcepath="/Toolkit/src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
