@@ -22,7 +22,6 @@ import uk.ac.ed.inf.Metabolic.ndomAPI.ICompartment;
 import uk.ac.ed.inf.Metabolic.ndomAPI.ICompound;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IMacromolecule;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IModel;
-import uk.ac.ed.inf.Metabolic.util.SharedLibLoader;
 
 @RunWith(JMock.class)
 public class EntittyBuilderTest {
@@ -32,12 +31,8 @@ public class EntittyBuilderTest {
     Model sbmlModel;
     SBMLDocument doc;
 
-	private static final List<String> MAND_SBML_LIBS = Arrays.asList(new String[]{ "sbml", "sbmlj" });
-	private static final List<String> OPT_SBML_LIBS = Arrays.asList(new String[]{ "xml2", "expat"});
-	private static final String ROOT_SBML_LIB = "sbmlj";
-
 	static {
-		SharedLibLoader.createInstance(ROOT_SBML_LIB, MAND_SBML_LIBS, OPT_SBML_LIBS).loadRootLibAndFallback();
+		System.loadLibrary("sbmlj");
 	}
 	
 	@Before
