@@ -2,6 +2,8 @@ package uk.ac.ed.inf.Metabolic.sbmlexport;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Arrays;
+import java.util.List;
 
 import org.sbml.libsbml.Model;
 import org.sbml.libsbml.SBMLDocument;
@@ -12,13 +14,15 @@ import org.sbml.libsbml.libsbmlConstants;
 import uk.ac.ed.inf.Metabolic.ExportAdapterCreationException;
 import uk.ac.ed.inf.Metabolic.IExportAdapter;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IModel;
+import uk.ac.ed.inf.Metabolic.util.SharedLibLoader;
 
 class MetabolicSBMLExportAdapter<N extends IModel> implements IExportAdapter<N> {
-	private static final String POSS_SBML_LIBS[] = { "xml2", "expat", "sbml", "sbmlj" };
-	private static final String LIB_PREFIX = "lib";
+	private static final List<String> MAND_SBML_LIBS = Arrays.asList(new String[]{ "sbml", "sbmlj" });
+	private static final List<String> OPT_SBML_LIBS = Arrays.asList(new String[]{ "xml2", "expat"});
+	private static final String ROOT_SBML_LIB = "sbmlj";
 
 	static {
-		jniSharedLibLoader();
+		SharedLibLoader.createInstance(ROOT_SBML_LIB, MAND_SBML_LIBS, OPT_SBML_LIBS).loadRootLibAndFallback();
 	}
 		
 	final long SPATIAL_DIMENSIONS = 3;
@@ -31,36 +35,6 @@ class MetabolicSBMLExportAdapter<N extends IModel> implements IExportAdapter<N> 
 	IModelFactory modelFactory       = new ModelFactory();
 	IReactionBuilder reactionFactory = new SBMLReactionFactory();;
 	
-
-	static void jniSharedLibLoader(){
-		try{
-			// this should work, but due to a bug with eclipse plugin packaging mechanisms it will currently only work
-			// on some O/Ss if the shared library path environment variable points to the sbml libs. This
-			// must be set BEFORE the app is executed.
-			System.loadLibrary("sbmlj");
-		}
-		catch(UnsatisfiedLinkError e1){
-			// our fallback is to load all the poss sbml libs in dependency order on Windows it expects some
-			// libs to be prefixed with a lib, Unix like O/Ss automatically prefix with lib so we need to try both forms
-			for(String libStub : POSS_SBML_LIBS){
-				loadLib(libStub);
-			}
-		}	
-	}
-	
-	static void loadLib(String libStub){
-		try{
-			// try loading using just the stub name 
-			System.loadLibrary(libStub);
-		}
-		catch(UnsatisfiedLinkError e2){
-			// load with a lib prefix
-			StringBuilder buf = new StringBuilder(LIB_PREFIX);
-			buf.append(libStub);
-			System.loadLibrary(buf.toString());
-			// if this fails then we cannot load the library and we should let things take there course.
-		}
-	}
 
 	public void createTarget(IModel model) throws ExportAdapterCreationException {
 		isTargetCreated = false; //reset

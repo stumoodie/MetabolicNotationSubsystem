@@ -3,6 +3,9 @@ package uk.ac.ed.inf.Metabolic.sbmlexport;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
@@ -15,17 +18,20 @@ import org.sbml.libsbml.Model;
 import org.sbml.libsbml.SBMLDocument;
 
 import uk.ac.ed.inf.Metabolic.ndomAPI.IModel;
+import uk.ac.ed.inf.Metabolic.util.SharedLibLoader;
 
 @RunWith(JMock.class)
 public class ModelFactoryTest {
 	Mockery mockery = new JUnit4Mockery();
 	IModelFactory factory;
 	SBMLDocument document;
-	
+
+	private static final List<String> MAND_SBML_LIBS = Arrays.asList(new String[]{ "sbml", "sbmlj" });
+	private static final List<String> OPT_SBML_LIBS = Arrays.asList(new String[]{ "xml2", "expat"});
+	private static final String ROOT_SBML_LIB = "sbmlj";
+
 	static {
-//		System.out.println(System.getenv("PATH"));
-//		System.out.println(System.getProperty("java.library.path"));
-		System.loadLibrary("sbmlj");
+		SharedLibLoader.createInstance(ROOT_SBML_LIB, MAND_SBML_LIBS, OPT_SBML_LIBS).loadRootLibAndFallback();
 	}
 	
 	@Before
