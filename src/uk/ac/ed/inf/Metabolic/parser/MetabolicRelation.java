@@ -1,6 +1,6 @@
 package uk.ac.ed.inf.Metabolic.parser;
 
-import org.pathwayeditor.contextadapter.toolkit.ndom.ModelObject;
+import org.eclipse.core.internal.resources.ModelObject;
 
 import uk.ac.ed.inf.Metabolic.ndomAPI.ERelType;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IMolecule;

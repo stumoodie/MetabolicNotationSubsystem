@@ -1,7 +1,8 @@
 package uk.ac.ed.inf.Metabolic.parser;
 
-import org.pathwayeditor.businessobjectsAPI.IMapObject;
-import org.pathwayeditor.contextadapter.publicapi.IValidationRuleDefinition;
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
 import org.pathwayeditor.contextadapter.toolkit.validation.IRuleValidationReportBuilder;
 
 /**
@@ -15,8 +16,8 @@ public class IntPropertyRule implements IParserRule{
 	private String propName;
 	private IValidationRuleDefinition ruleDef;
 	
-	private IMapObject imo;
-	private IMapObject ref;
+	private IDrawingNode imo;
+	private IDrawingNode ref;
 	private int value;
 	
 	/**
@@ -50,7 +51,7 @@ public class IntPropertyRule implements IParserRule{
 	/**
 	 * @return object to be tested
 	 */
-	public IMapObject getImo() {
+	public IDrawingNode getImo() {
 		return imo;
 	}
 
@@ -63,7 +64,7 @@ public class IntPropertyRule implements IParserRule{
 	}
 
 
-	public void setObject(IMapObject imo) {
+	public void setObject(IDrawingNode imo) {
 		this.imo = imo;
 		ref=imo;
 	}
@@ -74,9 +75,9 @@ public class IntPropertyRule implements IParserRule{
 	 */
 	public boolean validate(IRuleValidationReportBuilder report) {
 		if(ruleDef==null) throw new NullPointerException("Rule definition is not set");
-		if(imo==null) throw new NullPointerException("IMapObject is not set");
+		if(imo==null) throw new NullPointerException("IDrawingNode is not set");
 		if(report==null) throw new NullPointerException("Report builder is not set");
-		String st=imo.getPropertyByName(propName).getValue();
+		String st=((IAnnotatedObject) imo).getProperty(propName).getValue().toString();
 		try {
 			if (st != null && st.trim().length() > 0) {
 				value = Integer.parseInt(st);
@@ -89,11 +90,11 @@ public class IntPropertyRule implements IParserRule{
 		return true;
 	}
 
-	public void setRefObject(IMapObject imo) {
+	public void setRefObject(IDrawingNode imo) {
 		ref=imo;
 	}
 
-	public IMapObject getRefObject() {
+	public IDrawingNode getRefObject() {
 		return ref;
 	}
 

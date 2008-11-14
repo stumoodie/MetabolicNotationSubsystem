@@ -4,10 +4,11 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.pathwayeditor.contextadapter.publicapi.IContext;
-import org.pathwayeditor.contextadapter.publicapi.IValidationRuleConfig;
-import org.pathwayeditor.contextadapter.publicapi.IValidationRuleDefinition;
-import org.pathwayeditor.contextadapter.publicapi.IValidationRuleDefinition.RuleLevel;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotationValidationService;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleConfig;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition.RuleEnforcement;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition.RuleLevel;
 import org.pathwayeditor.contextadapter.toolkit.validation.IDefaultValidationRuleConfigLoader;
 import org.pathwayeditor.contextadapter.toolkit.validation.ValidationRuleConfig;
 import org.pathwayeditor.contextadapter.toolkit.validation.ValidationRuleDefinition;
@@ -24,20 +25,20 @@ public class DefaultRuleLoader implements IDefaultValidationRuleConfigLoader {
 	static IValidationRuleDefinition def1, def2, def3, def4,ERROR;
 	
 	static IValidationRuleConfig config1 ,config2, config3, config4, ERROR_CONFIG;
-	static IContext context;
+	static INotationValidationService validationService;
 	static {
-		context = MetabolicContextAdapterServiceProvider.getInstance().getContext();
-		def1 = new ValidationRuleDefinition(context, "Rule 1", "Layout", 1, RuleLevel.MANDATORY);
-		def2 = new ValidationRuleDefinition(context, "Rule 2", "Type", 2, RuleLevel.OPTIONAL);
-		def3 = new ValidationRuleDefinition(context, "Rule 3", "Graph", 3, RuleLevel.GUIDELINE);
-		def4 = new ValidationRuleDefinition(context, "Rule 4 with quite a long name", "Graph", 4, RuleLevel.GUIDELINE);
-		ERROR = new ValidationRuleDefinition(context, "Exception!", "Graph", ERROR_ID, RuleLevel.MANDATORY);
+		validationService = MetabolicNotationSubsystem.getInstance().getValidationService();
+		def1 = new ValidationRuleDefinition(validationService, "Rule 1", "Layout", 1, RuleLevel.MANDATORY, RuleEnforcement.ERROR);
+		def2 = new ValidationRuleDefinition(validationService, "Rule 2", "Type", 2, RuleLevel.MANDATORY,RuleEnforcement.ERROR);
+		def3 = new ValidationRuleDefinition(validationService, "Rule 3", "Graph", 3, RuleLevel.OPTIONAL,RuleEnforcement.WARNING);
+		def4 = new ValidationRuleDefinition(validationService, "Rule 4 with quite a long name", "Graph", 4, RuleLevel.OPTIONAL,RuleEnforcement.ERROR);
+		ERROR = new ValidationRuleDefinition(validationService, "Exception!", "Graph", ERROR_ID, RuleLevel.OPTIONAL,RuleEnforcement.ERROR);
 		
-		config1 = new ValidationRuleConfig(def1, true, true);// must be run, error
-		config2 = new ValidationRuleConfig(def2, true, true); // must be run, error
-		config3 = new ValidationRuleConfig(def3, true, false); // must be run, warning
-		config4 = new ValidationRuleConfig(def4, false, true); // not run, error
-		ERROR_CONFIG = new ValidationRuleConfig(ERROR, true, true); // not run, error
+		config1 = new ValidationRuleConfig(def1);// must be run, error
+		config2 = new ValidationRuleConfig(def2); // must be run, error
+		config3 = new ValidationRuleConfig(def3); // must be run, warning
+		config4 = new ValidationRuleConfig(def4); // not run, error
+		ERROR_CONFIG = new ValidationRuleConfig(ERROR); // not run, error
 		
 	}
 

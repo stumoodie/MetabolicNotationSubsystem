@@ -5,12 +5,12 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
-import uk.ac.ed.inf.Metabolic.MetabolicContextAdapterServiceProvider;
+import uk.ac.ed.inf.Metabolic.MetabolicNotationSubsystem;
 
 public class MainPreference extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
 	public MainPreference (){
 		super(GRID);
-		setDescription("Main  preference page for " + MetabolicContextAdapterServiceProvider.DISPLAY_NAME);
+		setDescription("Main  preference page for " + MetabolicNotationSubsystem.DISPLAY_NAME);
 		setTitle("Metabolic Context Adapter  Preferences");
 		IPreferenceStore store = Activator.getDefault().getPreferenceStore();
 		setPreferenceStore(store);

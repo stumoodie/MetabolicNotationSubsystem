@@ -2,14 +2,6 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         id="org.pathwayeditor.application.metabolicContextAdapter"
-         name="Metabolic context plugin"
-         point="org.pathwayeditor.application.contextAdapters">
-      <context
-            class="uk.ac.ed.inf.metaboliccontext.plugin.MetabolicContextServiceProviderLoader">
-      </context>
-   </extension>
-   <extension
          point="org.eclipse.ui.preferencePages">
       <page
             category="uk.ac.ed.inf.csb.Metabolic.main"

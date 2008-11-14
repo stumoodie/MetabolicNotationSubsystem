@@ -1,35 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="test"/>
-	<classpathentry exported="true" kind="lib" path="lib/Toolkit.jar" sourcepath="/Toolkit/src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
-	<classpathentry kind="lib" path="lib/junit4.4/junit-4.4.jar"/>
-	<classpathentry kind="lib" path="lib/jmock-2.4.0/cglib-nodep-2.1_3.jar"/>
-	<classpathentry kind="lib" path="lib/jmock-2.4.0/hamcrest-core-1.1.jar"/>
-	<classpathentry kind="lib" path="lib/jmock-2.4.0/hamcrest-library-1.1.jar"/>
-	<classpathentry kind="lib" path="lib/jmock-2.4.0/jmock-2.4.0.jar"/>
-	<classpathentry kind="lib" path="lib/jmock-2.4.0/jmock-junit4-2.4.0.jar"/>
-	<classpathentry kind="lib" path="lib/jmock-2.4.0/objenesis-1.0.jar"/>
-	<classpathentry kind="lib" path="lib/sbml-3.1.1/libsbmlj.jar"/>
-	<classpathentry kind="lib" path="lib/poi-3.1-FINAL/poi-3.1-FINAL-20080629.jar"/>
-	<classpathentry kind="lib" path="lib/antlr-2.7.5.jar"/>
-	<classpathentry kind="lib" path="lib/arq-extra.jar"/>
-	<classpathentry kind="lib" path="lib/arq.jar"/>
-	<classpathentry kind="lib" path="lib/collections-generic-4.01.jar"/>
-	<classpathentry kind="lib" path="lib/commons-logging.jar"/>
-	<classpathentry kind="lib" path="lib/concurrent.jar"/>
-	<classpathentry kind="lib" path="lib/jena.jar"/>
-	<classpathentry kind="lib" path="lib/json.jar"/>
-	<classpathentry kind="lib" path="lib/log4j-1.2.12.jar"/>
-	<classpathentry kind="lib" path="lib/lucene-core-2.3.1.jar"/>
-	<classpathentry kind="lib" path="lib/paxtools-api.zip"/>
-	<classpathentry kind="lib" path="lib/paxtools.jar"/>
-	<classpathentry kind="lib" path="lib/paxtools.zip"/>
-	<classpathentry kind="lib" path="lib/stax-api-1.0.jar"/>
-	<classpathentry kind="lib" path="lib/wstx-asl-3.0.0.jar"/>
-	<classpathentry kind="lib" path="lib/xercesImpl.jar"/>
-	<classpathentry kind="lib" path="lib/xml-apis.jar"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry excluding="uk/ac/ed/inf/Metabolic/parser/MetabolicCompartment.java|uk/ac/ed/inf/Metabolic/parser/MetabolicMolecule.java|uk/ac/ed/inf/Metabolic/parser/MetabolicCompound.java|uk/ac/ed/inf/Metabolic/parser/MetabolicMacromolecule.java|uk/ac/ed/inf/Metabolic/parser/MetabolicModel.java|uk/ac/ed/inf/Metabolic/parser/MetabolicNDOMFactory.java|uk/ac/ed/inf/Metabolic/parser/MetabolicReaction.java|uk/ac/ed/inf/Metabolic/parser/MetabolicRelation.java|uk/ac/ed/inf/Metabolic/parser/NDOMFactory.java" kind="src" path="src"/>
+	<classpathentry kind="src" path="test"/>
+	<classpathentry exported="true" kind="lib" path="lib/sbml-3.1.1/libsbmlj.jar" sourcepath="uk.ac.ed.inf.csb.Metabolicsrc.zip"/>
+	<classpathentry exported="true" kind="lib" path="lib/antlr-2.7.5.jar" sourcepath="uk.ac.ed.inf.csb.Metabolicsrc.zip"/>
+	<classpathentry exported="true" kind="lib" path="lib/arq.jar" sourcepath="uk.ac.ed.inf.csb.Metabolicsrc.zip"/>
+	<classpathentry exported="true" kind="lib" path="lib/arq-extra.jar" sourcepath="uk.ac.ed.inf.csb.Metabolicsrc.zip"/>
+	<classpathentry exported="true" kind="lib" path="lib/collections-generic-4.01.jar" sourcepath="uk.ac.ed.inf.csb.Metabolicsrc.zip"/>
+	<classpathentry exported="true" kind="lib" path="lib/commons-logging.jar" sourcepath="uk.ac.ed.inf.csb.Metabolicsrc.zip"/>
+	<classpathentry exported="true" kind="lib" path="lib/concurrent.jar" sourcepath="uk.ac.ed.inf.csb.Metabolicsrc.zip"/>
+	<classpathentry exported="true" kind="lib" path="lib/jena.jar" sourcepath="uk.ac.ed.inf.csb.Metabolicsrc.zip"/>
+	<classpathentry exported="true" kind="lib" path="lib/json.jar" sourcepath="uk.ac.ed.inf.csb.Metabolicsrc.zip"/>
+	<classpathentry exported="true" kind="lib" path="lib/log4j-1.2.12.jar" sourcepath="uk.ac.ed.inf.csb.Metabolicsrc.zip"/>
+	<classpathentry exported="true" kind="lib" path="lib/lucene-core-2.3.1.jar" sourcepath="uk.ac.ed.inf.csb.Metabolicsrc.zip"/>
+	<classpathentry exported="true" kind="lib" path="lib/paxtools.jar" sourcepath="uk.ac.ed.inf.csb.Metabolicsrc.zip"/>
+	<classpathentry exported="true" kind="lib" path="lib/stax-api-1.0.jar" sourcepath="uk.ac.ed.inf.csb.Metabolicsrc.zip"/>
+	<classpathentry exported="true" kind="lib" path="lib/wstx-asl-3.0.0.jar" sourcepath="uk.ac.ed.inf.csb.Metabolicsrc.zip"/>
+	<classpathentry exported="true" kind="lib" path="lib/xercesImpl.jar" sourcepath="uk.ac.ed.inf.csb.Metabolicsrc.zip"/>
+	<classpathentry exported="true" kind="lib" path="lib/xml-apis.jar" sourcepath="uk.ac.ed.inf.csb.Metabolicsrc.zip"/>
+	<classpathentry exported="true" kind="lib" path="lib/poi-3.1-FINAL/poi-3.1-FINAL-20080629.jar" sourcepath="uk.ac.ed.inf.csb.Metabolicsrc.zip"/>
+	<classpathentry exported="true" kind="lib" path="lib/Toolkit.jar" sourcepath="/Toolkit/src"/>
+	<classpathentry exported="true" kind="lib" path="lib/BusinessObjects.jar" sourcepath="/BusinessObjects/src"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

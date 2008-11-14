@@ -114,7 +114,7 @@ public class ModelFactory {
 	
 	/**
 	 * Create macromolecule annotation in BioPAX.
-	 * All macromolecules in Metabolic context are suppose to be Proteins and their complexes.
+	 * All macromolecules in Metabolic validationService are suppose to be Proteins and their complexes.
 	 * This is not true for rybozymes, for example, but at current stage we will create protein
 	 * entities for each macromolecule on the diagram.
 	 * @param m macromolecule NDOM element

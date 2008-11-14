@@ -1,25 +1,11 @@
 package uk.ac.ed.inf.Metabolic.parser;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import org.jmock.Expectations;
-import org.jmock.Mockery;
-import org.jmock.integration.junit4.JMock;
-import org.jmock.integration.junit4.JUnit4Mockery;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.pathwayeditor.businessobjectsAPI.IContextProperty;
-import org.pathwayeditor.businessobjectsAPI.IMapObject;
-import org.pathwayeditor.contextadapter.publicapi.IValidationRuleDefinition;
-import org.pathwayeditor.contextadapter.publicapi.IValidationRuleDefinition.RuleLevel;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition.RuleLevel;
 import org.pathwayeditor.contextadapter.toolkit.validation.IRuleValidationReportBuilder;
 import org.pathwayeditor.contextadapter.toolkit.validation.ValidationRuleDefinition;
 
-import uk.ac.ed.inf.Metabolic.MetabolicContextAdapterServiceProvider;
+import uk.ac.ed.inf.Metabolic.MetabolicNotationSubsystem;
 
 @RunWith(JMock.class)
 public class TestIntPropertyRule {
@@ -36,7 +22,7 @@ public class TestIntPropertyRule {
 	@Before
 	public void setUp() throws Exception {
 		rule=new IntPropertyRule("Prop");
-		ruleDef=new ValidationRuleDefinition(MetabolicContextAdapterServiceProvider.getInstance().getContext(),"IntString conversion rule","Properties",-12,RuleLevel.OPTIONAL);
+		ruleDef=new ValidationRuleDefinition(MetabolicNotationSubsystem.getInstance().getContext(),"IntString conversion rule","Properties",-12,RuleLevel.OPTIONAL);
 		rule.setRuleDef(ruleDef);
 		imo = mockery.mock(IMapObject.class);
 		prop = mockery.mock(IContextProperty.class);

@@ -5,8 +5,6 @@ import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFRichTextString;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.pathwayeditor.businessobjectsAPI.ITextProperty;
-import org.pathwayeditor.businessobjectsAPI.TextProperty;
 
 public class CellManipulator {
 	
@@ -41,9 +39,10 @@ public class CellManipulator {
 	
 	public String convertToRTF ( String string)
 	{
-		ITextProperty textProperty = TextProperty.createTextPropertyFromString ( string , null ) ;
-		
-		return textProperty.getString() ;
+//		ITextProperty textProperty = TextProperty.createTextPropertyFromString ( string , null ) ;
+//		
+//		return textProperty.getString() ;
+	return string;//FIXME NH what happened to this functionality?
 	}
 	
 	

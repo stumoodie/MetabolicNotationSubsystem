@@ -4,13 +4,13 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 /**
- * An interface that defines the behaviour of the export adapter used by a context adapter's
+ * An interface that defines the behaviour of the export adapter used by a validationService adapter's
  * export service. Typical implementations of this class will implement a mapping from the NDOM
  * to an intermediate representation of the export format that can then be written to an output stream.
  * Future development of the API may include output by some other mechanism than a stream, hence
  * the separation of creation and writing.    
  * @author smoodie
- * @param N root class of the Notation Domain Object Model for the context adapter.
+ * @param N root class of the Notation Domain Object Model for the validationService adapter.
  */
 public interface IExportAdapter<N> {
 

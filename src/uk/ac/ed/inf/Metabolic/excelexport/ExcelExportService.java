@@ -6,20 +6,21 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import org.pathwayeditor.businessobjectsAPI.IMap;
-import org.pathwayeditor.contextadapter.publicapi.ExportServiceException;
-import org.pathwayeditor.contextadapter.publicapi.IContext;
-import org.pathwayeditor.contextadapter.publicapi.IContextAdapterExportService;
-import org.pathwayeditor.contextadapter.publicapi.IContextAdapterServiceProvider;
-import org.pathwayeditor.contextadapter.publicapi.IContextAdapterValidationService;
-import org.pathwayeditor.contextadapter.publicapi.IValidationReport;
-import org.pathwayeditor.contextadapter.toolkit.validation.ContextValidationService;
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
+import org.pathwayeditor.businessobjects.notationsubsystem.ExportServiceException;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotationExportService;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotationValidationService;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReport;
+import org.pathwayeditor.businessobjects.repository.IMap;
+import org.pathwayeditor.contextadapter.toolkit.validation.NotationValidationService;
 
 import uk.ac.ed.inf.Metabolic.ExportAdapterCreationException;
 import uk.ac.ed.inf.Metabolic.MetabolicNDOMValidationService;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IModel;
 
-public class ExcelExportService implements IContextAdapterExportService {
+public class ExcelExportService implements INotationExportService {
 
 	String DISPLAY_NAME = "Excel Export";
 
@@ -28,18 +29,18 @@ public class ExcelExportService implements IContextAdapterExportService {
 	String PROPERTIES_LOCATION = "/templatepath.properties" ;
 
 	final String TYPECODE = "Excel_Export_1.0.0";
-	private IContext context;
+	private INotation notation;
 	private IExcelFileGenerator generator;
+	private INotationSubsystem notationSubsystem;
 
-	public ExcelExportService(IContextAdapterServiceProvider provider) {
-		this.serviceProvider = provider;
-		context = provider.getContext();
+	public ExcelExportService(INotationSubsystem provider) {
+		this.notationSubsystem = provider;
+		notation = provider.getNotation();
 	}
 
-	private IContextAdapterServiceProvider serviceProvider;
 
-	public IContextAdapterServiceProvider getServiceProvider() {
-		return serviceProvider;
+	public INotationSubsystem getNotationSubsystem() {
+		return notationSubsystem;
 	}
 
 	/**
@@ -53,23 +54,23 @@ public class ExcelExportService implements IContextAdapterExportService {
 	 *             <li> Cannot produce valid Excel
 	 *             </ul>
 	 */
-	public void exportMap(IMap map, File exportFile) throws ExportServiceException {
+	public void exportMap(ICanvas map, File exportFile) throws ExportServiceException {
 		FileOutputStream fos = null;
 		try {
 			checkArgs(map, exportFile);
 
-//	MetabolicContextValidationService validator = (MetabolicContextValidationService) serviceProvider
+//	MetabolicContextValidationService validator = (MetabolicContextValidationService) notationSubsystem
 //			.getValidationService();
 	
-			ContextValidationService validator = (ContextValidationService) serviceProvider.getValidationService();
+			NotationValidationService validator = (NotationValidationService) notationSubsystem.getValidationService();
 			validator.setMapToValidate(map);
 			IModel ndom = null;
 			validator.validateMap();
 				
-			IValidationReport report =validator.getValidationReport();
+			IValidationReport report =validator.getValidationReport();//FIXME - NH what do we do with this now??
 			if(!report.isMapValid()){
 				String sb="Map is not valid:\n";
-				throw new ExportServiceException(sb, report);
+				throw new ExportServiceException(sb);
 			}else{
 				ndom=getModel(validator);
 			}
@@ -104,20 +105,20 @@ public class ExcelExportService implements IContextAdapterExportService {
 		}
 	}
 
-	IModel getModel(IContextAdapterValidationService validator) {
+	IModel getModel(INotationValidationService validator) {
 		if (validator.getValidationReport().isMapValid()) {
 			return (IModel) MetabolicNDOMValidationService.getInstance(
-					serviceProvider).getNDOM();
+					notationSubsystem).getNDOM();
 		} else {
 			return null;
 		}
 	}
 
-	private void checkArgs(IMap map, File exportFile)
+	private void checkArgs(ICanvas canvas, File exportFile)
 			throws ExportServiceException, IOException {
 
-		if (map == null || exportFile == null
-				|| map.getTheSingleRootMapObject() == null) {
+		if (canvas == null || exportFile == null
+				|| canvas.getModel().getRootNode()== null) {
 			throw new IllegalArgumentException("Arguments must not be null");
 		}
 		exportFile.createNewFile();
@@ -132,8 +133,8 @@ public class ExcelExportService implements IContextAdapterExportService {
 		return TYPECODE;
 	}
 
-	public IContext getContext() {
-		return context;
+	public INotation getNotation() {
+		return notation;
 	}
 
 	public String getDisplayName() {
@@ -145,8 +146,8 @@ public class ExcelExportService implements IContextAdapterExportService {
 	}
 
 	public String toString() {
-		return new StringBuffer().append("Export service for context :")
-				.append(context.toString()).append("\n Display name :").append(
+		return new StringBuffer().append("Export service for validationService :")
+				.append(notation.toString()).append("\n Display name :").append(
 						DISPLAY_NAME).append("\n Code: ").append(TYPECODE)
 				.toString();
 	}

@@ -6,15 +6,16 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.pathwayeditor.contextadapter.publicapi.IContext;
-import org.pathwayeditor.contextadapter.publicapi.IValidationRuleConfig;
-import org.pathwayeditor.contextadapter.publicapi.IValidationRuleDefinition;
-import org.pathwayeditor.contextadapter.publicapi.IValidationRuleDefinition.RuleLevel;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotationValidationService;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleConfig;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition.RuleEnforcement;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition.RuleLevel;
 import org.pathwayeditor.contextadapter.toolkit.validation.IDefaultValidationRuleConfigLoader;
 import org.pathwayeditor.contextadapter.toolkit.validation.ValidationRuleConfig;
 import org.pathwayeditor.contextadapter.toolkit.validation.ValidationRuleDefinition;
 
-import uk.ac.ed.inf.Metabolic.MetabolicContextAdapterServiceProvider;
+import uk.ac.ed.inf.Metabolic.MetabolicNotationSubsystem;
 
 /**
  * <br>
@@ -54,37 +55,37 @@ public class MetabolicRuleLoader implements IDefaultValidationRuleConfigLoader {
 	private static Map<IValidationRuleDefinition, IParserRule> rules = new HashMap<IValidationRuleDefinition, IParserRule>();
 	static IValidationRuleConfig configStoich, configIC, configReparam,
 			configNotReg, configConsRev,configCompDef,configReDef,ERROR_CONFIG,configOrphanCDef,configOrphanRDef;
-	static IContext context;
+	static INotationValidationService validationService;
 
 	static {
-		context = MetabolicContextAdapterServiceProvider.getInstance()
-				.getContext();
-		notReg = new ValidationRuleDefinition(context,
+		validationService = MetabolicNotationSubsystem.getInstance()
+				.getValidationService();
+		notReg = new ValidationRuleDefinition(validationService,
 				"Object is not registered with the model", "NDOM parser", NOT_REGISTERED_ERROR_ID,
-				RuleLevel.MANDATORY);
-		consRev = new ValidationRuleDefinition(context,
+				RuleLevel.MANDATORY,RuleEnforcement.ERROR);
+		consRev = new ValidationRuleDefinition(validationService,
 				"Consumption link to reversible reaction", "NDOM parser", CONSUMPTION_TO_REVERSIBLE_ERROR_ID,
-				RuleLevel.MANDATORY);
-		compDef=new ValidationRuleDefinition(context,"Compound definition discrepancy","NDOM parser",COMP_DEF_ERROR_ID,
-				RuleLevel.GUIDELINE);
-		reDef=new ValidationRuleDefinition(context,"Reaction definition discrepancy","NDOM parser",RE_DEF_ERROR_ID,
-				RuleLevel.GUIDELINE);
-		orphanRDef=new ValidationRuleDefinition(context,"Orphan object","NDOM parser",ORPHAN_PROCESS_ERROR_ID,
-				RuleLevel.MANDATORY);
-		orphanCDef=new ValidationRuleDefinition(context,"Orphan object","NDOM parser",ORPHAN_COMPOUND_ERROR_ID,
-				RuleLevel.GUIDELINE);
-		ERROR = new ValidationRuleDefinition(context, "Exception!", "Graph",
-				ERROR_ID, RuleLevel.MANDATORY);
+				RuleLevel.MANDATORY,RuleEnforcement.ERROR);
+		compDef=new ValidationRuleDefinition(validationService,"Compound definition discrepancy","NDOM parser",COMP_DEF_ERROR_ID,
+				RuleLevel.OPTIONAL,RuleEnforcement.WARNING);
+		reDef=new ValidationRuleDefinition(validationService,"Reaction definition discrepancy","NDOM parser",RE_DEF_ERROR_ID,
+				RuleLevel.OPTIONAL,RuleEnforcement.WARNING);
+		orphanRDef=new ValidationRuleDefinition(validationService,"Orphan object","NDOM parser",ORPHAN_PROCESS_ERROR_ID,
+				RuleLevel.MANDATORY,RuleEnforcement.ERROR);
+		orphanCDef=new ValidationRuleDefinition(validationService,"Orphan object","NDOM parser",ORPHAN_COMPOUND_ERROR_ID,
+				RuleLevel.OPTIONAL,RuleEnforcement.WARNING);
+		ERROR = new ValidationRuleDefinition(validationService, "Exception!", "Graph",
+				ERROR_ID, RuleLevel.MANDATORY,RuleEnforcement.ERROR);
 
-		configNotReg = new ValidationRuleConfig(notReg, true, true); // not run,
-		configConsRev = new ValidationRuleConfig(consRev, true, true); // not run,
-		configOrphanRDef = new ValidationRuleConfig(orphanRDef, true, true); // not run,
-		configOrphanCDef = new ValidationRuleConfig(orphanCDef, true, false); // not run,
+		configNotReg = new ValidationRuleConfig(notReg); // not run,
+		configConsRev = new ValidationRuleConfig(consRev); // not run,
+		configOrphanRDef = new ValidationRuleConfig(orphanRDef); // not run,
+		configOrphanCDef = new ValidationRuleConfig(orphanCDef); // not run,
 		// error
-		configCompDef = new ValidationRuleConfig(compDef, false, true); // not run,
-		configReDef = new ValidationRuleConfig(reDef, false, true); // not run,
+		configCompDef = new ValidationRuleConfig(compDef); // not run,
+		configReDef = new ValidationRuleConfig(reDef); // not run,
 		// error
-		ERROR_CONFIG = new ValidationRuleConfig(ERROR, true, true); // not run,
+		ERROR_CONFIG = new ValidationRuleConfig(ERROR); // not run,
 																	// error
 		stoichiometryIntDefinition();
 		initConcentrDoubleDefinition();
@@ -93,8 +94,8 @@ public class MetabolicRuleLoader implements IDefaultValidationRuleConfigLoader {
 
 	private static void stoichiometryIntDefinition() {
 		IntPropertyRule r = new IntPropertyRule("STOICH");
-		stoich = new ValidationRuleDefinition(context,"Stoichiometry",  "NDOM parser",STOICH_ERROR_ID, RuleLevel.MANDATORY);
-		configStoich = new ValidationRuleConfig(stoich, true, true);// must be
+		stoich = new ValidationRuleDefinition(validationService,"Stoichiometry",  "NDOM parser",STOICH_ERROR_ID, RuleLevel.MANDATORY,RuleEnforcement.ERROR);
+		configStoich = new ValidationRuleConfig(stoich);// must be
 																	// run,
 																	// error
 		r.setRuleDef(stoich);
@@ -104,8 +105,8 @@ public class MetabolicRuleLoader implements IDefaultValidationRuleConfigLoader {
 	private static void initConcentrDoubleDefinition() {
 		DoublePropertyRule r = new DoublePropertyRule("IC");
 		ic = new ValidationRuleDefinition(
-				context, "Initial concentration", "NDOM parser",IC_ERROR_ID, RuleLevel.MANDATORY);
-		configIC = new ValidationRuleConfig(ic, true, true); // must be run,
+				validationService, "Initial concentration", "NDOM parser",IC_ERROR_ID, RuleLevel.MANDATORY,RuleEnforcement.ERROR);
+		configIC = new ValidationRuleConfig(ic); // must be run,
 																// error
 		r.setRuleDef(ic);
 		rules.put(ic, r);
@@ -116,9 +117,9 @@ public class MetabolicRuleLoader implements IDefaultValidationRuleConfigLoader {
 				"^(\\s*\\w+\\s*=\\s*[0-9eE\\-+.]+\\s*;)+$");
 		r.setEmptyValid(true);
 		reParam = new ValidationRuleDefinition(
-				context,
-				"Reaction parameters",  "NDOM parser",RE_PARAM_ERROR_ID, RuleLevel.MANDATORY);
-		configReparam = new ValidationRuleConfig(reParam, true, true);
+				validationService,
+				"Reaction parameters",  "NDOM parser",RE_PARAM_ERROR_ID, RuleLevel.MANDATORY,RuleEnforcement.ERROR);
+		configReparam = new ValidationRuleConfig(reParam);
 		r.setRuleDef(reParam);
 		rules.put(reParam, r);
 	}

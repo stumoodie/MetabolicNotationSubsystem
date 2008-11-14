@@ -1,7 +1,6 @@
 package uk.ac.ed.inf.metaboliccontext.plugin;
 
 import org.eclipse.jface.preference.IPreferenceStore;
-import org.pathwayeditor.application.contextadapter.uitoolkit.ValidationConfigPreferencesConfigurer;
 
 
 

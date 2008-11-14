@@ -22,11 +22,11 @@ Bundle-ClassPath: .,
  lib/xercesImpl.jar,
  lib/xml-apis.jar,
  lib/poi-3.1-FINAL/poi-3.1-FINAL-20080629.jar,
- lib/Toolkit.jar
+ lib/Toolkit.jar,
+ lib/BusinessObjects.jar
 Bundle-Activator: uk.ac.ed.inf.metaboliccontext.plugin.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.pathwayeditor.application;bundle-version="0.8.1",
  org.eclipse.core.resources
 Eclipse-LazyStart: true
 Bundle-Vendor: CSB group, University of Edinburgh

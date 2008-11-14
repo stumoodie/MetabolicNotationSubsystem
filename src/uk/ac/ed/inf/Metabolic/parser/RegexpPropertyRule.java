@@ -2,8 +2,7 @@ package uk.ac.ed.inf.Metabolic.parser;
 
 import java.util.regex.Pattern;
 
-import org.pathwayeditor.businessobjectsAPI.IMapObject;
-import org.pathwayeditor.contextadapter.publicapi.IValidationRuleDefinition;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
 import org.pathwayeditor.contextadapter.toolkit.validation.IRuleValidationReportBuilder;
 
 /**

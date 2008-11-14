@@ -1,9 +1,6 @@
 package uk.ac.ed.inf.metaboliccontext.plugin;
 
-import org.pathwayeditor.contextadapter.publicapi.IContextAdapterServiceProvider;
-import org.pathwayeditor.contextadapter.publicapi.IContextAdapterServiceProviderLoader;
-
-import uk.ac.ed.inf.Metabolic.MetabolicContextAdapterServiceProvider;
+import uk.ac.ed.inf.Metabolic.MetabolicNotationSubsystem;
 
 public class MetabolicContextServiceProviderLoader implements IContextAdapterServiceProviderLoader {
     
@@ -14,7 +11,7 @@ public class MetabolicContextServiceProviderLoader implements IContextAdapterSer
 		super();
 	}
 	public IContextAdapterServiceProvider getContextAdapterServiceProvider() {
-		return MetabolicContextAdapterServiceProvider.getInstance();
+		return MetabolicNotationSubsystem.getInstance();
 	}
 
 }

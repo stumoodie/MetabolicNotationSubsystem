@@ -8,14 +8,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
-import org.pathwayeditor.businessobjectsAPI.ILink;
-import org.pathwayeditor.businessobjectsAPI.IMapObject;
-import org.pathwayeditor.businessobjectsAPI.IRootMapObject;
-import org.pathwayeditor.businessobjectsAPI.IShape;
-import org.pathwayeditor.businessobjectsAPI.Location;
-import org.pathwayeditor.contextadapter.publicapi.IValidationRuleDefinition;
-import org.pathwayeditor.contextadapter.toolkit.ndom.GeometryUtils;
-import org.pathwayeditor.contextadapter.toolkit.ndom.ModelObject;
+import org.eclipse.core.internal.resources.ModelObject;
+import org.pathwayeditor.businessobjects.drawingprimitives.IRootNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
 import org.pathwayeditor.contextadapter.toolkit.ndom.NdomException;
 
 import uk.ac.ed.inf.Metabolic.ndomAPI.ERelType;
@@ -28,7 +24,7 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 	LinkedList<Map<String, MetabolicCompound>> name2Compound = new LinkedList<Map<String, MetabolicCompound>>();
 	List<ILink> prodLinks;
 
-	public MetabolicNDOMFactory(IRootMapObject rmo) {
+	public MetabolicNDOMFactory(IRootNode rmo) {
 		super(rmo);
 	}
 

@@ -1,13 +1,5 @@
 package uk.ac.ed.inf.metaboliccontext.plugin;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.pathwayeditor.contextadapter.publicapi.IContextAdapterServiceProvider;
-import org.pathwayeditor.contextadapter.publicapi.IContextAdapterServiceProviderLoader;
 
 public class TestServcePRoviderLoader {
     IContextAdapterServiceProviderLoader loader;

@@ -3,14 +3,11 @@ package uk.ac.ed.inf.Metabolic.validation;
 import java.util.List;
 import java.util.Set;
 
-import org.pathwayeditor.businessobjectsAPI.IMap;
-import org.pathwayeditor.contextadapter.publicapi.IContext;
-import org.pathwayeditor.contextadapter.publicapi.IContextAdapterServiceProvider;
-import org.pathwayeditor.contextadapter.publicapi.IContextAdapterValidationService;
-import org.pathwayeditor.contextadapter.publicapi.IValidationReport;
-import org.pathwayeditor.contextadapter.publicapi.IValidationReportItem;
-import org.pathwayeditor.contextadapter.publicapi.IValidationRuleConfig;
-import org.pathwayeditor.contextadapter.publicapi.IValidationRuleConfigurer;
+import org.eclipse.ui.contexts.IContext;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReport;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReportItem;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleConfig;
+import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.contextadapter.toolkit.ndom.AbstractNDOMParser;
 import org.pathwayeditor.contextadapter.toolkit.ndom.NdomException;
 import org.pathwayeditor.contextadapter.toolkit.validation.IDefaultValidationRuleConfigLoader;
@@ -129,7 +126,7 @@ public abstract class AbstractContextValidationService implements IContextAdapte
 	protected abstract AbstractNDOMParser createNdomFactory();
 	
 	/**
-	 * Subclasses should implement the generattion of a notation domain object model.
+	 * Subclasses should implement the generattion of a validationService domain object model.
 	 * @throws NdomException If Ndom generation cannot proceed.
 	 */
 	protected abstract void generateNdom() throws NdomException;

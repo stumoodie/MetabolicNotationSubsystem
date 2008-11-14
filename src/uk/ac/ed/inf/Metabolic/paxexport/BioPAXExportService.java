@@ -4,34 +4,34 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import org.pathwayeditor.businessobjectsAPI.IMap;
-import org.pathwayeditor.contextadapter.publicapi.ExportServiceException;
-import org.pathwayeditor.contextadapter.publicapi.IContext;
-import org.pathwayeditor.contextadapter.publicapi.IContextAdapterExportService;
-import org.pathwayeditor.contextadapter.publicapi.IContextAdapterServiceProvider;
-import org.pathwayeditor.contextadapter.publicapi.IContextAdapterValidationService;
-import org.pathwayeditor.contextadapter.publicapi.IValidationReport;
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
+import org.pathwayeditor.businessobjects.notationsubsystem.ExportServiceException;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotationExportService;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotationValidationService;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReport;
 
 import uk.ac.ed.inf.Metabolic.ExportAdapterCreationException;
 import uk.ac.ed.inf.Metabolic.IExportAdapter;
 import uk.ac.ed.inf.Metabolic.MetabolicNDOMValidationService;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IModel;
 
-public class BioPAXExportService implements IContextAdapterExportService {
+public class BioPAXExportService implements INotationExportService {
 
 	String DISPLAY_NAME = "BioPAX exportL3v.95";
 
 	String RECOMMENDED_SUFFIX = "owl";
 
 	final String TYPECODE = "MetBioPAX_1.0.0";
-	private IContext context;
+	private INotation notation;
 	private IExportAdapter<IModel> generator;
 
-	private IContextAdapterServiceProvider serviceProvider;
+	private INotationSubsystem serviceProvider;
 
 	
-	public BioPAXExportService(IContextAdapterServiceProvider serviceProvider) {
-		context=serviceProvider.getContext();
+	public BioPAXExportService(INotationSubsystem serviceProvider) {
+		notation=serviceProvider.getNotation();
 		this.serviceProvider = serviceProvider;
 	}
 
@@ -46,7 +46,7 @@ public class BioPAXExportService implements IContextAdapterExportService {
 	 *             <li> Cannot produce valid SBML
 	 *             </ul>
 	 */
-	public void exportMap(IMap map, File exportFile)
+	public void exportMap(ICanvas map, File exportFile)
 			throws ExportServiceException {
 		FileOutputStream fos = null;
 		try {
@@ -54,7 +54,7 @@ public class BioPAXExportService implements IContextAdapterExportService {
 
 			generator = getGenerator();//new MetabolicSBMLExportAdapter<IModel>();
 
-			IContextAdapterValidationService validator =  serviceProvider
+			INotationValidationService validator =  serviceProvider
 					.getValidationService();
 			validator.setMapToValidate(map);
 			IModel ndom = null;
@@ -63,8 +63,7 @@ public class BioPAXExportService implements IContextAdapterExportService {
 				IValidationReport report =validator.getValidationReport();
 				if(!report.isMapValid()){
 					String sb="Map is not valid:\n";
-					
-					throw new ExportServiceException(sb, report);
+					throw new ExportServiceException(sb);
 				}else {
 					ndom=getModel(validator);
 				
@@ -90,7 +89,7 @@ public class BioPAXExportService implements IContextAdapterExportService {
 
 	}
 
-	IModel getModel(IContextAdapterValidationService validator) {
+	IModel getModel(INotationValidationService validator) {
 		if(validator.getValidationReport().isMapValid()){
 		return (IModel) MetabolicNDOMValidationService.getInstance(serviceProvider).getNDOM();
 		}else{
@@ -98,11 +97,11 @@ public class BioPAXExportService implements IContextAdapterExportService {
 		}
 	}
 
-	private void checkArgs(IMap map, File exportFile)
+	private void checkArgs(ICanvas map, File exportFile)
 			throws ExportServiceException, IOException {
 
 		if (map == null || exportFile == null
-				|| map.getTheSingleRootMapObject() == null) {
+				|| map.getModel().getRootNode() == null) {
 			throw new IllegalArgumentException("Arguments must not be null");
 		}
 		exportFile.createNewFile();
@@ -113,13 +112,12 @@ public class BioPAXExportService implements IContextAdapterExportService {
 		}
 	}
 
-	
 	public String getCode() {
 		return TYPECODE;
 	}
 
-	public IContext getContext() {
-		return context;
+	public INotation getNotation() {
+		return notation;
 	}
 
 	public String getDisplayName() {
@@ -130,7 +128,7 @@ public class BioPAXExportService implements IContextAdapterExportService {
 		return RECOMMENDED_SUFFIX;
 	}
 
-	public IContextAdapterServiceProvider getServiceProvider() {
+	public INotationSubsystem getNotationSubsystem() {
 		return serviceProvider;
 	}
 

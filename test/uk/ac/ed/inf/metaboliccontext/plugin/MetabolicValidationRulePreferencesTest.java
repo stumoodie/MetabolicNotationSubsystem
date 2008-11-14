@@ -1,18 +1,11 @@
 package uk.ac.ed.inf.metaboliccontext.plugin;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.pathwayeditor.contextadapter.publicapi.IValidationRuleConfig;
-import org.pathwayeditor.contextadapter.toolkit.validation.ContextValidationService;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleConfig;
 
-import uk.ac.ed.inf.Metabolic.MetabolicContextAdapterServiceProvider;
+import uk.ac.ed.inf.Metabolic.MetabolicNotationSubsystem;
 
 public class MetabolicValidationRulePreferencesTest {
 	private class MetabolicValidationRulePreferencesExt extends MetabolicValidationRulePreferences {
@@ -26,7 +19,7 @@ public class MetabolicValidationRulePreferencesTest {
 
 	@Before
 	public void setUp() throws Exception {
-		validationService = (ContextValidationService) MetabolicContextAdapterServiceProvider
+		validationService = (ContextValidationService) MetabolicNotationSubsystem
 				.getInstance().getValidationService();
 //		validationService.initRuleStore();
 		prefsTSS = new MetabolicValidationRulePreferencesExt();

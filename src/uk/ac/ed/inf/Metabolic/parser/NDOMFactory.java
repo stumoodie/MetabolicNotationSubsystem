@@ -2,16 +2,9 @@ package uk.ac.ed.inf.Metabolic.parser;
 
 import java.util.List;
 
-import org.pathwayeditor.businessobjectsAPI.IContextProperty;
-import org.pathwayeditor.businessobjectsAPI.ILabel;
-import org.pathwayeditor.businessobjectsAPI.ILink;
-import org.pathwayeditor.businessobjectsAPI.IMapObject;
-import org.pathwayeditor.businessobjectsAPI.IPort;
-import org.pathwayeditor.businessobjectsAPI.IRootMapObject;
-import org.pathwayeditor.businessobjectsAPI.Location;
-import org.pathwayeditor.contextadapter.publicapi.IValidationRuleDefinition;
+import org.eclipse.core.internal.resources.ModelObject;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
 import org.pathwayeditor.contextadapter.toolkit.ndom.AbstractNDOMParser;
-import org.pathwayeditor.contextadapter.toolkit.ndom.ModelObject;
 import org.pathwayeditor.contextadapter.toolkit.ndom.NdomException;
 import org.pathwayeditor.contextadapter.toolkit.validation.RuleValidationReportBuilder;
 

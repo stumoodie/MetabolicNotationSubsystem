@@ -4,10 +4,9 @@ import java.util.Set;
 
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.IWorkbenchPreferencePage;
-import org.pathwayeditor.application.contextadapter.uitoolkit.ValidationRulePreferences;
-import org.pathwayeditor.contextadapter.publicapi.IValidationRuleConfig;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleConfig;
 
-import uk.ac.ed.inf.Metabolic.MetabolicContextAdapterServiceProvider;
+import uk.ac.ed.inf.Metabolic.MetabolicNotationSubsystem;
 
 public class MetabolicValidationRulePreferences extends ValidationRulePreferences implements IWorkbenchPreferencePage {
 	
@@ -29,7 +28,7 @@ public class MetabolicValidationRulePreferences extends ValidationRulePreference
 
 	@Override
 	protected Set<IValidationRuleConfig> getConfigurableRules() {
-		return MetabolicContextAdapterServiceProvider
+		return MetabolicNotationSubsystem
 				         .getInstance()
 				         .getValidationService()
 				         .getRuleConfigurations();
@@ -38,7 +37,7 @@ public class MetabolicValidationRulePreferences extends ValidationRulePreference
 
 	@Override
 	protected Set<IValidationRuleConfig> getDefaultConfigurableRules() {
-		return    MetabolicContextAdapterServiceProvider
+		return    MetabolicNotationSubsystem
 		         .getInstance()
 		         .getValidationService()
 		         .getDefaultRuleConfigurations();

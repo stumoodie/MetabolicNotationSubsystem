@@ -1,27 +1,11 @@
 package uk.ac.ed.inf.Metabolic.sbmlexport;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 import java.io.File;
 
-import org.jmock.Expectations;
-import org.jmock.Mockery;
-import org.jmock.integration.junit4.JMock;
-import org.jmock.integration.junit4.JUnit4Mockery;
-import org.jmock.lib.legacy.ClassImposteriser;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.pathwayeditor.businessobjectsAPI.IMap;
-import org.pathwayeditor.businessobjectsAPI.IMapObject;
-import org.pathwayeditor.businessobjectsAPI.IRootMapObject;
-import org.pathwayeditor.contextadapter.publicapi.ExportServiceException;
-import org.pathwayeditor.contextadapter.publicapi.IContext;
-import org.pathwayeditor.contextadapter.publicapi.IContextAdapterServiceProvider;
-import org.pathwayeditor.contextadapter.publicapi.IContextAdapterValidationService;
-import org.pathwayeditor.contextadapter.publicapi.IValidationReport;
+import org.eclipse.ui.contexts.IContext;
+import org.pathwayeditor.businessobjects.notationsubsystem.ExportServiceException;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReport;
+import org.pathwayeditor.businessobjects.repository.IMap;
 
 import uk.ac.ed.inf.Metabolic.IExportAdapter;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IModel;
@@ -70,7 +54,7 @@ public class SBMLExportServiceTest {
  
     @Before
 	public void setUp() throws Exception {
-    	mockery.checking(new Expectations(){{atLeast(1).of(provider).getContext(); will(returnValue(context));}});
+    	mockery.checking(new Expectations(){{atLeast(1).of(provider).getContext(); will(returnValue(validationService));}});
 		serviceTSS = new SBMLExportServiceTSS(provider);
 		service = serviceTSS;
 		 EXISTENT = new File ("SBMLoutput");

@@ -4,38 +4,40 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import org.pathwayeditor.businessobjectsAPI.IMap;
-import org.pathwayeditor.contextadapter.publicapi.ExportServiceException;
-import org.pathwayeditor.contextadapter.publicapi.IContext;
-import org.pathwayeditor.contextadapter.publicapi.IContextAdapterExportService;
-import org.pathwayeditor.contextadapter.publicapi.IContextAdapterServiceProvider;
-import org.pathwayeditor.contextadapter.publicapi.IContextAdapterValidationService;
-import org.pathwayeditor.contextadapter.publicapi.IValidationReport;
+import org.eclipse.ui.contexts.IContext;
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
+import org.pathwayeditor.businessobjects.notationsubsystem.ExportServiceException;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotationExportService;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotationValidationService;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReport;
+import org.pathwayeditor.businessobjects.repository.IMap;
 
 import uk.ac.ed.inf.Metabolic.ExportAdapterCreationException;
 import uk.ac.ed.inf.Metabolic.IExportAdapter;
 import uk.ac.ed.inf.Metabolic.MetabolicNDOMValidationService;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IModel;
 
-public class SBMLExportService implements IContextAdapterExportService {
+public class SBMLExportService implements INotationExportService {
 
 	String DISPLAY_NAME = "SBML export L2v3";
 
 	String RECOMMENDED_SUFFIX = "sbml";
 
 	final String TYPECODE = "MetSBML_1.0.0";
-	private IContext context;
+	private INotation notation;
 	private IExportAdapter<IModel> generator;
+	private INotationSubsystem notationSubSystem;
 
-	public SBMLExportService(IContextAdapterServiceProvider provider) {
-		this.serviceProvider = provider;
-		context = provider.getContext();
+	public SBMLExportService(INotationSubsystem provider) {
+		this.notationSubSystem = provider;
+		notation = provider.getNotation();
 	}
 
-	private IContextAdapterServiceProvider serviceProvider;
 
-	public IContextAdapterServiceProvider getServiceProvider() {
-		return serviceProvider;
+	public INotationSubsystem getNotationSubsystem() {
+		return notationSubSystem;
 	}
 
 	/**
@@ -49,7 +51,7 @@ public class SBMLExportService implements IContextAdapterExportService {
 	 *             <li> Cannot produce valid SBML
 	 *             </ul>
 	 */
-	public void exportMap(IMap map, File exportFile) throws ExportServiceException {
+	public void exportMap(ICanvas map, File exportFile) throws ExportServiceException {
 		if(map == null || exportFile == null){
 			throw new IllegalArgumentException("parameters map or exportFile canot be null");
 		}
@@ -59,7 +61,7 @@ public class SBMLExportService implements IContextAdapterExportService {
 
 			generator = getGenerator();//new MetabolicSBMLExportAdapter<IModel>();
 
-			IContextAdapterValidationService validator =  serviceProvider
+			INotationValidationService validator =  notationSubSystem
 					.getValidationService();
 			validator.setMapToValidate(map);
 			IModel ndom = null;
@@ -69,7 +71,7 @@ public class SBMLExportService implements IContextAdapterExportService {
 				if(!report.isMapValid()){
 					String sb="Map is not valid:\n";
 					
-					throw new ExportServiceException(sb, report);
+					throw new ExportServiceException(sb);
 				}else {
 					ndom=getModel(validator);
 				
@@ -99,19 +101,19 @@ public class SBMLExportService implements IContextAdapterExportService {
 
 	}
 	
-	IModel getModel(IContextAdapterValidationService validator) {
+	IModel getModel(INotationValidationService validator) {
 		if(validator.getValidationReport().isMapValid()){
-		return (IModel) MetabolicNDOMValidationService.getInstance(serviceProvider).getNDOM();
+		return (IModel) MetabolicNDOMValidationService.getInstance(notationSubSystem).getNDOM();
 		}else{
 			return null;
 		}
 	}
 
-	private void checkArgs(IMap map, File exportFile)
+	private void checkArgs(ICanvas map, File exportFile)
 			throws ExportServiceException, IOException {
 
 		if (map == null || exportFile == null
-				|| map.getTheSingleRootMapObject() == null) {
+				|| map.getModel().getRootNode() == null) {
 			throw new IllegalArgumentException("Arguments must not be null");
 		}
         // yes yt is, export fails without it
@@ -127,8 +129,8 @@ public class SBMLExportService implements IContextAdapterExportService {
 		return TYPECODE;
 	}
 
-	public IContext getContext() {
-		return context;
+	public INotation getNotation(){
+		return notation;
 	}
 
 	public String getDisplayName() {
@@ -140,8 +142,8 @@ public class SBMLExportService implements IContextAdapterExportService {
 	}
 
 	public String toString() {
-		return new StringBuffer().append("Export service for context :")
-				.append(context.toString()).append("\n Display name :").append(
+		return new StringBuffer().append("Export service for validationService :")
+				.append(notation.toString()).append("\n Display name :").append(
 						DISPLAY_NAME).append("\n Code: ").append(TYPECODE)
 				.toString();
 	}

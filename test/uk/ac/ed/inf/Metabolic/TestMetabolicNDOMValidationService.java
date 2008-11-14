@@ -1,22 +1,6 @@
 package uk.ac.ed.inf.Metabolic;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import org.jmock.Expectations;
-import org.jmock.Mockery;
-import org.jmock.integration.junit4.JMock;
-import org.jmock.integration.junit4.JUnit4Mockery;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.pathwayeditor.businessobjectsAPI.IMap;
-import org.pathwayeditor.businessobjectsAPI.IRootMapObject;
+import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.contextadapter.toolkit.validation.RuleStore;
 
 import uk.ac.ed.inf.Metabolic.parser.MetabolicRuleLoader;
@@ -38,7 +22,7 @@ public class TestMetabolicNDOMValidationService {
 	private MetabolicNDOMValidationService s;
 	@Before
 	public void setUp() throws Exception {
-		s=MetabolicNDOMValidationService.getInstance(MetabolicContextAdapterServiceProvider.getInstance());
+		s=MetabolicNDOMValidationService.getInstance(MetabolicNotationSubsystem.getInstance());
 		rmo=mockery.mock(IRootMapObject.class);
 		map=mockery.mock(IMap.class);
 		mockery.checking(new Expectations(){{
