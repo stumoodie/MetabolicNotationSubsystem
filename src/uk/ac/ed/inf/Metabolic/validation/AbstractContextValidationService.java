@@ -4,6 +4,10 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.ui.contexts.IContext;
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotationValidationService;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReport;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReportItem;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleConfig;
@@ -16,34 +20,39 @@ import org.pathwayeditor.contextadapter.toolkit.validation.IValidationRuleStore;
 import org.pathwayeditor.contextadapter.toolkit.validation.RuleValidationReportBuilder;
 
 
-public abstract class AbstractContextValidationService implements IContextAdapterValidationService {
+/**
+ * @author asorokin
+ *
+ */
+public abstract class AbstractContextValidationService implements INotationValidationService {
+//public  class AbstractContextValidationService implements INotationValidationService {
 
-	private IContext context;
+	private INotation notation;
+	private INotationSubsystem serviceProvider;
 	private IValidationReport validationReport;
 	List<IValidationReportItem> reportItems;
 	private boolean beenValidated = false;
 	private boolean readyToValidate = false;
-	private IMap mapToValidate;
-	private IValidationRuleConfigurer configurer;
+	private ICanvas mapToValidate;
+//	private IValidationRuleConfigurer configurer;
 	
 	private AbstractNDOMParser factory;
 	private IRuleValidationReportBuilder reportBuilder;
 
 	
-	public AbstractContextValidationService(IContextAdapterServiceProvider provider) {
+	public AbstractContextValidationService(INotationSubsystem provider) {
 		this.serviceProvider= provider;
-		this.context        = provider.getContext();
+		this.notation        = provider.getNotation();
 	}
-	private IContextAdapterServiceProvider serviceProvider;
 
-	public IContextAdapterServiceProvider getServiceProvider() {
+	public INotationSubsystem getNotationSubsystem() {
 		return serviceProvider;
 	}
 
     /**
      * Subclasses should not override this method
      */
-	public IMap getMapBeingValidated() {
+	public ICanvas getMapBeingValidated() {
 		return mapToValidate;
 	}
     
@@ -84,10 +93,10 @@ public abstract class AbstractContextValidationService implements IContextAdapte
 	public final void validateMap() {
 		if(!isReadyToValidate())
 			throw new IllegalStateException("Service not ready to validate");
-		 configureRulesFromUserPreferences();
+//		 configureRulesFromUserPreferences();
 		factory = createNdomFactory();
 		reportBuilder = new RuleValidationReportBuilder(getRuleStore(), mapToValidate);
-		factory.setRmo(mapToValidate.getTheSingleRootMapObject());
+		factory.setRmo(mapToValidate.getModel().getRootNode());
 		try {
 			factory.parse();
 			generateNdom();
@@ -110,13 +119,14 @@ public abstract class AbstractContextValidationService implements IContextAdapte
 	 /**
      * Subclasses should not override this method
      */
-	public void setRuleConfigurer(IValidationRuleConfigurer configurer) {
+/*	public void setRuleConfigurer(IValidationRuleConfigurer configurer) {
 		if(configurer == null){
 			throw new IllegalArgumentException("Rule configurer cannot be null!");
 		}
 		this.configurer = configurer;
 	}
 	
+*/
 	/**
 	 * Subclasses should implement and provide an {@link AbstractNDOMParser} which performs
 	 * validation. 
@@ -131,7 +141,7 @@ public abstract class AbstractContextValidationService implements IContextAdapte
 	 */
 	protected abstract void generateNdom() throws NdomException;
 	
-	private void configureRulesFromUserPreferences() {
+/*	private void configureRulesFromUserPreferences() {
 		// configurer is optional - no config = default settings
 		if(configurer != null){
 			configurer.configureRules(getRuleStore().getConfigurableRules());
@@ -139,11 +149,12 @@ public abstract class AbstractContextValidationService implements IContextAdapte
 		
 	}
     
+*/	
 	/**
      * Subclasses should not override this method
      */
-	public IContext getContext() {
-		return context;
+	public INotation getNotation() {
+		return notation;
 	}
     
 	/**
@@ -153,7 +164,7 @@ public abstract class AbstractContextValidationService implements IContextAdapte
 		return readyToValidate && getRuleStore().isInitialized();
 	}
 
-	public void setMapToValidate(IMap mapToValidate) {
+	public void setMapToValidate(ICanvas mapToValidate) {
 		if(mapToValidate==null) throw new IllegalArgumentException("Map to be validated should not be null");
 		this.mapToValidate = mapToValidate;
 		beenValidated=false;
@@ -163,7 +174,7 @@ public abstract class AbstractContextValidationService implements IContextAdapte
 
 	/**
 	 * Must be called before validation to load up the rule store.
-	 * Typically implemenations will implement an {@link IDefaultValidationRuleConfigLoader}
+	 * Typically implementations will implement an {@link IDefaultValidationRuleConfigLoader}
 	 * and call it as follows:<br>
 	 * <pre>
 	 *    getRuleStore().initializeStore(new MyDefaultRuleLoader());
