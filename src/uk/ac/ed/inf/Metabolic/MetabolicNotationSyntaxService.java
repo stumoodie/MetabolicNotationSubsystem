@@ -39,6 +39,22 @@ import org.pathwayeditor.contextadapter.toolkit.ctxdefn.ShapeParentingRules;
 
 public class MetabolicNotationSyntaxService implements INotationSyntaxService {
 
+	public static final String PARAMETERS_PROP = "Parameters";
+	public static final String REVERSIBILITY_PROP = "Reversibility";
+	public static final String EC_PROP = "EC";
+	public static final String SMILES_PROP = "SMILES";
+	public static final String STOICH_PROP = "STOICH";
+	public static final String ROLE_PROP = "ROLE";
+	public static final String IC_PROP = "IC";
+	public static final String KINETIC_LAW_PROP = "KineticLaw";
+	public static final String CID_PROP = "CID";
+	public static final String CH_EBI_PROP = "ChEBI";
+	public static final String PUB_CHEM_PROP = "PubChem";
+	public static final String IN_CHI_PROP = "InChI";
+	public static final String VAR_NAME_PROP = "VarName";
+	public static final String GO_TERM_PROP = "GO term";
+	private static final String VOLUME_PROP = "volume";
+
 	private static IPropertyDefinition reassignVal(IPropertyDefinition prop, String val, boolean isEdit, boolean isVis) {
 		if (prop instanceof IPlainTextPropertyDefinition)
 			return reassignVal((PlainTextPropertyDefinition) prop, val, isEdit, isVis);
@@ -161,7 +177,7 @@ public class MetabolicNotationSyntaxService implements INotationSyntaxService {
 		private String description = "Functional compartment";
 		{
 			IPropertyDefinition goTerm = reassignVal(getPropGOTerm(), " ", true, false);
-			IPropertyDefinition volume = new NumberPropertyDefinition("volume", "1.0", false, true);
+			IPropertyDefinition volume = new NumberPropertyDefinition(MetabolicNotationSyntaxService.VOLUME_PROP, "1.0", false, true);
 			propertyDefinitions.add(goTerm);
 			propertyDefinitions.add(volume);
 		}
@@ -214,7 +230,7 @@ public class MetabolicNotationSyntaxService implements INotationSyntaxService {
 	private void defineParentingCompartment() {
 		Set<IShapeObjectType> set = new HashSet<IShapeObjectType>();
 		set.addAll(Arrays.asList(new IShapeObjectType[] { this.Compartment, this.process, this.Compound }));
-		ShapeParentingRules rules = Compartment.getParentingRules();
+		ShapeParentingRules rules = (ShapeParentingRules) Compartment.getParentingRules();
 		for (IShapeObjectType child : set) {
 			rules.addChild(child);
 		}
@@ -241,9 +257,9 @@ public class MetabolicNotationSyntaxService implements INotationSyntaxService {
 		properties.add(ECnum);
 		IPropertyDefinition KineticLaw = reassignVal(getPropKineticLaw(), " ", true, false);
 		properties.add(KineticLaw);
-		IPropertyDefinition Reversibility = new PlainTextPropertyDefinition("Reversibility", "irreversible", false, true);
+		IPropertyDefinition Reversibility = new PlainTextPropertyDefinition(REVERSIBILITY_PROP, "irreversible", false, true);
 		properties.add(Reversibility);
-		IPropertyDefinition Parameters = new PlainTextPropertyDefinition("Parameters", " ", false, true);
+		IPropertyDefinition Parameters = new PlainTextPropertyDefinition(PARAMETERS_PROP, " ", false, true);
 		properties.add(Parameters);
 		processDefaults.setPropertyDefinitions(properties);
 		this.process = new ShapeObjectType(processDefaults, 11, "chemical conversion of compounds", "process", serviceProvider.getSyntaxService());
@@ -251,7 +267,7 @@ public class MetabolicNotationSyntaxService implements INotationSyntaxService {
 	}
 
 	private void defineParentingProcess() {
-		this.process.getParentingRules().clear();
+		((ShapeParentingRules)this.process.getParentingRules()).clear();
 	}
 
 	public ShapeObjectType getProcess() {
@@ -289,7 +305,7 @@ public class MetabolicNotationSyntaxService implements INotationSyntaxService {
 	}
 
 	private void defineParentingCompound() {
-		this.Compound.getParentingRules().clear();
+		((ShapeParentingRules)this.Compound.getParentingRules()).clear();
 	}
 
 	public ShapeObjectType getCompound() {
@@ -369,62 +385,62 @@ public class MetabolicNotationSyntaxService implements INotationSyntaxService {
 	}
 
 	private IPropertyDefinition getPropECnum() {
-		PlainTextPropertyDefinition ECnum = new PlainTextPropertyDefinition("EC", "-", true, true);
+		PlainTextPropertyDefinition ECnum = new PlainTextPropertyDefinition(EC_PROP, "-", true, true);
 		return ECnum;
 	}
 
 	private IPropertyDefinition getPropSmiles() {
-		IPropertyDefinition Smiles = new PlainTextPropertyDefinition("SMILES", " ", false, true);
+		IPropertyDefinition Smiles = new PlainTextPropertyDefinition(SMILES_PROP, " ", false, true);
 		return Smiles;
 	}
 
 	private IPropertyDefinition getPropStoich() {
-		PlainTextPropertyDefinition Stoich = new PlainTextPropertyDefinition("STOICH", " ", true, true);
+		PlainTextPropertyDefinition Stoich = new PlainTextPropertyDefinition(STOICH_PROP, " ", true, true);
 		return Stoich;
 	}
 
 	private IPropertyDefinition getPropRole() {
-		PlainTextPropertyDefinition Role = new PlainTextPropertyDefinition("ROLE", " ", false, true);
+		PlainTextPropertyDefinition Role = new PlainTextPropertyDefinition(ROLE_PROP, " ", false, true);
 		return Role;
 	}
 
 	private IPropertyDefinition getPropIC() {
-		IPropertyDefinition IC = new NumberPropertyDefinition("IC", "0.0", false, true);
+		IPropertyDefinition IC = new NumberPropertyDefinition(IC_PROP, "0.0", false, true);
 		return IC;
 	}
 
 	private IPropertyDefinition getPropKineticLaw() {
-		IPropertyDefinition KineticLaw = new PlainTextPropertyDefinition("KineticLaw", " ", false, true);
+		IPropertyDefinition KineticLaw = new PlainTextPropertyDefinition(KINETIC_LAW_PROP, " ", false, true);
 		return KineticLaw;
 	}
 
 	private IPropertyDefinition getPropCID() {
-		IPropertyDefinition CID = new PlainTextPropertyDefinition("CID", " ", false, true);
+		IPropertyDefinition CID = new PlainTextPropertyDefinition(CID_PROP, " ", false, true);
 		return CID;
 	}
 
 	private IPropertyDefinition getPropChEBI() {
-		IPropertyDefinition ChEBI = new PlainTextPropertyDefinition("ChEBI", " ", false, true);
+		IPropertyDefinition ChEBI = new PlainTextPropertyDefinition(CH_EBI_PROP, " ", false, true);
 		return ChEBI;
 	}
 
 	private IPropertyDefinition getPropPubChem() {
-		IPropertyDefinition PubChem = new PlainTextPropertyDefinition("PubChem", " ", false, true);
+		IPropertyDefinition PubChem = new PlainTextPropertyDefinition(PUB_CHEM_PROP, " ", false, true);
 		return PubChem;
 	}
 
 	private IPropertyDefinition getPropInChI() {
-		IPropertyDefinition InChI = new PlainTextPropertyDefinition("InChI", " ", false, true);
+		IPropertyDefinition InChI = new PlainTextPropertyDefinition(IN_CHI_PROP, " ", false, true);
 		return InChI;
 	}
 
 	private IPropertyDefinition getPropGOTerm() {
-		IPropertyDefinition GOTerm = new PlainTextPropertyDefinition("GO term", " ", false, true);
+		IPropertyDefinition GOTerm = new PlainTextPropertyDefinition(GO_TERM_PROP, " ", false, true);
 		return GOTerm;
 	}
 
 	private IPropertyDefinition getPropVarName() {
-		IPropertyDefinition VarName = new PlainTextPropertyDefinition("VarName", " ", false, true);
+		IPropertyDefinition VarName = new PlainTextPropertyDefinition(VAR_NAME_PROP, " ", false, true);
 		return VarName;
 	}
 
