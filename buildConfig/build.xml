@@ -16,11 +16,12 @@
      CLASSPATH DEFINITIONS
      ======== -->
 	<path id="classpath">
-		<pathelement location="${MyWorkspace}/org.pathwayeditor.application/EPE2_new.jar"/>
+		<pathelement location="../lib/BusinessObjects.jar"/>
+		<pathelement location="../lib/Toolkit.jar"/>
 		<fileset dir="../" />
 	</path>
 	<path id="jmock">
-		 <fileset dir="../jmock-2.2.0-jars" includes="**/*.jar"/>
+		 <fileset dir="../lib/jmock-2.4.0" includes="**/*.jar"/>
     </path>
 	
 <!-- builds syntax definition code and drops into application -->
@@ -38,18 +39,23 @@
 		<path id="testclasspath">
 			  <path refid="classpath"/>
 			  <path refid="jmock"/>
+			  <pathelement location="lib/junit4.4/junit-4.4.jar"/>
 			  <pathelement location="${archive}"/>
 			  <pathelement location="${build.test}"/>
-			  <fileset dir ="${MyWorkspace}/org.pathwayeditor.application">
+<!--
+			<fileset dir ="${MyWorkspace}/org.pathwayeditor.application">
 			  	 <include name="**/*.jar"/>
 			  </fileset>
-			 
+	 -->		 
 				 
 		</path>
 	
     <!-- now compile test cases -->
 		<echo> Compiling test cases</echo>
 		<javac classpathref="testclasspath" debug="true" srcdir="../test/" destdir="${build.test}" >
+        	<exclude name= "**/plugin/*.java"/> <!-- or plugin code -->
+        	<exclude name= "**/TestMetabolicParser.java"/> 
+        	<exclude name= "**/sbmlexport/*.java"/> <!-- SBML export -->
 		</javac>
 	
 	<!-- copy testConfig files  -->
@@ -65,7 +71,10 @@
 				<formatter type="xml"/>
 		        <classpath>
 		        	<path refid="testclasspath"/>
-		        	<pathelement location="${devEclipse.dir.plugins}/org.junit/junit4_4.1.0.1/junit-4.1.jar"/>
+		        	<!--
+		        	<pathelement location="lib/BusinessObjects.jar"/>
+		        	<pathelement location="lib/Toolkit.jar"/>
+		        	-->
 		        </classpath>
 				
 				<batchtest todir="${build.test.logs}">
@@ -77,6 +86,15 @@
 				
 			    
 			</junit>
+	<!-- clean report directory -->
+	<delete dir="${build.test.logs}/junitReports" />
+	<mkdir dir="${build.test.logs}/junitReports" />
+
+	<!-- generate report -->
+	<junitreport todir="${build.test.logs}/junitReports">
+		<fileset dir="$${build.test.logs}" includes="**/*.xml" />
+		<report todir="$${build.test.logs}/junitReports" />
+	</junitreport>
 	
 	
 	
@@ -104,7 +122,7 @@
 			
 	        <javac classpathref="classpath" srcdir="../src/" destdir="${build.root}/bin">
 	            
-	        	<exclude name= "**/Activator.java"/> <!-- or plugin code -->
+	        	<exclude name= "**/plugin/*.java"/> <!-- or plugin code -->
 	        </javac>
 </target>
 	
