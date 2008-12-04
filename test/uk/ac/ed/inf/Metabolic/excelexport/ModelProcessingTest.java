@@ -1,5 +1,11 @@
 package uk.ac.ed.inf.Metabolic.excelexport;
 
+import static org.junit.Assert.*;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import uk.ac.ed.inf.Metabolic.ndomAPI.ERelType;
 import uk.ac.ed.inf.Metabolic.parser.CompoundTestDouble;
 import uk.ac.ed.inf.Metabolic.parser.MacromoleculeTestDouble;

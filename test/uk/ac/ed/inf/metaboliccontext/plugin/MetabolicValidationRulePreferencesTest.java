@@ -3,6 +3,9 @@ package uk.ac.ed.inf.metaboliccontext.plugin;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleConfig;
 
 import uk.ac.ed.inf.Metabolic.MetabolicNotationSubsystem;

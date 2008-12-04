@@ -3,7 +3,6 @@ package uk.ac.ed.inf.Metabolic.validation;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.ui.contexts.IContext;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
@@ -11,7 +10,6 @@ import org.pathwayeditor.businessobjects.notationsubsystem.INotationValidationSe
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReport;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReportItem;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleConfig;
-import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.contextadapter.toolkit.ndom.AbstractNDOMParser;
 import org.pathwayeditor.contextadapter.toolkit.ndom.NdomException;
 import org.pathwayeditor.contextadapter.toolkit.validation.IDefaultValidationRuleConfigLoader;

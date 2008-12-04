@@ -2,9 +2,6 @@ package uk.ac.ed.inf.Metabolic.parser;
 
 import java.util.regex.Pattern;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
-import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
 import org.pathwayeditor.contextadapter.toolkit.validation.IRuleValidationReportBuilder;
 
 /**
@@ -48,8 +45,12 @@ public class RegexpPropertyRule extends AbstractPropertyRule implements
 			throw new NullPointerException("Report builder is not set");
 		if (pattern == null)
 			throw new NullPointerException("Regex is not set");
-		String st = imo.getProperty(
-				propName).getValue().toString();
+		Object val = imo.getProperty(
+				propName).getValue();
+		String st=null;
+		if(val!=null){
+			st = val.toString();
+		}
 		if ((st == null || st.trim().length() == 0)) {
 			if (isEmptyValid) {
 				value = "";

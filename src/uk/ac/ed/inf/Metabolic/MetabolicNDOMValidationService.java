@@ -3,7 +3,6 @@ package uk.ac.ed.inf.Metabolic;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReport;
-import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.contextadapter.toolkit.ndom.INDOMValidationService;
 import org.pathwayeditor.contextadapter.toolkit.ndom.INdomModel;
 import org.pathwayeditor.contextadapter.toolkit.ndom.NdomException;

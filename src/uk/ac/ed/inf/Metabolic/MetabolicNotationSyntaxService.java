@@ -22,6 +22,7 @@ import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
+import org.pathwayeditor.businessobjects.typedefn.IRootObjectParentingRules;
 import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
@@ -33,6 +34,7 @@ import org.pathwayeditor.contextadapter.toolkit.ctxdefn.LinkTerminusDefaults;
 import org.pathwayeditor.contextadapter.toolkit.ctxdefn.LinkTerminusDefinition;
 import org.pathwayeditor.contextadapter.toolkit.ctxdefn.NumberPropertyDefinition;
 import org.pathwayeditor.contextadapter.toolkit.ctxdefn.PlainTextPropertyDefinition;
+import org.pathwayeditor.contextadapter.toolkit.ctxdefn.RootObjectParentingRules;
 import org.pathwayeditor.contextadapter.toolkit.ctxdefn.RootObjectType;
 import org.pathwayeditor.contextadapter.toolkit.ctxdefn.ShapeObjectType;
 import org.pathwayeditor.contextadapter.toolkit.ctxdefn.ShapeParentingRules;
@@ -147,19 +149,19 @@ public class MetabolicNotationSyntaxService implements INotationSyntaxService {
 	}
 
 	private void createCompartment() {
-		this.Compartment = new ShapeObjectType(new CompartmentDefaults(), 10, "Functional compartment", "Compartment", serviceProvider.getSyntaxService());
+		this.Compartment = new ShapeObjectType(new CompartmentDefaults(), 10, "Functional compartment", "Compartment", this);
 		Compartment.setEditableAttributes(EnumSet.allOf(IShapeObjectType.EditableShapeAttributes.class));
 	}
 
 	private void createRMO() {
-		this.rmo = new RootObjectType(-10, "ROOT_MAP_OBJECT", "ROOT_MAP_OBJECT", this);
+		this.rmo = new RootObjectType(1, "ROOT_MAP_OBJECT", "ROOT_MAP_OBJECT", this);
 	}
 
 	private void defineParentingRMO() {
 		HashSet<IShapeObjectType> set = new HashSet<IShapeObjectType>();
 		set.addAll(Arrays.asList(new IShapeObjectType[] { this.process, this.Compound, this.Compartment }));
 		for (IShapeObjectType child : set) {
-			((ShapeParentingRules) this.rmo.getParentingRules()).addChild(child);
+			((RootObjectParentingRules) this.rmo.getParentingRules()).addChild(child);
 		}
 
 	}
@@ -262,7 +264,7 @@ public class MetabolicNotationSyntaxService implements INotationSyntaxService {
 		IPropertyDefinition Parameters = new PlainTextPropertyDefinition(PARAMETERS_PROP, " ", false, true);
 		properties.add(Parameters);
 		processDefaults.setPropertyDefinitions(properties);
-		this.process = new ShapeObjectType(processDefaults, 11, "chemical conversion of compounds", "process", serviceProvider.getSyntaxService());
+		this.process = new ShapeObjectType(processDefaults, 11, "chemical conversion of compounds", "process", this);
 		process.setEditableAttributes(EnumSet.complementOf(EnumSet.of(IShapeObjectType.EditableShapeAttributes.LINE_WIDTH, IShapeObjectType.EditableShapeAttributes.SHAPE_SIZE)));
 	}
 

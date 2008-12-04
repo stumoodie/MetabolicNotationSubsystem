@@ -1,5 +1,9 @@
 package uk.ac.ed.inf.metaboliccontext.plugin;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 
 public class TestServcePRoviderLoader {
     IContextAdapterServiceProviderLoader loader;

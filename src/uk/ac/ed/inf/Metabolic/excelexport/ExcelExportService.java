@@ -13,7 +13,6 @@ import org.pathwayeditor.businessobjects.notationsubsystem.INotationExportServic
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationValidationService;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReport;
-import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.contextadapter.toolkit.validation.NotationValidationService;
 
 import uk.ac.ed.inf.Metabolic.ExportAdapterCreationException;
