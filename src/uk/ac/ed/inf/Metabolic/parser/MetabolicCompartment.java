@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.core.internal.resources.ModelObject;
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
+import org.pathwayeditor.contextadapter.toolkit.ndom.ModelObject;
 import org.pathwayeditor.contextadapter.toolkit.ndom.NdomException;
 
 import uk.ac.ed.inf.Metabolic.ndomAPI.ICompartment;
@@ -22,7 +23,7 @@ public class MetabolicCompartment extends ModelObject implements ICompartment {
 	private List<IMacromolecule> macromoleculeList=new ArrayList<IMacromolecule>();
 	private List<ICompartment> childCompartments=new ArrayList<ICompartment>();
 	private List<ICompound> compoundList=new ArrayList<ICompound>();
-	private final MetabolicModel parentModel;
+	private MetabolicModel parentModel;
 
 	
 	public MetabolicCompartment(String id, String name, String asciiName,
@@ -32,6 +33,18 @@ public class MetabolicCompartment extends ModelObject implements ICompartment {
 	}
 	
 	
+	
+	
+	public MetabolicCompartment(String id, IDrawingNode mapObject,
+			MetabolicModel m)
+			throws IllegalArgumentException {
+		super(id, mapObject);
+		parentModel=m;
+	}
+
+
+
+
 	public MetabolicCompartment(String description, String detailedDescription,
 			String id, String name, String asciiName,
 			ICompartment parentCompartment,MetabolicModel m, String term, double volume,
@@ -83,7 +96,7 @@ public class MetabolicCompartment extends ModelObject implements ICompartment {
 
 
 	boolean removeChildCompartment(MetabolicCompartment o) {
-		getParentModel().unregisterCompartment(o);
+		parentModel.unregisterCompartment(o);
 		setParentCompartment(null);
 		return childCompartments.remove(o);
 	}
@@ -118,9 +131,9 @@ public class MetabolicCompartment extends ModelObject implements ICompartment {
 	}
 
 
-	public MetabolicModel getParentModel() {
-		return parentModel;
-	}
+//	public MetabolicModel getParentModel() {
+//		return parentModel;
+//	}
 
 	@Override
 	public String toString() {

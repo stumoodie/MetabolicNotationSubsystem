@@ -2,6 +2,8 @@ package uk.ac.ed.inf.Metabolic.parser;
 
 import java.util.regex.Pattern;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
 import org.pathwayeditor.contextadapter.toolkit.validation.IRuleValidationReportBuilder;
 
@@ -14,14 +16,12 @@ import org.pathwayeditor.contextadapter.toolkit.validation.IRuleValidationReport
  * @date 5 Aug 2008
  * 
  */
-public class RegexpPropertyRule implements IParserRule {
+public class RegexpPropertyRule extends AbstractPropertyRule implements
+		IParserRule {
 
 	private String propName;
-	private IValidationRuleDefinition ruleDef;
 	private Pattern pattern;
 
-	private IMapObject imo;
-	private IMapObject ref;
 	private String value;
 	private boolean isEmptyValid = false;
 
@@ -35,32 +35,28 @@ public class RegexpPropertyRule implements IParserRule {
 		this.pattern = Pattern.compile(regexp);
 	}
 
-	public void setObject(IMapObject imo) {
-		this.imo = imo;
-		ref=imo;
-	}
-
-	public void setRuleDef(IValidationRuleDefinition ruleDef) {
-		this.ruleDef = ruleDef;
-	}
-
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * uk.ac.ed.inf.Metabolic.parser.IParserRule#validate(org.pathwayeditor.
+	 * contextadapter.toolkit.validation.IRuleValidationReportBuilder)
+	 */
 	public boolean validate(IRuleValidationReportBuilder report) {
-		if (ruleDef == null)
-			throw new NullPointerException("Rule definition is not set");
-		if (imo == null)
-			throw new NullPointerException("IMapObject is not set");
+		checkState();
 		if (report == null)
 			throw new NullPointerException("Report builder is not set");
 		if (pattern == null)
 			throw new NullPointerException("Regex is not set");
-		String st = imo.getPropertyByName(propName).getValue();
+		String st = imo.getProperty(
+				propName).getValue().toString();
 		if ((st == null || st.trim().length() == 0)) {
 			if (isEmptyValid) {
 				value = "";
 				report.setRulePassed(ruleDef);
 				return true;
 			} else {
-				report.setRuleFailed(imo, ruleDef,
+				report.setRuleFailed(ref, ruleDef,
 						"Empty string is not valid value for " + propName);
 				return false;
 			}
@@ -70,7 +66,7 @@ public class RegexpPropertyRule implements IParserRule {
 			report.setRulePassed(ruleDef);
 			return true;
 		}
-		report.setRuleFailed(imo, ruleDef, "Regex not match value for "
+		report.setRuleFailed(ref, ruleDef, "Regex not match value for "
 				+ propName + ": " + st + " <> (" + pattern + ")");
 		return false;
 	}
@@ -79,17 +75,13 @@ public class RegexpPropertyRule implements IParserRule {
 		return propName;
 	}
 
-	protected IValidationRuleDefinition getRuleDef() {
-		return ruleDef;
-	}
-
+	/**
+	 * @return
+	 */
 	protected String getValue() {
 		return value;
 	}
 
-	protected IMapObject getImo() {
-		return imo;
-	}
 
 	/**
 	 * Is empty string acceptable by the rule.
@@ -109,14 +101,6 @@ public class RegexpPropertyRule implements IParserRule {
 		this.isEmptyValid = isEmptyValid;
 	}
 
-
-	public void setRefObject(IMapObject imo) {
-		ref=imo;
-	}
-
-	public IMapObject getRefObject() {
-		return ref;
-	}
 }
 
 /*

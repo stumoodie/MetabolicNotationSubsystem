@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.core.internal.resources.ModelObject;
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
 import org.pathwayeditor.contextadapter.toolkit.ndom.INdomModel;
+import org.pathwayeditor.contextadapter.toolkit.ndom.ModelObject;
 import org.pathwayeditor.contextadapter.toolkit.ndom.NdomException;
 
 import uk.ac.ed.inf.Metabolic.ndomAPI.ERelType;
@@ -21,9 +22,24 @@ public abstract class MetabolicMolecule  extends ModelObject implements IMolecul
 	protected List<IRelation> catalyticRelationList = new ArrayList<IRelation>();
 	protected List<IRelation> sinkList = new ArrayList<IRelation>();
 	protected List<IRelation> sourceList = new ArrayList<IRelation>();
+	private MetabolicModel parentModel;
+
+	public MetabolicModel getParentModel() {
+		return parentModel;
+	}
+
+	public void setParentModel(MetabolicModel parentModel) {
+		this.parentModel = parentModel;
+	}
 
 	public MetabolicMolecule(String id, String name, String name2) {
 		super(id,name,name2);
+	}
+
+	public MetabolicMolecule(String id, IDrawingNode mapObject,MetabolicModel m)
+			throws IllegalArgumentException {
+		super(id, mapObject);
+		parentModel=m;
 	}
 
 	public List<IRelation> getActivatoryRelationList() {
@@ -113,6 +129,7 @@ public abstract class MetabolicMolecule  extends ModelObject implements IMolecul
 	public void setParent(INdomModel parent) {
 		this.parent = parent;
 	}
+
 
 	/**
 	 * Is molecule independent in the model. Any molecule could exists as it is

@@ -2,7 +2,6 @@ package uk.ac.ed.inf.Metabolic.parser;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
-import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
 import org.pathwayeditor.contextadapter.toolkit.validation.IRuleValidationReportBuilder;
 
 /**
@@ -11,13 +10,9 @@ import org.pathwayeditor.contextadapter.toolkit.validation.IRuleValidationReport
  * @date 28 Jun 2008
  * 
  */
-public class IntPropertyRule implements IParserRule{
+public class IntPropertyRule extends AbstractPropertyRule implements IParserRule{
 
 	private String propName;
-	private IValidationRuleDefinition ruleDef;
-	
-	private IDrawingNode imo;
-	private IDrawingNode ref;
 	private int value;
 	
 	/**
@@ -40,44 +35,13 @@ public class IntPropertyRule implements IParserRule{
 	}
 
 
-	/**
-	 * @return rule definition object
-	 */
-	public IValidationRuleDefinition getRuleDef() {
-		return ruleDef;
-	}
-
-
-	/**
-	 * @return object to be tested
-	 */
-	public IDrawingNode getImo() {
-		return imo;
-	}
-
-
-	/* (non-Javadoc)
-	 * @see uk.ac.ed.inf.Metabolic.parser.IParserRule#setRuleDef(org.pathwayeditor.contextadapter.publicapi.IValidationRuleDefinition)
-	 */
-	public void setRuleDef(IValidationRuleDefinition ruleDef) {
-		this.ruleDef = ruleDef;
-	}
-
-
-	public void setObject(IDrawingNode imo) {
-		this.imo = imo;
-		ref=imo;
-	}
-
-
 	/* (non-Javadoc)
 	 * @see uk.ac.ed.inf.Metabolic.parser.IParserRule#validate(org.pathwayeditor.contextadapter.toolkit.validation.IRuleValidationReportBuilder)
 	 */
 	public boolean validate(IRuleValidationReportBuilder report) {
-		if(ruleDef==null) throw new NullPointerException("Rule definition is not set");
-		if(imo==null) throw new NullPointerException("IDrawingNode is not set");
+		checkState();
 		if(report==null) throw new NullPointerException("Report builder is not set");
-		String st=((IAnnotatedObject) imo).getProperty(propName).getValue().toString();
+		String st=imo.getProperty(propName).getValue().toString();
 		try {
 			if (st != null && st.trim().length() > 0) {
 				value = Integer.parseInt(st);
@@ -88,14 +52,6 @@ public class IntPropertyRule implements IParserRule{
 		}
 		report.setRulePassed(ruleDef);
 		return true;
-	}
-
-	public void setRefObject(IDrawingNode imo) {
-		ref=imo;
-	}
-
-	public IDrawingNode getRefObject() {
-		return ref;
 	}
 
 	

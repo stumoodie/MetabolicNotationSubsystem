@@ -2,27 +2,34 @@ package uk.ac.ed.inf.Metabolic.parser;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
-import org.eclipse.core.internal.resources.ModelObject;
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
+import org.pathwayeditor.contextadapter.toolkit.ndom.ModelObject;
 import org.pathwayeditor.contextadapter.toolkit.ndom.NdomException;
 
+import uk.ac.ed.inf.Metabolic.MetabolicNotationSyntaxService;
 import uk.ac.ed.inf.Metabolic.ndomAPI.ERelType;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IReaction;
 
 public class MetabolicNDOMFactory extends NDOMFactory {
 
-	private Map<IShape, MetabolicMolecule> shape2Molecule = new HashMap<IShape, MetabolicMolecule>();
-	Map<MetabolicReaction, IShape> reaction2Shape = new HashMap<MetabolicReaction, IShape>();
+	private Map<IShapeNode, MetabolicMolecule> shape2Molecule = new HashMap<IShapeNode, MetabolicMolecule>();
+	Map<MetabolicReaction, IShapeNode> reaction2Shape = new HashMap<MetabolicReaction, IShapeNode>();
 	LinkedList<Map<String, MetabolicCompound>> name2Compound = new LinkedList<Map<String, MetabolicCompound>>();
-	List<ILink> prodLinks;
+	List<ILinkEdge> prodLinks;
 
 	public MetabolicNDOMFactory(IRootNode rmo) {
 		super(rmo);
@@ -45,7 +52,7 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 				IValidationRuleDefinition rd = getReportBuilder()
 						.getRuleStore().getRuleById(
 								MetabolicRuleLoader.ORPHAN_PROCESS_ERROR_ID);
-				IShape el = reaction2Shape.get(r);
+				IShapeNode el = reaction2Shape.get(r);
 				getReportBuilder().setRuleFailed(el, rd, "Reaction has no substrates");
 			}
 			if ((r.getProductList().size() == 0)) {
@@ -53,7 +60,7 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 				IValidationRuleDefinition rd = getReportBuilder()
 						.getRuleStore().getRuleById(
 								MetabolicRuleLoader.ORPHAN_PROCESS_ERROR_ID);
-				IShape el = reaction2Shape.get(r);
+				IShapeNode el = reaction2Shape.get(r);
 				getReportBuilder().setRuleFailed(el, rd, "Reaction has no products");
 			}
 		}
@@ -61,8 +68,8 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 
 	void checkOrphanCompounds() {
 //		ModelProcessor proc=new ModelProcessor(ndom);
-		for(Entry<IShape,MetabolicMolecule> e:shape2Molecule.entrySet()){
-			IShape el=e.getKey();
+		for(Entry<IShapeNode,MetabolicMolecule> e:shape2Molecule.entrySet()){
+			IShapeNode el=e.getKey();
 			MetabolicMolecule c=e.getValue();
 			if((c.getInhibitoryRelationList().size()+c.getActivatoryRelationList().size()+c.getCatalyticRelationList().size()+c.getSinkList().size()+c.getSourceList().size())==0){
 				IValidationRuleDefinition rd = getReportBuilder()
@@ -83,12 +90,12 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 
 	void processProdLinks(MetabolicReaction r) {
 		if (r.isReversible()) {
-			IShape s = reaction2Shape.get(r);
+			IShapeNode s = reaction2Shape.get(r);
 			// Set<ILink> substr = new HashSet<ILink>();
 			// Set<ILink> prod = new HashSet<ILink>();
 			Location srcLoc = null;
 			// double srcAngle;
-			for (ILink l : prodLinks) {
+			for (ILinkEdge l : prodLinks) {
 				if (srcLoc == null) {
 					// first link
 					srcLoc = GeometryUtils.getSrcLocation(l, s);
@@ -108,7 +115,7 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 	}
 
 	@Override
-	protected void products(ILink el, MetabolicReaction r) {
+	protected void products(ILinkEdge el, MetabolicReaction r) {
 		if (r.isReversible()) {
 			prodLinks.add(el);
 		} else {
@@ -116,11 +123,11 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 		}
 	}
 
-	private void productsIrr(ILink el, MetabolicReaction r) {
+	private void productsIrr(ILinkEdge el, MetabolicReaction r) {
 		// TODO separate substrates from products
 		MetabolicRelation rel = production(el);
 		r.addProduct(rel);
-		IShape targ = el.getTarget();
+		IShapeNode targ = el.getTargetShape();
 		MetabolicMolecule mol = shape2Molecule.get(targ);
 		if (mol == null) {
 			IValidationRuleDefinition rd = getReportBuilder().getRuleStore()
@@ -152,11 +159,11 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 	}
 
 	@Override
-	protected void substrate(ILink el, MetabolicReaction r) {
-		IShape targ =null;
+	protected void substrate(ILinkEdge el, MetabolicReaction r) {
+		IShapeNode targ =null;
 		MetabolicRelation rel = null;
 		if (r.isReversible()){
-				if( "Consume".equals(el.getObjectType().getTypeName())) {
+				if( "Consume".equals(el.getAttribute().getObjectType().getName())) {
 			// error("Consumption link to reversible reaction");
 			IValidationRuleDefinition rd = getReportBuilder()
 					.getRuleStore()
@@ -167,11 +174,11 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 			return;
 			}else{
 				 rel = consumptionRev(el);
-				 targ = el.getTarget();
+				 targ = el.getTargetShape();
 			}
 		}else{
 		 rel = consumption(el);
-		 targ = el.getSource();
+		 targ = el.getSourceShape();
 		}
 		 r.addSubstrate(rel);
 		MetabolicMolecule mol = shape2Molecule.get(targ);
@@ -195,17 +202,16 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 		}
 	}
 
-	private MetabolicRelation consumptionRev(ILink el) {
+	private MetabolicRelation consumptionRev(ILinkEdge el) {
 		MetabolicRelation rel = relation(el, ERelType.Consumption);
-		rel.setRole(el.getSrcPort().getPropertyByName("ROLE").getValue());
-//		rel.setStoichiometry(getInt(el.getTargetPort().getPropertyByName(
-//				"STOICH").getValue(), "Wrong stoichiometry\t"));
-		setStoichiometry(el, el.getSrcPort(),rel);
+		ILinkAttribute att = (ILinkAttribute) el.getAttribute();
+		rel.setRole(att.getSourceTerminus().getProperty(MetabolicNotationSyntaxService.ROLE_PROP).getValue().toString());
+		setStoichiometry(el, att.getTargetTerminus(), rel);
 		return rel;
 	}
 
 	@Override
-	protected void activate(ILink el, MetabolicReaction r) {
+	protected void activate(ILinkEdge el, MetabolicReaction r) {
 		MetabolicRelation rel = activation(el);
 		if (r == null) {
 			IValidationRuleDefinition rd = getReportBuilder().getRuleStore()
@@ -217,7 +223,7 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 			// model");
 		}
 		r.addActivator(rel);
-		IShape src = el.getSource();
+		IShapeNode src = el.getSourceShape();
 		MetabolicMolecule mol = shape2Molecule.get(src);
 		if (mol == null) {
 			IValidationRuleDefinition rd = getReportBuilder().getRuleStore()
@@ -235,7 +241,7 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 	}
 
 	@Override
-	protected void inhibit(ILink el, MetabolicReaction r) {
+	protected void inhibit(ILinkEdge el, MetabolicReaction r) {
 		MetabolicRelation rel = inhibition(el);
 		if (r == null) {
 			IValidationRuleDefinition rd = getReportBuilder().getRuleStore()
@@ -245,7 +251,7 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 							"Reaction for Inhibiton relation is not registered in the model");
 		}
 		r.addInhibitor(rel);
-		IShape src = el.getSource();
+		IShapeNode src = el.getSourceShape();
 		MetabolicMolecule mol = shape2Molecule.get(src);
 		if (mol == null) {
 			IValidationRuleDefinition rd = getReportBuilder().getRuleStore()
@@ -263,10 +269,10 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 	}
 
 	@Override
-	protected void catalysis(ILink el, MetabolicReaction r) {
+	protected void catalysis(ILinkEdge el, MetabolicReaction r) {
 		MetabolicRelation rel = catalysis(el);
 		r.addCatalyst(rel);
-		IShape src = el.getSource();
+		IShapeNode src = el.getSourceShape();
 		MetabolicMolecule mol = shape2Molecule.get(src);
 		if (mol == null) {
 			IValidationRuleDefinition rd = getReportBuilder().getRuleStore()
@@ -283,33 +289,11 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 		}
 	}
 
-	@Override
-	protected void macromolecule(MetabolicCompartment comaprtment,
-			IMapObject mapObject) {
-		MetabolicMacromolecule m = macromolecule(mapObject);
-		shape2Molecule.put((IShape) mapObject, m);
-		comaprtment.addMacromolecule(m);
-	}
 
-	@Override
-	protected void macromolecule(MetabolicMacromolecule parent,
-			IMapObject mapObject) {
-		MetabolicMacromolecule m = macromolecule(mapObject);
-		shape2Molecule.put((IShape) mapObject, m);
-		parent.addSubunit(m);
-	}
-
-	@Override
-	protected void compound(MetabolicMacromolecule m, IMapObject mapObject) {
-		MetabolicCompound comp = compound(mapObject);
-		m.addCompound(comp);
-		shape2Molecule.put((IShape) mapObject, comp);
-
-	}
 
 	@Override
 	protected void compound(MetabolicCompartment compartment,
-			IMapObject mapObject) {
+			IDrawingNode mapObject) {
 		MetabolicCompound comp = compound(mapObject);
 		if (name2Compound.getFirst().containsKey(comp.getName())) {
 			MetabolicCompound comp1 = name2Compound.getFirst().get(
@@ -321,7 +305,7 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 			compartment.addCompound(comp);
 		}
 		comp.setCloneNumber(comp.getCloneNumber() + 1);
-		shape2Molecule.put((IShape) mapObject, comp);
+		shape2Molecule.put((IShapeNode) mapObject, comp);
 	}
 
 	/**
@@ -335,7 +319,7 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 	 *            compound under creation
 	 */
 	private void compareCompounds(MetabolicCompound comp1,
-			MetabolicCompound comp, ModelObject parent, IMapObject mapObject) {
+			MetabolicCompound comp, ModelObject parent, IDrawingNode mapObject) {
 		String name = comp1.getASCIIName();
 		// TODO replace with rules
 		if (!comp1.getDescription().equals(comp.getDescription())) {
@@ -421,22 +405,24 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 	}
 
 	@Override
-	protected void compartment(MetabolicCompartment parent, IMapObject mapObject) {
+	protected void compartment(MetabolicCompartment parent, IDrawingNode mapObject) {
 		MetabolicCompartment compartment = compartment(mapObject);
 		try {
 			name2Compound.addFirst(new HashMap<String, MetabolicCompound>());
 			parent.addChildCompartment(compartment);
-			List<IMapObject> ch = mapObject.getChildren();
-			for (IMapObject el : ch) {
-				String ot = el.getObjectType().getTypeName();
+//			List<IDrawingNode> ch = mapObject.getChildren();
+//			for (IMapObject el : ch) {
+			Iterator<IShapeNode> it = mapObject.getSubModel().shapeNodeIterator();
+			
+			while (it.hasNext()){
+				IShapeNode el =it.next(); 
+				String ot = el.getObjectType().getName();
 				if ("Compartment".equals(ot)) {
 					compartment(compartment, el);
 				} else if ("Process".equals(ot)) {
 					process(compartment, el);
 				} else if ("Compound".equals(ot)) {
 					compound(compartment, el);
-				} else if ("Macromolecule".equals(ot)) {
-					macromolecule(compartment, el);
 				}
 			}
 			name2Compound.removeFirst();
@@ -450,21 +436,23 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 	@Override
 	protected void connectivity() {
 		for (MetabolicReaction r : reaction2Shape.keySet()) {
-			IShape s = reaction2Shape.get(r);
-			prodLinks = new ArrayList<ILink>();
-			Set<ILink> lset = s.getSourceLinks();
-			if (lset.size() == 0) {
+			IShapeNode s = reaction2Shape.get(r);
+			prodLinks = new ArrayList<ILinkEdge>();
+			Iterator<ILinkEdge> its = s.sourceLinkIterator();//getSubModel().SourceLinks();
+			if (s.getNumSourceLinks() == 0) {
 			}
-			for (ILink el : lset) {
-				String ot = el.getObjectType().getTypeName();
+			while (its.hasNext()) {
+				ILinkEdge el = its.next();
+				String ot = el.getAttribute().getObjectType().getName();
 				if ("Produce".equals(ot)) {
 					products(el, r);
 				}
 			}
-			lset = s.getTargetLinks();
+			its = s.targetLinkIterator();
 			int nsubstr = 0;
-			for (ILink el : lset) {
-				String ot = el.getObjectType().getTypeName();
+			while (its.hasNext()) {
+				ILinkEdge el = its.next();
+				String ot = el.getAttribute().getObjectType().getName();
 				if ("Consume".equals(ot)) {
 					substrate(el, r);
 					nsubstr++;
@@ -485,35 +473,20 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 						s,
 						rd,
 						"Reaction is not reversible and do not have substrates \t"
-								+ s.getId());
+								+ s.getIndex());
 			}
 			processProdLinks(r);
 		}
 	}
 
 	@Override
-	protected void process(ModelObject parent, IMapObject mapObject) {
+	protected void process(ModelObject parent, IDrawingNode mapObject) {
 		MetabolicReaction re = process(mapObject);
 		// checkParameters(re);
 		ndom.addReaction(re);
-		reaction2Shape.put(re, (IShape) mapObject);
+		reaction2Shape.put(re, (IShapeNode) mapObject);
 	}
 
-	/**
-	 * @deprecated replaced by
-	 *             {@link NDOMFactory#setReParam(IMapObject, MetabolicReaction)}
-	 * @param re
-	 *            process node;
-	 */
-	void checkParameters(MetabolicReaction re) {
-		// String parameters = re.getParameters();
-		// //TODO replace with rules
-		// if(parameters.trim().length()>0 &&
-		// !parameters.matches("^(\\s*\\w+\\s*=\\s*[0-9eE\\-+.]+\\s*;)+$")){
-		// // !parameters.matches("^(\\s*\\w+\\s*=\\s*[0-9eE-+.]+\\s*;)+$")){
-		// error("Invalid parameter definition"+parameters);
-		// }
-	}
 
 }
 

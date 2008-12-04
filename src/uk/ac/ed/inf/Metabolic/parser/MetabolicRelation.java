@@ -1,6 +1,8 @@
 package uk.ac.ed.inf.Metabolic.parser;
 
-import org.eclipse.core.internal.resources.ModelObject;
+
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
+import org.pathwayeditor.contextadapter.toolkit.ndom.ModelObject;
 
 import uk.ac.ed.inf.Metabolic.ndomAPI.ERelType;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IMolecule;
@@ -22,6 +24,17 @@ public class MetabolicRelation extends ModelObject implements IRelation {
 		super(id,name,asciiName);
 		this.type = type;
 	}
+	
+	
+
+	public MetabolicRelation(String id, ILinkEdge mapObject,
+			ERelType type)
+			throws IllegalArgumentException {
+		super(id, mapObject);
+		this.type = type;
+	}
+
+
 
 	public MetabolicRelation(String description, String detailedDescription,
 			String id, String name, String asciiName, ERelType type,

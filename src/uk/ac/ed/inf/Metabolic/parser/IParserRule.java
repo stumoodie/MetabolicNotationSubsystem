@@ -1,6 +1,8 @@
 package uk.ac.ed.inf.Metabolic.parser;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement;
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
 import org.pathwayeditor.contextadapter.toolkit.validation.IRuleValidationReportBuilder;
 
@@ -22,13 +24,13 @@ public interface IParserRule {
 	 * set object to be analyse. 
 	 * @param imo
 	 */
-	void setObject(IDrawingNode imo);
+	void setObject(IAnnotatedObject imo);
 
 	/**
 	 * set reference object. set object to be selected in the case of error. By default {@link #setObject(IMapObject)} set  reference object as well.
 	 * @param imo
 	 */
-	void setRefObject(IDrawingNode imo);
+	void setRefObject(IDrawingElement imo);
 
 	
 	/**
@@ -42,6 +44,7 @@ public interface IParserRule {
 	 * @return true if object is valid false otherwise.
 	 */
 	boolean validate(IRuleValidationReportBuilder report);
+
 }
 
 

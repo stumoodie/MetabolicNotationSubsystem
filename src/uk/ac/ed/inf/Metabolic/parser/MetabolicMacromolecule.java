@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
+
 import uk.ac.ed.inf.Metabolic.ndomAPI.ICompound;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IMacromolecule;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IRelation;
@@ -18,6 +20,12 @@ public class MetabolicMacromolecule extends MetabolicMolecule implements IMacrom
 	List<ICompound> compoundList=new ArrayList<ICompound>();
 	public MetabolicMacromolecule(String id, String name, String asciiName) {
 		super(id,name,asciiName);
+	}
+
+
+	public MetabolicMacromolecule(String id, IDrawingNode mapObject,
+			MetabolicModel m) throws IllegalArgumentException {
+		super(id, mapObject, m);
 	}
 
 

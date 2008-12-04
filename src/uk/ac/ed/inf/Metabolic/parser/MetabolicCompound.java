@@ -3,6 +3,8 @@ package uk.ac.ed.inf.Metabolic.parser;
 import java.util.Collections;
 import java.util.List;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
+
 import uk.ac.ed.inf.Metabolic.ndomAPI.ICompound;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IRelation;
 
@@ -24,6 +26,13 @@ public class MetabolicCompound extends MetabolicMolecule  implements ICompound {
 	public MetabolicCompound(String id, String name, String asciiName) {
 		super(id,name,asciiName);
 	}
+
+	
+	public MetabolicCompound(String id, IDrawingNode mapObject, MetabolicModel m)
+			throws IllegalArgumentException {
+		super(id, mapObject, m);
+	}
+
 
 	public MetabolicCompound(String cid, String chEBIId, double ic,
 			String inChI, String pubChemId, String smiles, String description,
