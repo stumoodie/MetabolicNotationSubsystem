@@ -92,8 +92,8 @@
 
 	<!-- generate report -->
 	<junitreport todir="${build.test.logs}/junitReports">
-		<fileset dir="$${build.test.logs}" includes="**/*.xml" />
-		<report todir="$${build.test.logs}/junitReports" />
+		<fileset dir="${build.test.logs}" includes="**/*.xml" />
+		<report todir="${build.test.logs}/junitReports" />
 	</junitreport>
 	
 	
