@@ -15,16 +15,15 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IRootNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
-import org.pathwayeditor.contextadapter.toolkit.ndom.GeometryUtils;
-import org.pathwayeditor.contextadapter.toolkit.ndom.ModelObject;
-import org.pathwayeditor.contextadapter.toolkit.ndom.NdomException;
+import org.pathwayeditor.notationsubsystem.toolkit.ndom.GeometryUtils;
+import org.pathwayeditor.notationsubsystem.toolkit.ndom.ModelObject;
+import org.pathwayeditor.notationsubsystem.toolkit.ndom.NdomException;
 
-import uk.ac.ed.inf.Metabolic.MetabolicNotationSyntaxService;
 import uk.ac.ed.inf.Metabolic.ndomAPI.ERelType;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IReaction;
+import uk.ac.ed.inf.Metabolic.validation.MetabolicRuleStore;
 
 public class MetabolicNDOMFactory extends NDOMFactory {
-
 	private Map<IShapeNode, MetabolicMolecule> shape2Molecule = new HashMap<IShapeNode, MetabolicMolecule>();
 	Map<MetabolicReaction, IShapeNode> reaction2Shape = new HashMap<MetabolicReaction, IShapeNode>();
 	LinkedList<Map<String, MetabolicCompound>> name2Compound = new LinkedList<Map<String, MetabolicCompound>>();
@@ -50,17 +49,17 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 
 				IValidationRuleDefinition rd = getReportBuilder()
 						.getRuleStore().getRuleById(
-								MetabolicRuleLoader.ORPHAN_PROCESS_ERROR_ID);
+								MetabolicRuleStore.ORPHAN_PROCESS_ERROR_ID);
 				IShapeNode el = reaction2Shape.get(r);
-				getReportBuilder().setRuleFailed(el, rd, "Reaction has no substrates");
+				getReportBuilder().setRuleFailed(el, rd.getRuleNumber(), "Reaction has no substrates");
 			}
 			if ((r.getProductList().size() == 0)) {
 
 				IValidationRuleDefinition rd = getReportBuilder()
 						.getRuleStore().getRuleById(
-								MetabolicRuleLoader.ORPHAN_PROCESS_ERROR_ID);
+								MetabolicRuleStore.ORPHAN_PROCESS_ERROR_ID);
 				IShapeNode el = reaction2Shape.get(r);
-				getReportBuilder().setRuleFailed(el, rd, "Reaction has no products");
+				getReportBuilder().setRuleFailed(el, rd.getRuleNumber(), "Reaction has no products");
 			}
 		}
 	}
@@ -73,8 +72,8 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 			if((c.getInhibitoryRelationList().size()+c.getActivatoryRelationList().size()+c.getCatalyticRelationList().size()+c.getSinkList().size()+c.getSourceList().size())==0){
 				IValidationRuleDefinition rd = getReportBuilder()
 						.getRuleStore().getRuleById(
-								MetabolicRuleLoader.ORPHAN_COMPOUND_ERROR_ID);
-				getReportBuilder().setRuleFailed(el, rd, "Reaction has no products");
+								MetabolicRuleStore.ORPHAN_COMPOUND_ERROR_ID);
+				getReportBuilder().setRuleFailed(el, rd.getRuleNumber(), "Reaction has no products");
 				
 			}
 		}
@@ -130,9 +129,9 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 		MetabolicMolecule mol = shape2Molecule.get(targ);
 		if (mol == null) {
 			IValidationRuleDefinition rd = getReportBuilder().getRuleStore()
-					.getRuleById(MetabolicRuleLoader.NOT_REGISTERED_ERROR_ID);
+					.getRuleById(MetabolicRuleStore.NOT_REGISTERED_ERROR_ID);
 			getReportBuilder()
-					.setRuleFailed(el, rd,
+					.setRuleFailed(el, rd.getRuleNumber(),
 							"Molecule in Production relation is not registered in the model");
 			// error("Molecule in Production relation is not registered in the
 			// model");
@@ -167,8 +166,8 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 			IValidationRuleDefinition rd = getReportBuilder()
 					.getRuleStore()
 					.getRuleById(
-							MetabolicRuleLoader.CONSUMPTION_TO_REVERSIBLE_ERROR_ID);
-			getReportBuilder().setRuleFailed(el, rd,
+							MetabolicRuleStore.CONSUMPTION_TO_REVERSIBLE_ERROR_ID);
+			getReportBuilder().setRuleFailed(el, rd.getRuleNumber(),
 					"Consumption link to reversible reaction");
 			return;
 			}else{
@@ -183,9 +182,9 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 		MetabolicMolecule mol = shape2Molecule.get(targ);
 		if (mol == null) {
 			IValidationRuleDefinition rd = getReportBuilder().getRuleStore()
-					.getRuleById(MetabolicRuleLoader.NOT_REGISTERED_ERROR_ID);
+					.getRuleById(MetabolicRuleStore.NOT_REGISTERED_ERROR_ID);
 			getReportBuilder()
-					.setRuleFailed(el, rd,
+					.setRuleFailed(el, rd.getRuleNumber(),
 							"Molecule in Consumption relation is not registered in the model");
 			// error("Molecule in Consumption relation is not registered in the
 			// model");
@@ -204,7 +203,7 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 	private MetabolicRelation consumptionRev(ILinkEdge el) {
 		MetabolicRelation rel = relation(el, ERelType.Consumption);
 		ILinkAttribute att = (ILinkAttribute) el.getAttribute();
-		rel.setRole(att.getSourceTerminus().getProperty(MetabolicNotationSyntaxService.ROLE_PROP).getValue().toString());
+		rel.setRole(att.getSourceTerminus().getProperty(ROLE_PROP).getValue().toString());
 		setStoichiometry(el, att.getTargetTerminus(), rel);
 		return rel;
 	}
@@ -214,9 +213,9 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 		MetabolicRelation rel = activation(el);
 		if (r == null) {
 			IValidationRuleDefinition rd = getReportBuilder().getRuleStore()
-					.getRuleById(MetabolicRuleLoader.NOT_REGISTERED_ERROR_ID);
+					.getRuleById(MetabolicRuleStore.NOT_REGISTERED_ERROR_ID);
 			getReportBuilder()
-					.setRuleFailed(el, rd,
+					.setRuleFailed(el, rd.getRuleNumber(),
 							"Reaction for Activation relation is not registered in the model");
 			// error("Reaction for Activation relation is not registered in the
 			// model");
@@ -226,9 +225,9 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 		MetabolicMolecule mol = shape2Molecule.get(src);
 		if (mol == null) {
 			IValidationRuleDefinition rd = getReportBuilder().getRuleStore()
-					.getRuleById(MetabolicRuleLoader.NOT_REGISTERED_ERROR_ID);
+					.getRuleById(MetabolicRuleStore.NOT_REGISTERED_ERROR_ID);
 			getReportBuilder()
-					.setRuleFailed(el, rd,
+					.setRuleFailed(el, rd.getRuleNumber(),
 							"Molecule for Activation relation is not registered in the model");
 		}
 		try {
@@ -244,9 +243,9 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 		MetabolicRelation rel = inhibition(el);
 		if (r == null) {
 			IValidationRuleDefinition rd = getReportBuilder().getRuleStore()
-					.getRuleById(MetabolicRuleLoader.NOT_REGISTERED_ERROR_ID);
+					.getRuleById(MetabolicRuleStore.NOT_REGISTERED_ERROR_ID);
 			getReportBuilder()
-					.setRuleFailed(el, rd,
+					.setRuleFailed(el, rd.getRuleNumber(),
 							"Reaction for Inhibiton relation is not registered in the model");
 		}
 		r.addInhibitor(rel);
@@ -254,9 +253,9 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 		MetabolicMolecule mol = shape2Molecule.get(src);
 		if (mol == null) {
 			IValidationRuleDefinition rd = getReportBuilder().getRuleStore()
-					.getRuleById(MetabolicRuleLoader.NOT_REGISTERED_ERROR_ID);
+					.getRuleById(MetabolicRuleStore.NOT_REGISTERED_ERROR_ID);
 			getReportBuilder()
-					.setRuleFailed(el, rd,
+					.setRuleFailed(el, rd.getRuleNumber(),
 							"Molecule for Inhibiton relation is not registered in the model");
 		}
 		try {
@@ -275,9 +274,9 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 		MetabolicMolecule mol = shape2Molecule.get(src);
 		if (mol == null) {
 			IValidationRuleDefinition rd = getReportBuilder().getRuleStore()
-					.getRuleById(MetabolicRuleLoader.NOT_REGISTERED_ERROR_ID);
+					.getRuleById(MetabolicRuleStore.NOT_REGISTERED_ERROR_ID);
 			getReportBuilder()
-					.setRuleFailed(el, rd,
+					.setRuleFailed(el, rd.getRuleNumber(),
 							"Molecule for Catalysis relation is not registered in the model");
 		}
 		try {
@@ -291,8 +290,7 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 
 
 	@Override
-	protected void compound(MetabolicCompartment compartment,
-			IDrawingNode mapObject) {
+	protected void compound(MetabolicCompartment compartment, IShapeNode mapObject) {
 		MetabolicCompound comp = compound(mapObject);
 		if (name2Compound.getFirst().containsKey(comp.getName())) {
 			MetabolicCompound comp1 = name2Compound.getFirst().get(
@@ -323,10 +321,10 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 		// TODO replace with rules
 		if (!comp1.getDescription().equals(comp.getDescription())) {
 			IValidationRuleDefinition rd = getReportBuilder().getRuleStore()
-					.getRuleById(MetabolicRuleLoader.COMP_DEF_ERROR_ID);
+					.getRuleById(MetabolicRuleStore.COMP_DEF_ERROR_ID);
 			getReportBuilder().setRuleFailed(
 					mapObject,
-					rd,
+					rd.getRuleNumber(),
 					"Compound " + name + "has two sets of Descriptions: '"
 							+ comp1.getDescription() + "' and '"
 							+ comp.getDescription() + "'");
@@ -334,10 +332,10 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 		if (!comp1.getDetailedDescription().equals(
 				comp.getDetailedDescription())) {
 			IValidationRuleDefinition rd = getReportBuilder().getRuleStore()
-					.getRuleById(MetabolicRuleLoader.COMP_DEF_ERROR_ID);
+					.getRuleById(MetabolicRuleStore.COMP_DEF_ERROR_ID);
 			getReportBuilder().setRuleFailed(
 					mapObject,
-					rd,
+					rd.getRuleNumber(),
 					"Compound " + name
 							+ "has two sets of DetailedDescription: '"
 							+ comp1.getDetailedDescription() + "' and '"
@@ -345,58 +343,58 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 		}
 		if (!comp1.getCID().equals(comp.getCID())) {
 			IValidationRuleDefinition rd = getReportBuilder().getRuleStore()
-					.getRuleById(MetabolicRuleLoader.COMP_DEF_ERROR_ID);
+					.getRuleById(MetabolicRuleStore.COMP_DEF_ERROR_ID);
 			getReportBuilder().setRuleFailed(
 					mapObject,
-					rd,
+					rd.getRuleNumber(),
 					"Compound " + name + "has two sets of CID: '"
 							+ comp1.getCID() + "' and '" + comp.getCID() + "'");
 		}
 		if (!comp1.getChEBIId().equals(comp.getChEBIId())) {
 			IValidationRuleDefinition rd = getReportBuilder().getRuleStore()
-					.getRuleById(MetabolicRuleLoader.COMP_DEF_ERROR_ID);
+					.getRuleById(MetabolicRuleStore.COMP_DEF_ERROR_ID);
 			getReportBuilder().setRuleFailed(
 					mapObject,
-					rd,
+					rd.getRuleNumber(),
 					"Compound " + name + "has two sets of ChEBIId: '"
 							+ comp1.getChEBIId() + "' and '"
 							+ comp.getChEBIId() + "'");
 		}
 		if (!comp1.getInChI().equals(comp.getInChI())) {
 			IValidationRuleDefinition rd = getReportBuilder().getRuleStore()
-					.getRuleById(MetabolicRuleLoader.COMP_DEF_ERROR_ID);
+					.getRuleById(MetabolicRuleStore.COMP_DEF_ERROR_ID);
 			getReportBuilder().setRuleFailed(
 					mapObject,
-					rd,
+					rd.getRuleNumber(),
 					"Compound " + name + "has two sets of InChI: '"
 							+ comp1.getInChI() + "' and '" + comp.getInChI()
 							+ "'");
 		}
 		if (comp1.getIC() != (comp.getIC())) {
 			IValidationRuleDefinition rd = getReportBuilder().getRuleStore()
-					.getRuleById(MetabolicRuleLoader.COMP_DEF_ERROR_ID);
+					.getRuleById(MetabolicRuleStore.COMP_DEF_ERROR_ID);
 			getReportBuilder().setRuleFailed(
 					mapObject,
-					rd,
+					rd.getRuleNumber(),
 					"Compound " + name + "has two sets of getIC: '"
 							+ comp1.getIC() + "' and '" + comp.getIC() + "'");
 		}
 		if (!comp1.getPubChemId().equals(comp.getPubChemId())) {
 			IValidationRuleDefinition rd = getReportBuilder().getRuleStore()
-					.getRuleById(MetabolicRuleLoader.COMP_DEF_ERROR_ID);
+					.getRuleById(MetabolicRuleStore.COMP_DEF_ERROR_ID);
 			getReportBuilder().setRuleFailed(
 					mapObject,
-					rd,
+					rd.getRuleNumber(),
 					"Compound " + name + "has two sets of PubChemId: '"
 							+ comp1.getPubChemId() + "' and '"
 							+ comp.getPubChemId() + "'");
 		}
 		if (!comp1.getSmiles().equals(comp.getSmiles())) {
 			IValidationRuleDefinition rd = getReportBuilder().getRuleStore()
-					.getRuleById(MetabolicRuleLoader.COMP_DEF_ERROR_ID);
+					.getRuleById(MetabolicRuleStore.COMP_DEF_ERROR_ID);
 			getReportBuilder().setRuleFailed(
 					mapObject,
-					rd,
+					rd.getRuleNumber(),
 					"Compound " + name + "has two sets of Smiles: '"
 							+ comp1.getSmiles() + "' and '" + comp.getSmiles()
 							+ "'");
@@ -467,10 +465,10 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 				// TODO replace with rules
 				IValidationRuleDefinition rd = getReportBuilder()
 						.getRuleStore().getRuleById(
-								MetabolicRuleLoader.RE_DEF_ERROR_ID);
+								MetabolicRuleStore.RE_DEF_ERROR_ID);
 				getReportBuilder().setRuleFailed(
 						s,
-						rd,
+						rd.getRuleNumber(),
 						"Reaction is not reversible and do not have substrates \t"
 								+ s.getIndex());
 			}
@@ -479,7 +477,7 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 	}
 
 	@Override
-	protected void process(ModelObject parent, IDrawingNode mapObject) {
+	protected void process(ModelObject parent, IShapeNode mapObject) {
 		MetabolicReaction re = process(mapObject);
 		// checkParameters(re);
 		ndom.addReaction(re);

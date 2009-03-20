@@ -3,7 +3,7 @@ package uk.ac.ed.inf.Metabolic.ndomAPI;
 import java.util.List;
 import java.util.Set;
 
-import org.pathwayeditor.contextadapter.toolkit.ndom.INdomModel;
+import org.pathwayeditor.notationsubsystem.toolkit.ndom.INdomModel;
 
 public interface IModel extends INdomModel {
 	public List<ICompartment> getCompartmentList();

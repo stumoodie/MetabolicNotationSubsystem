@@ -179,7 +179,7 @@ shape 	Compartment (name="Compartment" descr="Functional compartment"
 		GOTerm = " "
 		property Volume (name="volume" type=number )= "1.0"
 		contains [*]
-		URL = "http://www.proteinatlas.org"
+		Url = "http://www.proteinatlas.org"
 	)
 	
 /**

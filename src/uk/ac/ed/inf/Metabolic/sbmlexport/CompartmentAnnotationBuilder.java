@@ -1,6 +1,6 @@
 package uk.ac.ed.inf.Metabolic.sbmlexport;
 
-import org.pathwayeditor.contextadapter.toolkit.ndom.INdomModel;
+import org.pathwayeditor.notationsubsystem.toolkit.ndom.INdomModel;
 
 import uk.ac.ed.inf.Metabolic.ndomAPI.ICompartment;
 

@@ -1,6 +1,7 @@
 package uk.ac.ed.inf.Metabolic.parser;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.jmock.Expectations;
 import org.jmock.Mockery;
@@ -10,19 +11,16 @@ import org.junit.Before;
 import org.junit.Test;
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition.RuleEnforcement;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition.RuleLevel;
-import org.pathwayeditor.contextadapter.toolkit.validation.IRuleValidationReportBuilder;
-import org.pathwayeditor.contextadapter.toolkit.validation.ValidationRuleDefinition;
-
-import uk.ac.ed.inf.Metabolic.MetabolicNotationSubsystem;
+import org.pathwayeditor.notationsubsystem.toolkit.validation.IRuleValidationReportBuilder;
+import org.pathwayeditor.notationsubsystem.toolkit.validation.ValidationRuleDefinition;
 
 //@RunWith(JMock.class)
 public class DoublePropertyRuleTest {
-	private static final double ASSERT_DOUBLE_DELTA = 0.0001;
+//	private static final double ASSERT_DOUBLE_DELTA = 0.0001;
 
 	Mockery mockery = new JUnit4Mockery();
 
@@ -37,9 +35,8 @@ public class DoublePropertyRuleTest {
 	private IRuleValidationReportBuilder report;
 	@Before
 	public void setUp() throws Exception {
-		rule=new DoublePropertyRule("Prop");
-		ruleDef=new ValidationRuleDefinition(MetabolicNotationSubsystem.getInstance().getValidationService(),"IntString conversion rule","Properties",-12,RuleLevel.OPTIONAL, RuleEnforcement.ERROR);
-		rule.setRuleDef(ruleDef);
+		ruleDef=new ValidationRuleDefinition("IntString conversion rule","Properties",-12,RuleLevel.OPTIONAL, RuleEnforcement.ERROR);
+		rule=new DoublePropertyRule(ruleDef, "Prop");
 		imo = mockery.mock(IShapeAttribute.class);
 		ref=mockery.mock(IDrawingElement.class);
 		prop = mockery.mock(IAnnotationProperty.class);
@@ -56,25 +53,11 @@ public class DoublePropertyRuleTest {
 			{one(ref).getAttribute();will(returnValue(imo));}
 			{one(imo).getProperty("Prop");will(returnValue(prop));}
 			{one(prop).getValue();will(returnValue("1.0"));}
-			{one(report).setRulePassed(ruleDef);}
+			{one(report).setRulePassed(ruleDef.getRuleNumber());}
 			
 		});
 		rule.setRefObject(ref);
 		assertTrue(rule.validate(report));
-		assertEquals("Double value",1.0, rule.getValue(), ASSERT_DOUBLE_DELTA);
-	}
-
-	@Test
-	public void testValidateWrongStringSet() {
-		
-		mockery.checking(new Expectations(){
-			{one(ref).getAttribute();will(returnValue(imo));}
-			{one(imo).getProperty("Prop");will(returnValue(prop));}
-			{one(prop).getValue();will(returnValue("One"));}
-			{allowing(report).setRuleFailed(ref, ruleDef, "Illegal double value for Prop: One");}
-		});
-		rule.setRefObject(ref);
-		assertFalse(rule.validate(report));
 	}
 
 	@Test(expected=NullPointerException.class)
@@ -92,7 +75,7 @@ public class DoublePropertyRuleTest {
 	
 	@Test(expected=NullPointerException.class)
 	public void testValidateRuleDefNotSet() {
-		rule.setRuleDef(null);
+		rule=new DoublePropertyRule(null, "Prop");
 		rule.setObject(imo);
 		assertFalse(rule.validate(report));
 	}

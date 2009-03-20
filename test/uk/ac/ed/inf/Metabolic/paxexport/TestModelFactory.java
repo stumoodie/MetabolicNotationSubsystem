@@ -3,7 +3,7 @@
  */
 package uk.ac.ed.inf.Metabolic.paxexport;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 
 import org.junit.After;
 import org.junit.Before;
@@ -58,7 +58,7 @@ public class TestModelFactory {
 	}
 
 	/**
-	 * Test method for {@link uk.ac.ed.inf.Metabolic.paxexport.ModelFactory#annotateEntity(org.pathwayeditor.contextadapter.toolkit.ndom.INdomModel, org.biopax.paxtools.model.level3.Level3Element)}.
+	 * Test method for {@link uk.ac.ed.inf.Metabolic.paxexport.ModelFactory#annotateEntity(org.pathwayeditor.notationsubsystem.toolkit.ndom.INdomModel, org.biopax.paxtools.model.level3.Level3Element)}.
 	 */
 	@Ignore
 	@Test
@@ -67,7 +67,7 @@ public class TestModelFactory {
 	}
 
 	/**
-	 * Test method for {@link uk.ac.ed.inf.Metabolic.paxexport.ModelFactory#nameEntity(org.pathwayeditor.contextadapter.toolkit.ndom.INdomModel, org.biopax.paxtools.model.level3.Named)}.
+	 * Test method for {@link uk.ac.ed.inf.Metabolic.paxexport.ModelFactory#nameEntity(org.pathwayeditor.notationsubsystem.toolkit.ndom.INdomModel, org.biopax.paxtools.model.level3.Named)}.
 	 */
 	@Ignore
 	@Test

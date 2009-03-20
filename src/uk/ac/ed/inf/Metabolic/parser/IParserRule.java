@@ -3,7 +3,7 @@ package uk.ac.ed.inf.Metabolic.parser;
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
-import org.pathwayeditor.contextadapter.toolkit.validation.IRuleValidationReportBuilder;
+import org.pathwayeditor.notationsubsystem.toolkit.validation.IRuleValidationReportBuilder;
 
 /**
  * <br>$Id:$
@@ -13,11 +13,7 @@ import org.pathwayeditor.contextadapter.toolkit.validation.IRuleValidationReport
  */
 public interface IParserRule {
 
-	/**
-	 * Assign rule definition object to the actual rule. should be invoked in constructor for particular rule definition;
-	 * @param ruleDef
-	 */
-	void setRuleDef(IValidationRuleDefinition ruleDef);
+	IValidationRuleDefinition getRuleDef();
 	
 	/**
 	 * set object to be analyse. 
@@ -25,12 +21,15 @@ public interface IParserRule {
 	 */
 	void setObject(IAnnotatedObject imo);
 
+	IAnnotatedObject getObject();
+	
 	/**
 	 * set reference object. set object to be selected in the case of error. By default {@link #setObject(IMapObject)} set  reference object as well.
 	 * @param imo
 	 */
 	void setRefObject(IDrawingElement imo);
 
+	IDrawingElement getRefObject();
 	
 	/**
 	 * Validate the rule. 

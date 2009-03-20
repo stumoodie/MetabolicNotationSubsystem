@@ -13,7 +13,7 @@ import org.pathwayeditor.businessobjects.notationsubsystem.INotationExportServic
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationValidationService;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReport;
-import org.pathwayeditor.contextadapter.toolkit.validation.NotationValidationService;
+import org.pathwayeditor.notationsubsystem.toolkit.validation.NotationValidationService;
 
 import uk.ac.ed.inf.Metabolic.ExportAdapterCreationException;
 import uk.ac.ed.inf.Metabolic.MetabolicNDOMValidationService;
@@ -62,12 +62,12 @@ public class ExcelExportService implements INotationExportService {
 //			.getValidationService();
 	
 			NotationValidationService validator = (NotationValidationService) notationSubsystem.getValidationService();
-			validator.setMapToValidate(map);
+			validator.setCanvasToValidate(map);
 			IModel ndom = null;
-			validator.validateMap();
+			validator.validate();
 				
 			IValidationReport report =validator.getValidationReport();//FIXME - NH what do we do with this now??
-			if(!report.isMapValid()){
+			if(!report.isValid()){
 				String sb="Map is not valid:\n";
 				throw new ExportServiceException(sb);
 			}else{
@@ -105,9 +105,8 @@ public class ExcelExportService implements INotationExportService {
 	}
 
 	IModel getModel(INotationValidationService validator) {
-		if (validator.getValidationReport().isMapValid()) {
-			return (IModel) MetabolicNDOMValidationService.getInstance(
-					notationSubsystem).getNDOM();
+		if (validator.getValidationReport().isValid()) {
+			return (IModel) MetabolicNDOMValidationService.getInstance().getNDOM();
 		} else {
 			return null;
 		}

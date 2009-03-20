@@ -1,6 +1,6 @@
 package uk.ac.ed.inf.Metabolic.parser;
 
-import org.pathwayeditor.contextadapter.toolkit.ndom.NdomException;
+import org.pathwayeditor.notationsubsystem.toolkit.ndom.NdomException;
 
 
 public class MetabolicCompartmentTestStub extends MetabolicCompartment {

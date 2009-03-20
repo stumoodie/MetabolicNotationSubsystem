@@ -2,7 +2,7 @@ package uk.ac.ed.inf.Metabolic.parser;
 
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
-import org.pathwayeditor.contextadapter.toolkit.ndom.ModelObject;
+import org.pathwayeditor.notationsubsystem.toolkit.ndom.ModelObject;
 
 import uk.ac.ed.inf.Metabolic.ndomAPI.ERelType;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IMolecule;

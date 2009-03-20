@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.pathwayeditor.contextadapter.toolkit.ndom.NdomException;
+import org.pathwayeditor.notationsubsystem.toolkit.ndom.NdomException;
 
 import uk.ac.ed.inf.Metabolic.ndomAPI.ICompartment;
 import uk.ac.ed.inf.Metabolic.ndomAPI.ICompound;

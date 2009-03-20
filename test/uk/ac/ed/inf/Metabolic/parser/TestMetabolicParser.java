@@ -14,8 +14,8 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.pathwayeditor.businessobjects.repository.IMap;
-import org.pathwayeditor.contextadapter.toolkit.validation.RuleStore;
-import org.pathwayeditor.contextadapter.toolkit.validation.RuleValidationReportBuilder;
+import org.pathwayeditor.notationsubsystem.toolkit.validation.RuleStore;
+import org.pathwayeditor.notationsubsystem.toolkit.validation.RuleValidationReportBuilder;
 
 /**
  * $Id$

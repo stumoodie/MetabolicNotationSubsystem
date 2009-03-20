@@ -1,6 +1,6 @@
 package uk.ac.ed.inf.Metabolic.ndomAPI;
 
-import org.pathwayeditor.contextadapter.toolkit.ndom.INdomModel;
+import org.pathwayeditor.notationsubsystem.toolkit.ndom.INdomModel;
 
 public interface IRelation extends INdomModel{
 	public String getRole();

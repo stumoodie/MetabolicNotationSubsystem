@@ -9,9 +9,6 @@ import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleConfig
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition.RuleEnforcement;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition.RuleLevel;
-import org.pathwayeditor.contextadapter.toolkit.validation.IDefaultValidationRuleConfigLoader;
-import org.pathwayeditor.contextadapter.toolkit.validation.ValidationRuleConfig;
-import org.pathwayeditor.contextadapter.toolkit.validation.ValidationRuleDefinition;
 
 /**
  * Supplies the default Rules and their definitions.

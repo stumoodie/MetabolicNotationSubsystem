@@ -1,6 +1,9 @@
 package uk.ac.ed.inf.Metabolic.parser;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.math.BigDecimal;
 
 import org.jmock.Expectations;
 import org.jmock.Mockery;
@@ -12,17 +15,17 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.INumberAnnotationProperty;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition.RuleEnforcement;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition.RuleLevel;
-import org.pathwayeditor.contextadapter.toolkit.validation.IRuleValidationReportBuilder;
-import org.pathwayeditor.contextadapter.toolkit.validation.ValidationRuleDefinition;
-
-import uk.ac.ed.inf.Metabolic.MetabolicNotationSubsystem;
+import org.pathwayeditor.notationsubsystem.toolkit.validation.IRuleValidationReportBuilder;
+import org.pathwayeditor.notationsubsystem.toolkit.validation.ValidationRuleDefinition;
 
 @RunWith(JMock.class)
 public class IntPropertyRuleTest {
+	private static final int RULE_NUMBER = -12;
+
 	Mockery mockery = new JUnit4Mockery();
 
 	IntPropertyRule rule;
@@ -31,17 +34,16 @@ public class IntPropertyRuleTest {
 	private IShapeAttribute imo;
 	protected IDrawingElement ref;
 
-	private IAnnotationProperty prop;
+	private INumberAnnotationProperty prop;
 
 	private IRuleValidationReportBuilder report;
 	@Before
 	public void setUp() throws Exception {
-		rule=new IntPropertyRule("Prop");
-		ruleDef=new ValidationRuleDefinition(MetabolicNotationSubsystem.getInstance().getValidationService(),"IntString conversion rule","Properties",-12,RuleLevel.OPTIONAL, RuleEnforcement.ERROR);
-		rule.setRuleDef(ruleDef);
+		ruleDef=new ValidationRuleDefinition("IntString conversion rule","Properties",RULE_NUMBER,RuleLevel.OPTIONAL, RuleEnforcement.ERROR);
+		rule=new IntPropertyRule(ruleDef, "Prop");
 		imo = mockery.mock(IShapeAttribute.class);
 		ref=mockery.mock(IDrawingElement.class);
-		prop = mockery.mock(IAnnotationProperty.class);
+		prop = mockery.mock(INumberAnnotationProperty.class);
 		report = mockery.mock(IRuleValidationReportBuilder.class);
 	}
 
@@ -52,28 +54,26 @@ public class IntPropertyRuleTest {
 	@Test
 	public void testValidateEverythingSet() {
 		mockery.checking(new Expectations(){
-			{one(ref).getAttribute();will(returnValue(imo));}
-			{one(imo).getProperty("Prop");will(returnValue(prop));}
-			{one(prop).getValue();will(returnValue("1"));}
-			{one(report).setRulePassed(ruleDef);}
+			{allowing(ref).getAttribute();will(returnValue(imo));}
+			{allowing(imo).getProperty("Prop");will(returnValue(prop));}
+			{allowing(prop).getValue();will(returnValue(BigDecimal.ONE));}
+			{allowing(report).setRulePassed(ruleDef.getRuleNumber());}
 			
 		});
 		rule.setRefObject(ref);
 		assertTrue(rule.validate(report));
-		assertEquals("Integer value",1, rule.getValue());
 	}
 
 	@Test
 	public void testValidateWrongStringSet() {
 		mockery.checking(new Expectations(){
-			{one(ref).getAttribute();will(returnValue(imo));}
+			{allowing(ref).getAttribute();will(returnValue(imo));}
 			{atLeast(1).of(imo).getProperty("Prop");will(returnValue(prop));}
-			{one(prop).getValue();will(returnValue("One"));}
-			{one(report).setRuleFailed(ref, ruleDef, "Illegal integer value for Prop: One");}
+			{allowing(prop).getValue();will(returnValue(new BigDecimal(1.1)));}
+			{allowing(report).setRuleFailed(with(same(ref)), with(same(RULE_NUMBER)), with(any(String.class)));}
 		});
 		rule.setRefObject(ref);
 		assertFalse(rule.validate(report));
-		assertEquals("Integer value",0, rule.getValue());
 	}
 
 	@Test(expected=NullPointerException.class)
@@ -91,7 +91,14 @@ public class IntPropertyRuleTest {
 	
 	@Test(expected=NullPointerException.class)
 	public void testValidateRuleDefNotSet() {
-		rule.setRuleDef(null);
+		mockery.checking(new Expectations(){
+			{allowing(ref).getAttribute();will(returnValue(imo));}
+			{allowing(imo).getProperty("Prop");will(returnValue(prop));}
+			{allowing(prop).getValue();will(returnValue(BigDecimal.ONE));}
+			{allowing(report).setRulePassed(ruleDef.getRuleNumber());}
+			
+		});
+		rule=new IntPropertyRule(null, "Prop");
 		rule.setObject(imo);
 		assertFalse(rule.validate(report));
 	}

@@ -5,9 +5,9 @@ import java.util.Collections;
 import java.util.List;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
-import org.pathwayeditor.contextadapter.toolkit.ndom.INdomModel;
-import org.pathwayeditor.contextadapter.toolkit.ndom.ModelObject;
-import org.pathwayeditor.contextadapter.toolkit.ndom.NdomException;
+import org.pathwayeditor.notationsubsystem.toolkit.ndom.INdomModel;
+import org.pathwayeditor.notationsubsystem.toolkit.ndom.ModelObject;
+import org.pathwayeditor.notationsubsystem.toolkit.ndom.NdomException;
 
 import uk.ac.ed.inf.Metabolic.ndomAPI.ERelType;
 import uk.ac.ed.inf.Metabolic.ndomAPI.ICompartment;

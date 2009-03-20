@@ -1,6 +1,6 @@
 package uk.ac.ed.inf.Metabolic.sbmlexport;
 
-import org.pathwayeditor.contextadapter.toolkit.ndom.INdomModel;
+import org.pathwayeditor.notationsubsystem.toolkit.ndom.INdomModel;
 
 public abstract class AnnotationBuilder {
 	protected INdomModel object;

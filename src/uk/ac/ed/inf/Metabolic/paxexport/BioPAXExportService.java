@@ -56,12 +56,12 @@ public class BioPAXExportService implements INotationExportService {
 
 			INotationValidationService validator =  serviceProvider
 					.getValidationService();
-			validator.setMapToValidate(map);
+			validator.setCanvasToValidate(map);
 			IModel ndom = null;
 			if (validator.isReadyToValidate()) {
-				validator.validateMap();
+				validator.validate();
 				IValidationReport report =validator.getValidationReport();
-				if(!report.isMapValid()){
+				if(!report.isValid()){
 					String sb="Map is not valid:\n";
 					throw new ExportServiceException(sb);
 				}else {
@@ -90,8 +90,8 @@ public class BioPAXExportService implements INotationExportService {
 	}
 
 	IModel getModel(INotationValidationService validator) {
-		if(validator.getValidationReport().isMapValid()){
-		return (IModel) MetabolicNDOMValidationService.getInstance(serviceProvider).getNDOM();
+		if(validator.getValidationReport().isValid()){
+		return (IModel) MetabolicNDOMValidationService.getInstance().getNDOM();
 		}else{
 			return null;
 		}

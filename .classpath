@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
-	<classpathentry excluding="uk/ac/ed/inf/metaboliccontext/plugin/" kind="src" path="src"/>
+	<classpathentry excluding="uk/ac/ed/inf/metaboliccontext/plugin/|uk/ac/ed/inf/Metabolic/DefaultRuleLoader.java|uk/ac/ed/inf/Metabolic/parser/MetabolicRuleLoader.java|uk/ac/ed/inf/Metabolic/MetabolicFallbackShapeAttributeDefaults.java|uk/ac/ed/inf/Metabolic/MetabolicFallbackLinkAttributeDefaults.java" kind="src" path="src"/>
 	<classpathentry excluding="uk/ac/ed/inf/Metabolic/sbmlexport/|uk/ac/ed/inf/metaboliccontext/plugin/|uk/ac/ed/inf/Metabolic/parser/TestMetabolicParser.java" kind="src" path="test"/>
 	<classpathentry exported="true" kind="lib" path="lib/sbml-3.1.1/libsbmlj.jar" sourcepath="uk.ac.ed.inf.csb.Metabolicsrc.zip"/>
 	<classpathentry exported="true" kind="lib" path="lib/antlr-2.7.5.jar" sourcepath="uk.ac.ed.inf.csb.Metabolicsrc.zip"/>
@@ -21,15 +21,27 @@
 	<classpathentry exported="true" kind="lib" path="lib/xercesImpl.jar" sourcepath="uk.ac.ed.inf.csb.Metabolicsrc.zip"/>
 	<classpathentry exported="true" kind="lib" path="lib/xml-apis.jar" sourcepath="uk.ac.ed.inf.csb.Metabolicsrc.zip"/>
 	<classpathentry exported="true" kind="lib" path="lib/poi-3.1-FINAL/poi-3.1-FINAL-20080629.jar" sourcepath="uk.ac.ed.inf.csb.Metabolicsrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="lib/Toolkit.jar" sourcepath="/Toolkit/src"/>
-	<classpathentry exported="true" kind="lib" path="lib/BusinessObjects.jar" sourcepath="/BusinessObjects/src"/>
 	<classpathentry kind="lib" path="lib/jmock-2.4.0/jmock-2.4.0.jar"/>
 	<classpathentry kind="lib" path="lib/jmock-2.4.0/jmock-junit4-2.4.0.jar"/>
-	<classpathentry kind="lib" path="lib/jmock-2.4.0/cglib-2.1_3-src.jar"/>
 	<classpathentry kind="lib" path="lib/jmock-2.4.0/cglib-nodep-2.1_3.jar"/>
 	<classpathentry kind="lib" path="lib/jmock-2.4.0/hamcrest-core-1.1.jar"/>
 	<classpathentry kind="lib" path="lib/jmock-2.4.0/hamcrest-library-1.1.jar"/>
 	<classpathentry kind="lib" path="lib/jmock-2.4.0/objenesis-1.0.jar"/>
 	<classpathentry kind="lib" path="lib/junit4.4/junit-4.4.jar"/>
+	<classpathentry kind="lib" path="lib/businessObjects/BusinessObjects.jar" sourcepath="lib/businessObjects/BusinessObjects-src.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/uk.ac.ed.inf.csb.Metabolic/lib/businessObjects/BusinessObjects-docs.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/compoundGraph/CompoundGraph.jar" sourcepath="lib/compoundGraph/CompoundGraph-src.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/uk.ac.ed.inf.csb.Metabolic/lib/compoundGraph/CompoundGraph-docs.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/toolkit/toolkit.jar" sourcepath="lib/toolkit/toolkit-src.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/uk.ac.ed.inf.csb.Metabolic/lib/toolkit/toolkit-docs.jar!/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

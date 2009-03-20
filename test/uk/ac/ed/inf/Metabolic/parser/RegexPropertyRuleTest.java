@@ -1,6 +1,7 @@
 package uk.ac.ed.inf.Metabolic.parser;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.regex.Pattern;
 
@@ -14,14 +15,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextAnnotationProperty;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition.RuleEnforcement;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition.RuleLevel;
-import org.pathwayeditor.contextadapter.toolkit.validation.IRuleValidationReportBuilder;
-import org.pathwayeditor.contextadapter.toolkit.validation.ValidationRuleDefinition;
-
-import uk.ac.ed.inf.Metabolic.MetabolicNotationSubsystem;
+import org.pathwayeditor.notationsubsystem.toolkit.validation.IRuleValidationReportBuilder;
+import org.pathwayeditor.notationsubsystem.toolkit.validation.ValidationRuleDefinition;
 
 @RunWith(JMock.class)
 public class RegexPropertyRuleTest {
@@ -33,18 +32,17 @@ public class RegexPropertyRuleTest {
 	private IShapeAttribute imo;
 	protected IDrawingElement ref;
 
-	private IAnnotationProperty prop;
+	private IPlainTextAnnotationProperty prop;
 
 	private IRuleValidationReportBuilder report;
 
 	@Before
 	public void setUp() throws Exception {
-		rule=new RegexpPropertyRule("Prop","^[0-9].*");
-		ruleDef=new ValidationRuleDefinition(MetabolicNotationSubsystem.getInstance().getValidationService(),"RegexString conversion rule","Properties",-12,RuleLevel.OPTIONAL, RuleEnforcement.ERROR);
-		rule.setRuleDef(ruleDef);
+		ruleDef=new ValidationRuleDefinition("RegexString conversion rule","Properties",-12,RuleLevel.OPTIONAL, RuleEnforcement.ERROR);
+		rule=new RegexpPropertyRule(ruleDef, "Prop","^[0-9].*");
 		imo = mockery.mock(IShapeAttribute.class);
 		ref=mockery.mock(IDrawingElement.class);
-		prop = mockery.mock(IAnnotationProperty.class);
+		prop = mockery.mock(IPlainTextAnnotationProperty.class);
 		report = mockery.mock(IRuleValidationReportBuilder.class);
 	}
 
@@ -58,12 +56,11 @@ public class RegexPropertyRuleTest {
 			{one(ref).getAttribute();will(returnValue(imo));}
 			{one(imo).getProperty("Prop");will(returnValue(prop));}
 			{one(prop).getValue();will(returnValue("1  "));}
-			{one(report).setRulePassed(ruleDef);}
+			{one(report).setRulePassed(ruleDef.getRuleNumber());}
 			
 		});
 		rule.setRefObject(ref);
 		assertTrue(rule.validate(report));
-		assertEquals("String value","1  ", rule.getValue());
 	}
 
 	@Test
@@ -72,11 +69,10 @@ public class RegexPropertyRuleTest {
 			{one(ref).getAttribute();will(returnValue(imo));}
 			{atLeast(1).of(imo).getProperty("Prop");will(returnValue(prop));}
 			{one(prop).getValue();will(returnValue("One"));}
-			{one(report).setRuleFailed(ref, ruleDef, "Regex not match value for Prop: One <> (^[0-9].*)");}
+			{one(report).setRuleFailed(ref, ruleDef.getRuleNumber(), "Regex not match value for Prop: One <> (^[0-9].*)");}
 		});
 		rule.setRefObject(ref);
 		assertFalse(rule.validate(report));
-		assertNull("String value",rule.getValue());
 	}
 
 	@Test
@@ -86,11 +82,10 @@ public class RegexPropertyRuleTest {
 			{one(ref).getAttribute();will(returnValue(imo));}
 			{atLeast(1).of(imo).getProperty("Prop");will(returnValue(prop));}
 			{one(prop).getValue();will(returnValue(""));}
-			{one(report).setRuleFailed(ref, ruleDef, "Empty string is not valid value for Prop");}
+			{one(report).setRuleFailed(ref, ruleDef.getRuleNumber(), "Empty string is not valid value for Prop");}
 		});
 		rule.setRefObject(ref);
 		assertFalse(rule.validate(report));
-		assertNull("String value",rule.getValue());
 	}
 	@Test
 	public void testValidateSpacesStringIsEmptyValidSetFalse() {
@@ -99,11 +94,10 @@ public class RegexPropertyRuleTest {
 			{one(ref).getAttribute();will(returnValue(imo));}
 			{atLeast(1).of(imo).getProperty("Prop");will(returnValue(prop));}
 			{one(prop).getValue();will(returnValue("   "));}
-			{one(report).setRuleFailed(ref, ruleDef, "Empty string is not valid value for Prop");}
+			{one(report).setRuleFailed(ref, ruleDef.getRuleNumber(), "Empty string is not valid value for Prop");}
 		});
 		rule.setRefObject(ref);
 		assertFalse(rule.validate(report));
-		assertNull("String value",rule.getValue());
 	}
 	
 	@Test
@@ -113,11 +107,10 @@ public class RegexPropertyRuleTest {
 			{one(ref).getAttribute();will(returnValue(imo));}
 			{atLeast(1).of(imo).getProperty("Prop");will(returnValue(prop));}
 			{one(prop).getValue();will(returnValue(null));}
-			{one(report).setRuleFailed(ref, ruleDef, "Empty string is not valid value for Prop");}
+			{one(report).setRuleFailed(ref, ruleDef.getRuleNumber(), "Empty string is not valid value for Prop");}
 		});
 		rule.setRefObject(ref);
 		assertFalse(rule.validate(report));
-		assertNull("String value",rule.getValue());
 	}
 
 	@Test
@@ -127,12 +120,11 @@ public class RegexPropertyRuleTest {
 			{one(ref).getAttribute();will(returnValue(imo));}
 			{atLeast(1).of(imo).getProperty("Prop");will(returnValue(prop));}
 			{one(prop).getValue();will(returnValue(""));}
-			{one(report).setRulePassed(ruleDef);}
+			{one(report).setRulePassed(ruleDef.getRuleNumber());}
 //			{one(report).setRuleFailed(imo, ruleDef, "Empty string is not valid value for Prop");}
 		});
 		rule.setRefObject(ref);
 		assertTrue(rule.validate(report));
-		assertEquals("String value","",rule.getValue());
 	}
 	
 	@Test
@@ -142,12 +134,11 @@ public class RegexPropertyRuleTest {
 			{one(ref).getAttribute();will(returnValue(imo));}
 			{atLeast(1).of(imo).getProperty("Prop");will(returnValue(prop));}
 			{one(prop).getValue();will(returnValue("\t"));}
-			{one(report).setRulePassed(ruleDef);}
+			{one(report).setRulePassed(ruleDef.getRuleNumber());}
 //			{one(report).setRuleFailed(imo, ruleDef, "Empty string is not valid value for Prop");}
 		});
 		rule.setRefObject(ref);
 		assertTrue(rule.validate(report));
-		assertEquals("String value","",rule.getValue());
 	}
 	
 	@Test
@@ -157,12 +148,11 @@ public class RegexPropertyRuleTest {
 			{one(ref).getAttribute();will(returnValue(imo));}
 			{atLeast(1).of(imo).getProperty("Prop");will(returnValue(prop));}
 			{one(prop).getValue();will(returnValue(null));}
-			{one(report).setRulePassed(ruleDef);}
+			{one(report).setRulePassed(ruleDef.getRuleNumber());}
 //			{one(report).setRuleFailed(imo, ruleDef, "Empty string is not valid value for Prop");}
 		});
 		rule.setRefObject(ref);
 		assertTrue(rule.validate(report));
-		assertEquals("String value","",rule.getValue());
 	}
 
 	@Test(expected=NullPointerException.class)
@@ -180,15 +170,20 @@ public class RegexPropertyRuleTest {
 	
 	@Test(expected=NullPointerException.class)
 	public void testValidateRuleDefNotSet() {
-		rule.setRuleDef(null);
+		mockery.checking(new Expectations(){
+			{allowing(ref).getAttribute();will(returnValue(imo));}
+			{allowing(imo).getProperty("Prop");will(returnValue(prop));}
+			{allowing(prop).getValue();will(returnValue(null));}
+			{allowing(report).setRuleFailed(ref, ruleDef.getRuleNumber(), "Empty string is not valid value for Prop");}
+		});
+		rule=new RegexpPropertyRule(null, "Prop","^[0-9].*");
 		rule.setObject(imo);
 		assertFalse(rule.validate(report));
 	}
 
 	@Test(expected=NullPointerException.class)
 	public void testValidatePatternNotSet() {
-		rule=new RegexpPropertyRule("Prop",(Pattern)null);
-		rule.setRuleDef(ruleDef);
+		rule=new RegexpPropertyRule(ruleDef, "Prop",(Pattern)null);
 		rule.setObject(imo);
 		assertFalse(rule.validate(report));
 	}

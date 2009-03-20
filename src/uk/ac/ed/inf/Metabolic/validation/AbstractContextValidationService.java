@@ -10,12 +10,11 @@ import org.pathwayeditor.businessobjects.notationsubsystem.INotationValidationSe
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReport;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReportItem;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleConfig;
-import org.pathwayeditor.contextadapter.toolkit.ndom.AbstractNDOMParser;
-import org.pathwayeditor.contextadapter.toolkit.ndom.NdomException;
-import org.pathwayeditor.contextadapter.toolkit.validation.IDefaultValidationRuleConfigLoader;
-import org.pathwayeditor.contextadapter.toolkit.validation.IRuleValidationReportBuilder;
-import org.pathwayeditor.contextadapter.toolkit.validation.IValidationRuleStore;
-import org.pathwayeditor.contextadapter.toolkit.validation.RuleValidationReportBuilder;
+import org.pathwayeditor.notationsubsystem.toolkit.ndom.AbstractNDOMParser;
+import org.pathwayeditor.notationsubsystem.toolkit.ndom.NdomException;
+import org.pathwayeditor.notationsubsystem.toolkit.validation.IRuleValidationReportBuilder;
+import org.pathwayeditor.notationsubsystem.toolkit.validation.IValidationRuleStore;
+import org.pathwayeditor.notationsubsystem.toolkit.validation.RuleValidationReportBuilder;
 
 
 /**
@@ -159,7 +158,7 @@ public abstract class AbstractContextValidationService implements INotationValid
      * Subclasses should not override this method
      */
 	public boolean isReadyToValidate() {
-		return readyToValidate && getRuleStore().isInitialized();
+		return readyToValidate;
 	}
 
 	public void setMapToValidate(ICanvas mapToValidate) {
@@ -179,10 +178,6 @@ public abstract class AbstractContextValidationService implements INotationValid
 	 * </pre>
 	 */
 	public abstract void initRuleStore(); 
-
-	public Set<IValidationRuleConfig> getDefaultRuleConfigurations() {
-		return getRuleStore().getDefaultRuleConfigurations();
-	}
 
 	public Set<IValidationRuleConfig> getRuleConfigurations() {
 		return getRuleStore().getAllRuleConfigurations();

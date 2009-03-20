@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Version;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibNotation;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
@@ -14,7 +15,7 @@ import org.pathwayeditor.businessobjects.notationsubsystem.INotationImportServic
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationPluginService;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationValidationService;
-import org.pathwayeditor.contextadapter.toolkit.validation.NotationValidationService;
+import org.pathwayeditor.notationsubsystem.toolkit.validation.NotationValidationService;
 
 import uk.ac.ed.inf.Metabolic.excelexport.ExcelExportService;
 import uk.ac.ed.inf.Metabolic.paxexport.BioPAXExportService;
@@ -46,7 +47,7 @@ public class MetabolicNotationSubsystem implements INotationSubsystem {
 		exportServices.add(new SBMLExportService(this));
 		exportServices.add(new ExcelExportService(this));
 		exportServices.add(new BioPAXExportService(this));
-		MetabolicNDOMValidationService ndomVal = MetabolicNDOMValidationService.getInstance(this);
+		MetabolicNDOMValidationService ndomVal = MetabolicNDOMValidationService.getInstance();
 		this.validationService=new NotationValidationService(this,ndomVal);
 	}
 	
@@ -104,6 +105,10 @@ public class MetabolicNotationSubsystem implements INotationSubsystem {
 		}
 		public INotationSubsystem getNotationSubsystem() {
 			return MetabolicNotationSubsystem.this;
+		}
+
+		public void layout(ICanvas canvas) {
+			throw new UnsupportedOperationException();
 		}
 
 	}

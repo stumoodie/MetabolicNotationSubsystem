@@ -5,8 +5,8 @@ import java.util.Collections;
 import java.util.List;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
-import org.pathwayeditor.contextadapter.toolkit.ndom.ModelObject;
-import org.pathwayeditor.contextadapter.toolkit.ndom.NdomException;
+import org.pathwayeditor.notationsubsystem.toolkit.ndom.ModelObject;
+import org.pathwayeditor.notationsubsystem.toolkit.ndom.NdomException;
 
 import uk.ac.ed.inf.Metabolic.ndomAPI.ICompartment;
 import uk.ac.ed.inf.Metabolic.ndomAPI.ICompound;
@@ -26,29 +26,18 @@ public class MetabolicCompartment extends ModelObject implements ICompartment {
 	private MetabolicModel parentModel;
 
 	
-	public MetabolicCompartment(String id, String name, String asciiName,
-			MetabolicModel m) {
+	public MetabolicCompartment(String id, String name, String asciiName, MetabolicModel m) {
 		super(id,name,asciiName);
 		parentModel=m;
 	}
 	
-	
-	
-	
-	public MetabolicCompartment(String id, IDrawingNode mapObject,
-			MetabolicModel m)
-			throws IllegalArgumentException {
+	public MetabolicCompartment(String id, IDrawingNode mapObject, MetabolicModel m) throws IllegalArgumentException {
 		super(id, mapObject);
 		parentModel=m;
 	}
 
-
-
-
-	public MetabolicCompartment(String description, String detailedDescription,
-			String id, String name, String asciiName,
-			ICompartment parentCompartment,MetabolicModel m, String term, double volume,
-			List<IMacromolecule> macromoleculeList,
+	public MetabolicCompartment(String description, String detailedDescription,	String id, String name, String asciiName,
+			ICompartment parentCompartment,MetabolicModel m, String term, double volume, List<IMacromolecule> macromoleculeList,
 			List<ICompartment> childCompartments, List<ICompound> compoundList) {
 		this(id,name,asciiName,m);
 		this.parentCompartment = parentCompartment;
@@ -56,9 +45,9 @@ public class MetabolicCompartment extends ModelObject implements ICompartment {
 		setDetailedDescription(detailedDescription);
 		gOTerm = term;
 		this.volume = volume;
-		this.macromoleculeList = macromoleculeList;
-		this.childCompartments = childCompartments;
-		this.compoundList = compoundList;
+		this.macromoleculeList = new ArrayList<IMacromolecule>(macromoleculeList);
+		this.childCompartments = new ArrayList<ICompartment>(childCompartments);
+		this.compoundList = new ArrayList<ICompound>(compoundList);
 	}
 	
 	public ICompartment getParentCompartment() {

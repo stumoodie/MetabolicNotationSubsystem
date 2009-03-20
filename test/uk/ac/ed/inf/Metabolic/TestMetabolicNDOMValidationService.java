@@ -1,9 +1,19 @@
 package uk.ac.ed.inf.Metabolic;
 
-import org.pathwayeditor.businessobjects.repository.IMap;
-import org.pathwayeditor.contextadapter.toolkit.validation.RuleStore;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
-import uk.ac.ed.inf.Metabolic.parser.MetabolicRuleLoader;
+import org.jmock.Expectations;
+import org.jmock.Mockery;
+import org.jmock.integration.junit4.JMock;
+import org.jmock.integration.junit4.JUnit4Mockery;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
+import org.pathwayeditor.businessobjects.drawingprimitives.IRootNode;
 
 /**
  * <br>$Id:$
@@ -15,18 +25,19 @@ import uk.ac.ed.inf.Metabolic.parser.MetabolicRuleLoader;
 public class TestMetabolicNDOMValidationService {
 
 	private Mockery mockery = new JUnit4Mockery();
-	private IMap map;
+	private ICanvas map;
 	
-	private IRootMapObject rmo;
+	private IRootNode rmo;
 	
 	private MetabolicNDOMValidationService s;
+	
 	@Before
 	public void setUp() throws Exception {
-		s=MetabolicNDOMValidationService.getInstance(MetabolicNotationSubsystem.getInstance());
-		rmo=mockery.mock(IRootMapObject.class);
-		map=mockery.mock(IMap.class);
+		s=MetabolicNDOMValidationService.getInstance();
+		rmo=mockery.mock(IRootNode.class);
+		map=mockery.mock(ICanvas.class);
 		mockery.checking(new Expectations(){{
-			allowing(map).getTheSingleRootMapObject();will(returnValue(rmo));
+			allowing(map).getModel().getRootNode();will(returnValue(rmo));
 		}});
 
 	}
@@ -34,23 +45,6 @@ public class TestMetabolicNDOMValidationService {
 	@After
 	public void tearDown() throws Exception {
 	}
-
-	@Test
-	public void testGetRuleStore() {
-		assertEquals(RuleStore.getInstance(s.getRuleLoader()), s.getRuleStore());
-	}
-
-	@Test
-	public void testGetRuleLoader() {
-		assertEquals(MetabolicRuleLoader.getInstance(), s.getRuleLoader()); // TODO
-	}
-
-	@Ignore
-	@Test
-	public void testGetValidationReport() {
-		fail("Not yet implemented"); // TODO
-	}
-
 
 	@Test
 	public void testSetMap(){
@@ -69,29 +63,6 @@ public class TestMetabolicNDOMValidationService {
 	
 	}
 
-	@Ignore
-	@Test
-	public void testValidateMap() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	@Ignore
-	@Test
-	public void testGenerateNdom() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	@Ignore
-	@Test
-	public void testCreateNdomFactory() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	@Ignore
-	@Test
-	public void testHandleNdomException() {
-		fail("Not yet implemented"); // TODO
-	}
 
 }
 

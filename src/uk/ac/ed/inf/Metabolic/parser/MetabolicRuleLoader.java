@@ -11,9 +11,9 @@ import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleConfig
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition.RuleEnforcement;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition.RuleLevel;
-import org.pathwayeditor.contextadapter.toolkit.validation.IDefaultValidationRuleConfigLoader;
-import org.pathwayeditor.contextadapter.toolkit.validation.ValidationRuleConfig;
-import org.pathwayeditor.contextadapter.toolkit.validation.ValidationRuleDefinition;
+import org.pathwayeditor.notationsubsystem.toolkit.validation.IDefaultValidationRuleConfigLoader;
+import org.pathwayeditor.notationsubsystem.toolkit.validation.ValidationRuleConfig;
+import org.pathwayeditor.notationsubsystem.toolkit.validation.ValidationRuleDefinition;
 
 import uk.ac.ed.inf.Metabolic.MetabolicNotationSubsystem;
 

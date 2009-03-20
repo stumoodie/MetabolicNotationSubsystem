@@ -61,12 +61,12 @@ public class SBMLExportService implements INotationExportService {
 
 			INotationValidationService validator =  notationSubSystem
 					.getValidationService();
-			validator.setMapToValidate(map);
+			validator.setCanvasToValidate(map);
 			IModel ndom = null;
 			if (validator.isReadyToValidate()) {
-				validator.validateMap();
+				validator.validate();
 				IValidationReport report =validator.getValidationReport();
-				if(!report.isMapValid()){
+				if(!report.isValid()){
 					String sb="Map is not valid:\n";
 					
 					throw new ExportServiceException(sb);
@@ -100,8 +100,8 @@ public class SBMLExportService implements INotationExportService {
 	}
 	
 	IModel getModel(INotationValidationService validator) {
-		if(validator.getValidationReport().isMapValid()){
-		return (IModel) MetabolicNDOMValidationService.getInstance(notationSubSystem).getNDOM();
+		if(validator.getValidationReport().isValid()){
+		return (IModel) MetabolicNDOMValidationService.getInstance().getNDOM();
 		}else{
 			return null;
 		}

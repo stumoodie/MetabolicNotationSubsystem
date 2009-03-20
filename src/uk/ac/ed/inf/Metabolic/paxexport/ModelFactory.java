@@ -31,7 +31,7 @@ import org.biopax.paxtools.model.level3.UnificationXref;
 import org.biopax.paxtools.model.level3.XReferrable;
 import org.biopax.paxtools.model.level3.Xref;
 import org.biopax.paxtools.util.IllegalBioPAXArgumentException;
-import org.pathwayeditor.contextadapter.toolkit.ndom.INdomModel;
+import org.pathwayeditor.notationsubsystem.toolkit.ndom.INdomModel;
 
 import uk.ac.ed.inf.Metabolic.ndomAPI.ICompartment;
 import uk.ac.ed.inf.Metabolic.ndomAPI.ICompound;

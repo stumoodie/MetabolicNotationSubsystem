@@ -1,44 +1,38 @@
 package uk.ac.ed.inf.Metabolic;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
-import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReport;
-import org.pathwayeditor.contextadapter.toolkit.ndom.INDOMValidationService;
-import org.pathwayeditor.contextadapter.toolkit.ndom.INdomModel;
-import org.pathwayeditor.contextadapter.toolkit.ndom.NdomException;
-import org.pathwayeditor.contextadapter.toolkit.validation.IDefaultValidationRuleConfigLoader;
-import org.pathwayeditor.contextadapter.toolkit.validation.IValidationRuleStore;
-import org.pathwayeditor.contextadapter.toolkit.validation.RuleStore;
-import org.pathwayeditor.contextadapter.toolkit.validation.RuleValidationReportBuilder;
+import org.pathwayeditor.notationsubsystem.toolkit.ndom.INDOMValidationService;
+import org.pathwayeditor.notationsubsystem.toolkit.ndom.INdomModel;
+import org.pathwayeditor.notationsubsystem.toolkit.ndom.NdomException;
+import org.pathwayeditor.notationsubsystem.toolkit.validation.IValidationRuleStore;
+import org.pathwayeditor.notationsubsystem.toolkit.validation.RuleValidationReportBuilder;
 
 import uk.ac.ed.inf.Metabolic.parser.MetabolicNDOMFactory;
-import uk.ac.ed.inf.Metabolic.parser.MetabolicRuleLoader;
 import uk.ac.ed.inf.Metabolic.parser.NDOMFactory;
+import uk.ac.ed.inf.Metabolic.validation.MetabolicRuleStore;
 
 public class MetabolicNDOMValidationService implements INDOMValidationService {
 
 	private static MetabolicNDOMValidationService instance;
 
-	public static MetabolicNDOMValidationService getInstance(
-			INotationSubsystem provider) {
+	public static MetabolicNDOMValidationService getInstance() {
 		if (instance == null) {
-			instance = new MetabolicNDOMValidationService(provider);
+			instance = new MetabolicNDOMValidationService();
 		}
 		return instance;
 	}
 
 	private NDOMFactory factory;
 	private RuleValidationReportBuilder reportBuilder;
-	private INotationSubsystem provider;
 	private ICanvas map;
-	private boolean readyToValidate;
+	private boolean readyToValidate = false;
 	private boolean validated;
 	private IValidationReport validationReport;
 //	private IValidationRuleStore ruleStore;
 	private boolean ndomCreated;
 	
-	private MetabolicNDOMValidationService(INotationSubsystem provider) {
-		this.provider=provider;
+	MetabolicNDOMValidationService() {
 	}
 
 	public ICanvas getMapBeingValidated() {
@@ -50,12 +44,12 @@ public class MetabolicNDOMValidationService implements INDOMValidationService {
 	}
 
 	public IValidationRuleStore getRuleStore() {
-		return RuleStore.getInstance(getRuleLoader());
+		return MetabolicRuleStore.getInstance();
 	}
 
-	protected IDefaultValidationRuleConfigLoader getRuleLoader() {
-		return MetabolicRuleLoader.getInstance();
-	}
+//	protected IDefaultValidationRuleConfigLoader getRuleLoader() {
+//		return MetabolicRuleLoader.getInstance();
+//	}
 
 	public IValidationReport getValidationReport() {
 		return validationReport;

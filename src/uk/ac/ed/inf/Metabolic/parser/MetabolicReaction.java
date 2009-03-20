@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
-import org.pathwayeditor.contextadapter.toolkit.ndom.ModelObject;
+import org.pathwayeditor.notationsubsystem.toolkit.ndom.ModelObject;
 
 import uk.ac.ed.inf.Metabolic.ndomAPI.IReaction;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IRelation;
