@@ -1,5 +1,7 @@
 package uk.ac.ed.inf.Metabolic.sbmlexport;
 
+import static org.junit.Assert.*;
+
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;

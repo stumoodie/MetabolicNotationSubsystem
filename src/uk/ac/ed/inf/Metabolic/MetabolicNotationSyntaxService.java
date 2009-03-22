@@ -1,12 +1,13 @@
 package uk.ac.ed.inf.Metabolic;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Collection;
 import java.util.Set;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
@@ -87,7 +88,7 @@ public class MetabolicNotationSyntaxService implements INotationSyntaxService {
 	}
 	
 	private static NumberPropertyDefinition reassignVal(NumberPropertyDefinition prop,String val,boolean isEdit,boolean isVis){
-		NumberPropertyDefinition newP=new NumberPropertyDefinition(prop.getName(),val,(prop.isVisualisable() | isVis),(prop.isEditable()&isEdit));
+		NumberPropertyDefinition newP=new NumberPropertyDefinition(prop.getName(), new BigDecimal(val),(prop.isVisualisable() | isVis),(prop.isEditable()&isEdit));
  //   if(newP.isVisualisable())newP.setAppearance(prop.getAppearance());
 		return newP;
 	}

@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
@@ -17,7 +16,6 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.INumberAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextAnnotationProperty;
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
 import org.pathwayeditor.notationsubsystem.toolkit.ndom.AbstractNDOMParser;
 import org.pathwayeditor.notationsubsystem.toolkit.ndom.ModelObject;
@@ -39,16 +37,19 @@ import uk.ac.ed.inf.Metabolic.validation.MetabolicRuleStore;
 public abstract class NDOMFactory extends AbstractNDOMParser {
 	protected static final String ROLE_PROP = "ROLE";
 	protected static final String VAR_NAME_PROP = "VarName";
-	private static final IPropertyDefinition GO_TERM_PROP = null;
-	private static final IPropertyDefinition CID_PROP = null;
-	private static final IPropertyDefinition CH_EBI_PROP = null;
-	private static final IPropertyDefinition IN_CHI_PROP = null;
-	private static final IPropertyDefinition PUB_CHEM_PROP = null;
-	private static final IPropertyDefinition SMILES_PROP = null;
-	private static final IPropertyDefinition EC_PROP = null;
-	private static final IPropertyDefinition KINETIC_LAW_PROP = null;
-	private static final IPropertyDefinition REVERSIBILITY_PROP = null;
-	private static final IPropertyDefinition IC_PROP = null;
+	private static final String GO_TERM_PROP = "GO term";
+	private static final String CID_PROP = "CID";
+	private static final String CH_EBI_PROP = "ChEBI";
+	private static final String IN_CHI_PROP = "InChI";
+	private static final String PUB_CHEM_PROP = "PubChem";
+	private static final String SMILES_PROP = "SMILES";
+	private static final String EC_PROP = "EC";
+	private static final String KINETIC_LAW_PROP = "KineticLaw";
+	private static final String REVERSIBILITY_PROP = "Reversibility";
+	private static final String IC_PROP = "IC";
+	private static final String STOICH_PROP = "STOICH";
+	private static final String PARAMETERS_PROP = "Parameters";
+	
 	protected MetabolicModel ndom;
 	private RuleValidationReportBuilder reportBuilder;
 	private IValidationRuleStore loader = MetabolicRuleStore.getInstance();
@@ -57,11 +58,11 @@ public abstract class NDOMFactory extends AbstractNDOMParser {
 	// private
 	protected NDOMFactory(IRootNode rmo) {
 		super(rmo);
-		IParserRule r = new IntPropertyRule(this.loader.getRuleById(MetabolicRuleStore.STOICH_ERROR_ID), "STOICH");
+		IParserRule r = new IntPropertyRule(this.loader.getRuleById(MetabolicRuleStore.STOICH_ERROR_ID), STOICH_PROP);
 		rules.put(r.getRuleDef(), r);
-		r = new DoublePropertyRule(this.loader.getRuleById(MetabolicRuleStore.IC_ERROR_ID), "IC");
+		r = new DoublePropertyRule(this.loader.getRuleById(MetabolicRuleStore.IC_ERROR_ID), IC_PROP);
 		rules.put(r.getRuleDef(), r);
-		r = new RegexpPropertyRule(this.loader.getRuleById(MetabolicRuleStore.RE_PARAM_ERROR_ID), "Parameters",	"^(\\s*\\w+\\s*=\\s*[0-9eE\\-+.]+\\s*;)+$");
+		r = new RegexpPropertyRule(this.loader.getRuleById(MetabolicRuleStore.RE_PARAM_ERROR_ID), PARAMETERS_PROP,	"^(\\s*\\w+\\s*=\\s*[0-9eE\\-+.]+\\s*;)+$");
 		((RegexpPropertyRule)r).setEmptyValid(true);
 		rules.put(r.getRuleDef(), r);
 	}
@@ -80,7 +81,7 @@ public abstract class NDOMFactory extends AbstractNDOMParser {
 	 * @param parent
 	 * @param mapObject
 	 */
-	protected abstract void compartment(MetabolicCompartment parent, IDrawingNode mapObject);
+	protected abstract void compartment(MetabolicCompartment parent, IShapeNode mapObject);
 
 	protected abstract void compound(MetabolicCompartment compartment, IShapeNode mapObject);
 
@@ -201,7 +202,7 @@ public abstract class NDOMFactory extends AbstractNDOMParser {
 	 */
 	protected abstract void substrate(ILinkEdge el, MetabolicReaction r);
 
-	protected MetabolicCompartment compartment(IDrawingNode mapObject) {
+	protected MetabolicCompartment compartment(IShapeNode mapObject) {
 		MetabolicCompartment compartment = new MetabolicCompartment(
 				getId(mapObject), mapObject, ndom);
 		IAnnotatedObject att = (IAnnotatedObject) mapObject.getAttribute();
@@ -234,7 +235,8 @@ public abstract class NDOMFactory extends AbstractNDOMParser {
 	}
 
 	private void setIC(IShapeNode mapObject, MetabolicCompound comp) {
-		DoublePropertyRule r = (DoublePropertyRule)this.loader.getRuleById(MetabolicRuleStore.IC_ERROR_ID);
+		IValidationRuleDefinition defn = this.loader.getRuleById(MetabolicRuleStore.IC_ERROR_ID);
+		IParserRule r = this.rules.get(defn);
 		r.setObject(mapObject.getAttribute());
 		r.setRefObject(mapObject);
 		if (r.validate(reportBuilder)) {
@@ -265,9 +267,8 @@ public abstract class NDOMFactory extends AbstractNDOMParser {
 
 	@Override
 	protected void rmo() {
-		// MetabolicCompartment def = new MetabolicCompartment(getId(getRmo()),
-		// "default", "default", ndom);
-		MetabolicCompartment def = compartment(getRmo());
+		 MetabolicCompartment def = new MetabolicCompartment(getId(getRmo()), "default", "default", ndom);
+//		MetabolicCompartment def = compartment(getRmo());
 		try {
 			ndom.addCompartment(def);
 			Iterator<IShapeNode> it = getRmo().getModel().shapeNodeIterator();
@@ -311,7 +312,8 @@ public abstract class NDOMFactory extends AbstractNDOMParser {
 	}
 
 	protected void setStoichiometry(ILinkEdge el, ILinkTerminus p, MetabolicRelation rel) {
-		IParserRule r = (IntPropertyRule)this.rules.get(MetabolicRuleStore.STOICH_ERROR_ID);
+		IValidationRuleDefinition defn = this.loader.getRuleById(MetabolicRuleStore.STOICH_ERROR_ID);
+		IParserRule r = this.rules.get(defn);
 		r.setObject(p);
 		r.setRefObject(el);
 		if (r.validate(reportBuilder)) {

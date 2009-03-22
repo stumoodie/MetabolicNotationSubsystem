@@ -402,7 +402,7 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 	}
 
 	@Override
-	protected void compartment(MetabolicCompartment parent, IDrawingNode mapObject) {
+	protected void compartment(MetabolicCompartment parent, IShapeNode mapObject) {
 		MetabolicCompartment compartment = compartment(mapObject);
 		try {
 			name2Compound.addFirst(new HashMap<String, MetabolicCompound>());

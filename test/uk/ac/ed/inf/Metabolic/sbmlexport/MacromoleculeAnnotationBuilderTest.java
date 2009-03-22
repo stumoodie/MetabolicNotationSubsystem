@@ -1,5 +1,7 @@
 package uk.ac.ed.inf.Metabolic.sbmlexport;
 
+import static org.junit.Assert.*;
+
 import java.util.Collections;
 
 import org.jmock.Expectations;

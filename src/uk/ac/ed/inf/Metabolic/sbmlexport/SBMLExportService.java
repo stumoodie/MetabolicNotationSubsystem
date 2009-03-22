@@ -59,8 +59,7 @@ public class SBMLExportService implements INotationExportService {
 
 			generator = getGenerator();//new MetabolicSBMLExportAdapter<IModel>();
 
-			INotationValidationService validator =  notationSubSystem
-					.getValidationService();
+			INotationValidationService validator =  notationSubSystem.getValidationService();
 			validator.setCanvasToValidate(map);
 			IModel ndom = null;
 			if (validator.isReadyToValidate()) {
