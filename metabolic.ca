@@ -6,7 +6,7 @@ Metabolic context. That context is supposed to be used for visualisation of meta
 New property Reversibility is added to the Process Node
 $Id$
 */
-context uk.ac.ed.inf.Metabolic (name = "Metabolic context" descr="Basic biochemical context" version=1.1.0)
+context org.pathwayeditor.metabolic (name = "Metabolic context" descr="Basic biochemical context" version=1.1.0)
 
 /**
 </verbatim>
