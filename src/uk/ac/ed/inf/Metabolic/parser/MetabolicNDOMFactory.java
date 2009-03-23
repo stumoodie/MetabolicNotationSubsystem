@@ -16,7 +16,6 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
 import org.pathwayeditor.notationsubsystem.toolkit.ndom.GeometryUtils;
-import org.pathwayeditor.notationsubsystem.toolkit.ndom.ModelObject;
 import org.pathwayeditor.notationsubsystem.toolkit.ndom.NdomException;
 
 import uk.ac.ed.inf.Metabolic.ndomAPI.ERelType;

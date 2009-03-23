@@ -17,8 +17,6 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotated
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.INumberAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextAnnotationProperty;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
-import org.pathwayeditor.notationsubsystem.toolkit.ndom.AbstractNDOMParser;
-import org.pathwayeditor.notationsubsystem.toolkit.ndom.ModelObject;
 import org.pathwayeditor.notationsubsystem.toolkit.ndom.NdomException;
 import org.pathwayeditor.notationsubsystem.toolkit.validation.IValidationRuleStore;
 import org.pathwayeditor.notationsubsystem.toolkit.validation.RuleValidationReportBuilder;

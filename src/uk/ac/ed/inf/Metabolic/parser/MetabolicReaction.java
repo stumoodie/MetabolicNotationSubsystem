@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
-import org.pathwayeditor.notationsubsystem.toolkit.ndom.ModelObject;
 
 import uk.ac.ed.inf.Metabolic.ndomAPI.IReaction;
 import uk.ac.ed.inf.Metabolic.ndomAPI.IRelation;
@@ -17,7 +16,7 @@ public class MetabolicReaction  extends ModelObject implements IReaction {
 	private String kineticLaw;
 	private String parameters;
 	private boolean reversible;
-	private MetabolicModel parentModel;
+//	private MetabolicModel parentModel;
 	
 	//Lists
 	private List<IRelation> activatorList=new ArrayList<IRelation>();
@@ -36,7 +35,7 @@ public class MetabolicReaction  extends ModelObject implements IReaction {
 	public MetabolicReaction(String id, IDrawingNode mapObject, MetabolicModel m)
 			throws IllegalArgumentException {
 		super(id, mapObject);
-		parentModel=m;
+//		parentModel=m;
 	}
 
 

@@ -78,7 +78,7 @@ public class nDOMParserTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.notationsubsystem.toolkit.ndom.AbstractNDOMParser#getId(org.pathwayeditor.businessobjectsAPI.IMapObject)}.
+	 * Test method for {@link org.pathwayeditor.notationsubsystem.ndom.AbstractNDOMParser#getId(org.pathwayeditor.businessobjectsAPI.IMapObject)}.
 	 */
 	@Test
 	public void testGetIdString() {
@@ -102,7 +102,7 @@ public class nDOMParserTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.notationsubsystem.toolkit.ndom.AbstractNDOMParser#getId(org.pathwayeditor.businessobjectsAPI.IMapObject)}.
+	 * Test method for {@link org.pathwayeditor.notationsubsystem.ndom.AbstractNDOMParser#getId(org.pathwayeditor.businessobjectsAPI.IMapObject)}.
 	 */
 	@Test
 	public void testGetIdWrong() {
@@ -125,7 +125,7 @@ public class nDOMParserTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.notationsubsystem.toolkit.ndom.AbstractNDOMParser#getId(org.pathwayeditor.businessobjectsAPI.IMapObject)}.
+	 * Test method for {@link org.pathwayeditor.notationsubsystem.ndom.AbstractNDOMParser#getId(org.pathwayeditor.businessobjectsAPI.IMapObject)}.
 	 */
 	@Test
 	public void testGetIdWeird() {

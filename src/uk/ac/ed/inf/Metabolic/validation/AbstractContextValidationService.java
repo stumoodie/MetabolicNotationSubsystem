@@ -10,11 +10,12 @@ import org.pathwayeditor.businessobjects.notationsubsystem.INotationValidationSe
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReport;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReportItem;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleConfig;
-import org.pathwayeditor.notationsubsystem.toolkit.ndom.AbstractNDOMParser;
 import org.pathwayeditor.notationsubsystem.toolkit.ndom.NdomException;
 import org.pathwayeditor.notationsubsystem.toolkit.validation.IRuleValidationReportBuilder;
 import org.pathwayeditor.notationsubsystem.toolkit.validation.IValidationRuleStore;
 import org.pathwayeditor.notationsubsystem.toolkit.validation.RuleValidationReportBuilder;
+
+import uk.ac.ed.inf.Metabolic.parser.AbstractNDOMParser;
 
 
 /**
