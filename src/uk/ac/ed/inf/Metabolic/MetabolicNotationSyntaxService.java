@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Collection;
 import java.util.Set;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDecoratorShape;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
@@ -508,6 +509,7 @@ public class MetabolicNotationSyntaxService implements INotationSyntaxService {
 	this.Consume.getDefaultAttributes().setName("Consumption Link");
 	this.Consume.getDefaultAttributes().setDescription("");
 	this.Consume.getDefaultAttributes().setDetailedDescription("");
+	this.Consume.getDefaultAttributes().setRouter(ConnectionRouter.SHORTEST_PATH);
 	EnumSet<LinkEditableAttributes> editableAttributes = EnumSet.noneOf(LinkEditableAttributes.class);
 	if(true){
 	  editableAttributes.add(LinkEditableAttributes.COLOUR);
@@ -594,6 +596,7 @@ public class MetabolicNotationSyntaxService implements INotationSyntaxService {
 	this.Produce.getDefaultAttributes().setName("Production Link");
 	this.Produce.getDefaultAttributes().setDescription("");
 	this.Produce.getDefaultAttributes().setDetailedDescription("");
+	this.Produce.getDefaultAttributes().setRouter(ConnectionRouter.SHORTEST_PATH);
 	EnumSet<LinkEditableAttributes> editableAttributes = EnumSet.noneOf(LinkEditableAttributes.class);
 	if(true){
 	  editableAttributes.add(LinkEditableAttributes.COLOUR);
@@ -680,6 +683,7 @@ public class MetabolicNotationSyntaxService implements INotationSyntaxService {
 	this.Activation.getDefaultAttributes().setName("Activation Link");
 	this.Activation.getDefaultAttributes().setDescription("");
 	this.Activation.getDefaultAttributes().setDetailedDescription("");
+	this.Activation.getDefaultAttributes().setRouter(ConnectionRouter.SHORTEST_PATH);
 	EnumSet<LinkEditableAttributes> editableAttributes = EnumSet.noneOf(LinkEditableAttributes.class);
 	if(true){
 	  editableAttributes.add(LinkEditableAttributes.COLOUR);
@@ -771,6 +775,7 @@ public class MetabolicNotationSyntaxService implements INotationSyntaxService {
 	this.Catalysis.getDefaultAttributes().setName("Catalysis Link");
 	this.Catalysis.getDefaultAttributes().setDescription("");
 	this.Catalysis.getDefaultAttributes().setDetailedDescription("");
+	this.Catalysis.getDefaultAttributes().setRouter(ConnectionRouter.SHORTEST_PATH);
 	EnumSet<LinkEditableAttributes> editableAttributes = EnumSet.noneOf(LinkEditableAttributes.class);
 	if(true){
 	  editableAttributes.add(LinkEditableAttributes.COLOUR);
@@ -859,6 +864,7 @@ public class MetabolicNotationSyntaxService implements INotationSyntaxService {
 	this.Inhibition.getDefaultAttributes().setName("Inhibition Link");
 	this.Inhibition.getDefaultAttributes().setDescription("");
 	this.Inhibition.getDefaultAttributes().setDetailedDescription("");
+	this.Inhibition.getDefaultAttributes().setRouter(ConnectionRouter.SHORTEST_PATH);
 	EnumSet<LinkEditableAttributes> editableAttributes = EnumSet.noneOf(LinkEditableAttributes.class);
 	if(true){
 	  editableAttributes.add(LinkEditableAttributes.COLOUR);

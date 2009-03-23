@@ -111,10 +111,10 @@ public class MetabolicSBMLExportAdapterTest {
 	@Test
 	public void testShouldCreateTargetForValidSBMLDocument()  {
 	  assertFalse(exportAdapter.isTargetCreated()) ;
-	  final IModelFactory moeckModelFactory = mockery.mock(IModelFactory.class);
-	  final IModel mockModel = mockery.mock(IModel.class);
-	  final IEntityFactory mockentityFac = mockery.mock(IEntityFactory.class);
-	  final IReactionBuilder mockReactionFactory = mockery.mock(IReactionBuilder.class);
+	  final IModelFactory moeckModelFactory = mockery.mock(IModelFactory.class, "mockModelFactory");
+	  final IModel mockModel = mockery.mock(IModel.class, "mockModel");
+	  final IEntityFactory mockentityFac = mockery.mock(IEntityFactory.class, "mockentityFac");
+	  final IReactionBuilder mockReactionFactory = mockery.mock(IReactionBuilder.class, "mockReactionFactory");
 	  final SBMLDocument doc = createSBMLDocument();
 	  mockery.checking(new Expectations() {
 		{one(moeckModelFactory).createSBMLModel(with(any(SBMLDocument.class)), with(any(IModel.class)));}

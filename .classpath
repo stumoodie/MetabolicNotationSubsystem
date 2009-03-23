@@ -41,10 +41,6 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/uk.ac.ed.inf.csb.Metabolic/lib/toolkit/toolkit-docs.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/libsml-3.2.2/lib/libsbmlj.jar">
-		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="MetabolicNotationSubsystem/lib/libsml-3.2.2/lib"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry kind="lib" path="lib/libsbml-3.2.2/lib/libsbmlj.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

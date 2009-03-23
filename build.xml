@@ -1,0 +1,180 @@
+<!-- ======================================
+
+      This build.xml is for a standard build of the src and test code that has no Eclipse
+      dependencies. The output is a jar.
+      
+      For building a project as a plugin, use PDE tools->Create ant script.
+      
+      This build file should have no machine-specific file paths. 
+
+     ====================================== -->
+<project name="Metabolic build" default="non_plugin_main">
+	<property name="archive.version" value="1.0.0" />
+	<property name="archive.name" value="metabolicNotation" />
+	<property name="archive.dir" value="org.pathwayeditor.application" />
+	<property name="docs.build.dir" value="./doc"/>
+	<property name="src.dir" value="src" />
+	<property name="jar.dir" value="./jars" />
+	<property name="jar.name.bin" value="MetabolicNotationSubsystem.jar" />
+	<property name="jar.name.src" value="MetabolicNotationSubsystem-src.jar" />
+	<property name="jar.name.doc" value="MetabolicNotationSubsystem-docs.jar" />
+	<property name="archive" value="${archive.name}.jar" />
+
+	<property name="build.root" value="tempBuild" />
+
+	<property name="build.bin" value="antBuild" />
+
+	<property name="build.test" value="testbin" />
+
+	<property name="build.test.logs" value="${build.test}/testLogs" />	
+
+	<path id="classpath">
+		<pathelement location="lib/businessObjects/BusinessObjects.jar" />
+		<pathelement location="lib/compoundGraph/CompoundGraph.jar" />
+		<pathelement location="lib/libsbml-3.2.2/lib/libsbmlj.jar" />
+		<pathelement location="lib/poi-3.1-FINAL/poi-3.1-FINAL-20080629.jar" />
+		<pathelement location="lib/toolkit/toolkit.jar" />
+		<pathelement location="lib/paxtools.jar" />
+		<pathelement location="lib/log4j-1.2.12.jar" />
+	</path>
+
+	<path id="testclasspath">
+		<path refid="classpath"/>
+		<pathelement location="${build.bin}"/>
+		<pathelement location="${build.test}"/>
+		<pathelement location="lib/jmock-2.4.0/jmock-2.4.0.jar" />
+		<pathelement location="lib/jmock-2.4.0/hamcrest-core-1.1.jar" />
+		<pathelement location="lib/jmock-2.4.0/hamcrest-library-1.1.jar" />
+		<pathelement location="lib/jmock-2.4.0/objenesis-1.0.jar" />
+		<pathelement location="lib/jmock-2.4.0/cglib-nodep-2.1_3.jar" />
+		<pathelement location="lib/jmock-2.4.0/jmock-junit4-2.4.0.jar" />
+		<pathelement location="lib/junit4.4/junit-4.4.jar"/>
+		<fileset dir="lib" includes="*.jar"/>
+	</path>
+
+	<target name="jarAll" depends="jar-bin, jar-src, jar-docs"/>
+	
+	<target name="init-jardirs">
+		<delete dir="${jar.dir}" />
+		<mkdir dir="${jar.dir}" />
+	</target>
+	
+	<target name="api-docs" depends="compile">
+		<javadoc access="package" author="true" splitindex="true" use="true" version="true" source="1.5" sourcepath="${src.dir}" destdir="${docs.build.dir}" doctitle="Business Objects API" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false">
+			<classpath refid="classpath" />
+		</javadoc>
+	</target>
+
+	<target name="jar-bin" depends="compile, init-jardirs">
+		<jar destfile="${jar.dir}/${jar.name.bin}">
+			<fileset dir="${build.bin}" />
+		</jar>
+	</target>
+	
+	<target name="jar-src" depends="init-jardirs">
+		<jar destfile="${jar.dir}/${jar.name.src}">
+			<fileset dir="${src.dir}" />
+		</jar>
+	</target>
+	
+	<target name="jar-docs" depends="api-docs">
+		<mkdir dir="${jar.dir}" />
+		<jar destfile="${jar.dir}/${jar.name.doc}">
+			<fileset dir="${docs.build.dir}" />
+		</jar>
+	</target>
+				
+
+	
+<!-- builds syntax definition code and drops into application -->
+<target name="non_plugin_main" depends="clean_compile,jarAll" description="builds class files into target" />
+
+<target name="test" depends="compile">
+ 	    <!-- now compile test cases -->
+		<echo> Compiling test cases</echo>
+		<javac classpathref="testclasspath" debug="true" srcdir="test" destdir="${build.test}" >
+		</javac>
+	
+	<!-- copy testConfig files  -->
+	<copy todir="${build.test}">
+				<fileset dir="test">
+				   <exclude name="**/*.java"/>
+	             </fileset>
+	 </copy>
+	
+	<property name="envPath" value="${basedir}/lib/libsbml-3.2.2/lib"/>
+	
+	<!--run test cases. All test class names  should end in 'Test' to avoid
+		       inclusion of inner classes. -->
+			<junit  printsummary="yes" haltonfailure="no" fork="true" forkmode="perBatch" newenvironment="true">
+				<env key="DYLD_LIBRARY_PATH" path="${envPath}" />
+				<formatter type="xml"/>
+		        <classpath>
+		        	<path refid="testclasspath"/>
+		        	<!--
+		        	<pathelement location="lib/BusinessObjects.jar"/>
+		        	<pathelement location="lib/Toolkit.jar"/>
+		        	-->
+		        </classpath>
+				
+				<batchtest todir="${build.test.logs}">
+					<fileset dir= "${build.test}">
+						<include name="**/*Test.class"/>
+					</fileset>
+					</batchtest>
+				
+				
+			    
+			</junit>
+	<!-- clean report directory -->
+	<delete dir="${build.test.logs}/junitReports" />
+	<mkdir dir="${build.test.logs}/junitReports" />
+
+	<!-- generate report -->
+	<junitreport todir="${build.test.logs}/junitReports">
+		<fileset dir="${build.test.logs}" includes="**/*.xml" />
+		<report todir="${build.test.logs}/junitReports" />
+	</junitreport>
+	
+	
+	
+</target>
+
+<target name="init">
+	<echo> here </echo>
+	<mkdir dir="${build.root}"/>
+	<mkdir dir="${build.bin}"/>
+	<mkdir dir="${build.test}"/>
+	<mkdir dir="${build.test.logs}"/>
+</target>
+
+	
+<!-- ==========================
+    Clean Compile
+     ========================== -->
+<target name="clean_compile"  depends="clean,compile" description=" clean compile">
+</target>
+
+	<!-- ==========================
+	    Incremental Compile
+	     ========================== -->
+<target name="compile" depends="init" description="Incremental compile">
+	      <!-- define classpath for src code (not tests) -->
+			
+	        <javac classpathref="classpath" srcdir="src/" destdir="${build.bin}">
+	        </javac>
+</target>
+	
+ <!-- =========================
+      Clean
+      ========================= -->
+<target name="clean" description="removes old build artefacts">
+	<delete dir="${build.root}"/>
+	<delete file="${build.bin}"/>
+	<delete file="${build.test}"/>
+	<delete file="${archive}"/>
+	<delete file="logs"/>
+	<delete file="sbmlLoaded"/>
+</target>
+	
+</project>

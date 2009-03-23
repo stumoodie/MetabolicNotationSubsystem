@@ -33,7 +33,7 @@ public class TestMetabolicNDOMValidationService {
 	
 	@Before
 	public void setUp() throws Exception {
-		s=MetabolicNDOMValidationService.getInstance();
+		s= new MetabolicNDOMValidationService();
 		rmo=mockery.mock(IRootNode.class);
 		map=mockery.mock(ICanvas.class);
 		mockery.checking(new Expectations(){{
