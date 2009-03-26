@@ -185,7 +185,7 @@ shape 	Compartment (name="Compartment" descr="Functional compartment"
 /**
 Reaction element.
 */
-shape 	Process ( name="Reaction" descr="chemical conversion of compounds"
+shape 	Process ( name="Process" descr="chemical conversion of compounds"
 		stype = RECTANGLE
 		size(read-only) = [10,10]
 		lcolor = [0,0,0]
