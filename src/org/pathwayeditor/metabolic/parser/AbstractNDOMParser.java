@@ -275,7 +275,7 @@ public abstract class AbstractNDOMParser {
  * *** empty log message ***
  *
  * Revision 1.2  2008/06/03 08:52:03  asorokin
- * Size-based calculation of direction of first or last link segment
+ * Dimension-based calculation of direction of first or last link segment
  *
  * Revision 1.1  2008/06/02 10:25:43  asorokin
  * NDOM facility

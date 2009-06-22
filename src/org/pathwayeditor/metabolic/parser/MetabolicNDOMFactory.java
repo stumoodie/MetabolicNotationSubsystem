@@ -13,8 +13,8 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
+import org.pathwayeditor.figure.geometry.Point;
 import org.pathwayeditor.metabolic.ndomAPI.ERelType;
 import org.pathwayeditor.metabolic.ndomAPI.IReaction;
 import org.pathwayeditor.metabolic.validation.MetabolicRuleStore;
@@ -90,7 +90,7 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 			IShapeNode s = reaction2Shape.get(r);
 			// Set<ILink> substr = new HashSet<ILink>();
 			// Set<ILink> prod = new HashSet<ILink>();
-			Location srcLoc = null;
+			Point srcLoc = null;
 			// double srcAngle;
 			for (ILinkEdge l : prodLinks) {
 				if (srcLoc == null) {
@@ -99,7 +99,7 @@ public class MetabolicNDOMFactory extends NDOMFactory {
 					substrate(l, r);
 				} else {
 					// all consequitive links
-					Location newLoc = GeometryUtils.getSrcLocation(l, s);
+					Point newLoc = GeometryUtils.getSrcLocation(l, s);
 					if (GeometryUtils.getAngle(srcLoc, newLoc) > 0) {
 						substrate(l, r);
 					} else {

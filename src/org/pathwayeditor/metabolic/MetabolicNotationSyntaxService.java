@@ -15,7 +15,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDecoratorShape;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
+import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
@@ -263,13 +263,13 @@ public class MetabolicNotationSyntaxService implements INotationSyntaxService {
 	this.Compartment.getDefaultAttributes().setName("Compartment");
 	this.Compartment.getDefaultAttributes().setShapeType(PrimitiveShapeType.RECTANGLE);
 	this.Compartment.getDefaultAttributes().setFillColour(new RGB(255,255,255));
-	this.Compartment.getDefaultAttributes().setSize(new Size(20,20));
+	this.Compartment.getDefaultAttributes().setSize(new Dimension(20,20));
 	int[] lc=new int[]{0,0,0};
 	this.Compartment.getDefaultAttributes().setLineWidth(1);
 	this.Compartment.getDefaultAttributes().setLineStyle(LineStyle.SOLID);
 	this.Compartment.getDefaultAttributes().setLineColour(new RGB(lc[0],lc[1],lc[2]));
 	this.Compartment.getDefaultAttributes().setShapeType(PrimitiveShapeType.ROUNDED_RECTANGLE);		int[] s=new int[]{200,200};
-			this.Compartment.getDefaultAttributes().setSize(new Size(s[0],s[1]));
+			this.Compartment.getDefaultAttributes().setSize(new Dimension(s[0],s[1]));
 
 	EnumSet<EditableShapeAttributes> editableAttributes = EnumSet.noneOf(EditableShapeAttributes.class);
 	if(true){
@@ -324,13 +324,13 @@ public class MetabolicNotationSyntaxService implements INotationSyntaxService {
 	this.Process.getDefaultAttributes().setName("Reaction");
 	this.Process.getDefaultAttributes().setShapeType(PrimitiveShapeType.RECTANGLE);
 	this.Process.getDefaultAttributes().setFillColour(new RGB(255,255,255));
-	this.Process.getDefaultAttributes().setSize(new Size(20,20));
+	this.Process.getDefaultAttributes().setSize(new Dimension(20,20));
 	int[] lc=new int[]{0,0,0};
 	this.Process.getDefaultAttributes().setLineWidth(1);
 	this.Process.getDefaultAttributes().setLineStyle(LineStyle.SOLID);
 	this.Process.getDefaultAttributes().setLineColour(new RGB(lc[0],lc[1],lc[2]));
 	this.Process.getDefaultAttributes().setShapeType(PrimitiveShapeType.RECTANGLE);		int[] s=new int[]{10,10};
-			this.Process.getDefaultAttributes().setSize(new Size(s[0],s[1]));int[] c=new int[]{255,255,255};
+			this.Process.getDefaultAttributes().setSize(new Dimension(s[0],s[1]));int[] c=new int[]{255,255,255};
 	this.Process.getDefaultAttributes().setFillColour(new RGB(c[0],c[1],c[2]));
 
 	EnumSet<EditableShapeAttributes> editableAttributes = EnumSet.noneOf(EditableShapeAttributes.class);
@@ -381,13 +381,13 @@ public class MetabolicNotationSyntaxService implements INotationSyntaxService {
 	this.Compound.getDefaultAttributes().setName("Compound");
 	this.Compound.getDefaultAttributes().setShapeType(PrimitiveShapeType.RECTANGLE);
 	this.Compound.getDefaultAttributes().setFillColour(new RGB(255,255,255));
-	this.Compound.getDefaultAttributes().setSize(new Size(20,20));
+	this.Compound.getDefaultAttributes().setSize(new Dimension(20,20));
 	int[] lc=new int[]{255,0,0};
 	this.Compound.getDefaultAttributes().setLineWidth(1);
 	this.Compound.getDefaultAttributes().setLineStyle(LineStyle.SOLID);
 	this.Compound.getDefaultAttributes().setLineColour(new RGB(lc[0],lc[1],lc[2]));
 	this.Compound.getDefaultAttributes().setShapeType(PrimitiveShapeType.ELLIPSE);		int[] s=new int[]{20,20};
-			this.Compound.getDefaultAttributes().setSize(new Size(s[0],s[1]));int[] c=new int[]{255,255,255};
+			this.Compound.getDefaultAttributes().setSize(new Dimension(s[0],s[1]));int[] c=new int[]{255,255,255};
 	this.Compound.getDefaultAttributes().setFillColour(new RGB(c[0],c[1],c[2]));
 
 	EnumSet<EditableShapeAttributes> editableAttributes = EnumSet.noneOf(EditableShapeAttributes.class);
@@ -444,13 +444,13 @@ public class MetabolicNotationSyntaxService implements INotationSyntaxService {
 	this.Macromolecule.getDefaultAttributes().setName("Macromolecule");
 	this.Macromolecule.getDefaultAttributes().setShapeType(PrimitiveShapeType.RECTANGLE);
 	this.Macromolecule.getDefaultAttributes().setFillColour(new RGB(255,255,255));
-	this.Macromolecule.getDefaultAttributes().setSize(new Size(20,20));
+	this.Macromolecule.getDefaultAttributes().setSize(new Dimension(20,20));
 	int[] lc=new int[]{0,0,0};
 	this.Macromolecule.getDefaultAttributes().setLineWidth(1);
 	this.Macromolecule.getDefaultAttributes().setLineStyle(LineStyle.SOLID);
 	this.Macromolecule.getDefaultAttributes().setLineColour(new RGB(lc[0],lc[1],lc[2]));
 	this.Macromolecule.getDefaultAttributes().setShapeType(PrimitiveShapeType.ROUNDED_RECTANGLE);		int[] s=new int[]{20,20};
-			this.Macromolecule.getDefaultAttributes().setSize(new Size(s[0],s[1]));int[] c=new int[]{255,255,255};
+			this.Macromolecule.getDefaultAttributes().setSize(new Dimension(s[0],s[1]));int[] c=new int[]{255,255,255};
 	this.Macromolecule.getDefaultAttributes().setFillColour(new RGB(c[0],c[1],c[2]));
 
 	EnumSet<EditableShapeAttributes> editableAttributes = EnumSet.noneOf(EditableShapeAttributes.class);
@@ -535,9 +535,9 @@ public class MetabolicNotationSyntaxService implements INotationSyntaxService {
 	LinkTerminusDefinition tport=this.Consume.getTargetTerminusDefinition();
 	sport.getDefaultAttributes().setGap((short)0);//to set default offset value
 	sport.getDefaultAttributes().setEndDecoratorType(LinkEndDecoratorShape.NONE);//, 8,8);
-	sport.getDefaultAttributes().setEndSize(new Size(8,8));
+	sport.getDefaultAttributes().setEndSize(new Dimension(8,8));
 	sport.getDefaultAttributes().setTermDecoratorType(PrimitiveShapeType.RECTANGLE);
-	sport.getDefaultAttributes().setTermSize(new Size(0,0));
+	sport.getDefaultAttributes().setTermSize(new Dimension(0,0));
 	int[] csport=new int[]{255,255,255};
 	sport.getDefaultAttributes().setTermColour(new RGB(csport[0],csport[1],csport[2]));
 	//sport.getDefaultAttributes().setLineProperties(0, LineStyle.SOLID);
@@ -556,9 +556,9 @@ public class MetabolicNotationSyntaxService implements INotationSyntaxService {
 	sport.getDefaultAttributes().addPropertyDefinition(Role);
 	 tport.getDefaultAttributes().setGap((short)0);
 	tport.getDefaultAttributes().setEndDecoratorType(LinkEndDecoratorShape.NONE);//, 8,8);
-	tport.getDefaultAttributes().setEndSize(new Size(8,8));
+	tport.getDefaultAttributes().setEndSize(new Dimension(8,8));
 	tport.getDefaultAttributes().setTermDecoratorType(PrimitiveShapeType.RECTANGLE);
-	tport.getDefaultAttributes().setTermSize(new Size(0,0));
+	tport.getDefaultAttributes().setTermSize(new Dimension(0,0));
 	int[] ctport=new int[]{255,255,255};
 	tport.getDefaultAttributes().setTermColour(new RGB(ctport[0],ctport[1],ctport[2]));
 	//tport.getDefaultAttributes().setLineProperties(0, LineStyle.SOLID);
@@ -622,9 +622,9 @@ public class MetabolicNotationSyntaxService implements INotationSyntaxService {
 	LinkTerminusDefinition tport=this.Produce.getTargetTerminusDefinition();
 	sport.getDefaultAttributes().setGap((short)2);
 	sport.getDefaultAttributes().setEndDecoratorType(LinkEndDecoratorShape.NONE);//, 8,8);
-	sport.getDefaultAttributes().setEndSize(new Size(8,8));
+	sport.getDefaultAttributes().setEndSize(new Dimension(8,8));
 	sport.getDefaultAttributes().setTermDecoratorType(PrimitiveShapeType.RECTANGLE);
-	sport.getDefaultAttributes().setTermSize(new Size(0,0));
+	sport.getDefaultAttributes().setTermSize(new Dimension(0,0));
 	int[] csport=new int[]{255,255,255};
 	sport.getDefaultAttributes().setTermColour(new RGB(csport[0],csport[1],csport[2]));
 	//sport.getDefaultAttributes().setLineProperties(0, LineStyle.SOLID);
@@ -643,9 +643,9 @@ public class MetabolicNotationSyntaxService implements INotationSyntaxService {
 	sport.getDefaultAttributes().addPropertyDefinition(Stoich);
 	 tport.getDefaultAttributes().setGap((short)0);//to set default offset value
 	tport.getDefaultAttributes().setEndDecoratorType(LinkEndDecoratorShape.TRIANGLE);//, 5,5);
-	tport.getDefaultAttributes().setEndSize(new Size(5,5));
+	tport.getDefaultAttributes().setEndSize(new Dimension(5,5));
 	tport.getDefaultAttributes().setTermDecoratorType(PrimitiveShapeType.RECTANGLE);
-	tport.getDefaultAttributes().setTermSize(new Size(0,0));
+	tport.getDefaultAttributes().setTermSize(new Dimension(0,0));
 	int[] ctport=new int[]{255,255,255};
 	tport.getDefaultAttributes().setTermColour(new RGB(ctport[0],ctport[1],ctport[2]));
 	//tport.getDefaultAttributes().setLineProperties(0, LineStyle.SOLID);
@@ -709,9 +709,9 @@ public class MetabolicNotationSyntaxService implements INotationSyntaxService {
 	LinkTerminusDefinition tport=this.Activation.getTargetTerminusDefinition();
 	sport.getDefaultAttributes().setGap((short)2);
 	sport.getDefaultAttributes().setEndDecoratorType(LinkEndDecoratorShape.NONE);//, 8,8);
-	sport.getDefaultAttributes().setEndSize(new Size(8,8));
+	sport.getDefaultAttributes().setEndSize(new Dimension(8,8));
 	sport.getDefaultAttributes().setTermDecoratorType(PrimitiveShapeType.RECTANGLE);
-	sport.getDefaultAttributes().setTermSize(new Size(0,0));
+	sport.getDefaultAttributes().setTermSize(new Dimension(0,0));
 	int[] csport=new int[]{255,255,255};
 	sport.getDefaultAttributes().setTermColour(new RGB(csport[0],csport[1],csport[2]));
 	//sport.getDefaultAttributes().setLineProperties(0, LineStyle.SOLID);
@@ -730,9 +730,9 @@ public class MetabolicNotationSyntaxService implements INotationSyntaxService {
 	sport.getDefaultAttributes().addPropertyDefinition(Stoich);
 	 tport.getDefaultAttributes().setGap((short)0);//to set default offset value
 	tport.getDefaultAttributes().setEndDecoratorType(LinkEndDecoratorShape.ARROW);//, 8,8);
-	tport.getDefaultAttributes().setEndSize(new Size(8,8));
+	tport.getDefaultAttributes().setEndSize(new Dimension(8,8));
 	tport.getDefaultAttributes().setTermDecoratorType(PrimitiveShapeType.RECTANGLE);
-	tport.getDefaultAttributes().setTermSize(new Size(0,0));
+	tport.getDefaultAttributes().setTermSize(new Dimension(0,0));
 	int[] ctport=new int[]{255,255,255};
 	tport.getDefaultAttributes().setTermColour(new RGB(ctport[0],ctport[1],ctport[2]));
 	//tport.getDefaultAttributes().setLineProperties(0, LineStyle.SOLID);
@@ -798,9 +798,9 @@ public class MetabolicNotationSyntaxService implements INotationSyntaxService {
 	LinkTerminusDefinition tport=this.Catalysis.getTargetTerminusDefinition();
 	sport.getDefaultAttributes().setGap((short)2);
 	sport.getDefaultAttributes().setEndDecoratorType(LinkEndDecoratorShape.NONE);//, 8,8);
-	sport.getDefaultAttributes().setEndSize(new Size(8,8));
+	sport.getDefaultAttributes().setEndSize(new Dimension(8,8));
 	sport.getDefaultAttributes().setTermDecoratorType(PrimitiveShapeType.RECTANGLE);
-	sport.getDefaultAttributes().setTermSize(new Size(0,0));
+	sport.getDefaultAttributes().setTermSize(new Dimension(0,0));
 	int[] csport=new int[]{255,255,255};
 	sport.getDefaultAttributes().setTermColour(new RGB(csport[0],csport[1],csport[2]));
 	//sport.getDefaultAttributes().setLineProperties(0, LineStyle.SOLID);
@@ -819,9 +819,9 @@ public class MetabolicNotationSyntaxService implements INotationSyntaxService {
 	sport.getDefaultAttributes().addPropertyDefinition(Stoich);
 	 tport.getDefaultAttributes().setGap((short)0);//to set default offset value
 	tport.getDefaultAttributes().setEndDecoratorType(LinkEndDecoratorShape.DIAMOND);//, 8,8);
-	tport.getDefaultAttributes().setEndSize(new Size(8,8));
+	tport.getDefaultAttributes().setEndSize(new Dimension(8,8));
 	tport.getDefaultAttributes().setTermDecoratorType(PrimitiveShapeType.RECTANGLE);
-	tport.getDefaultAttributes().setTermSize(new Size(0,0));
+	tport.getDefaultAttributes().setTermSize(new Dimension(0,0));
 	int[] ctport=new int[]{255,255,255};
 	tport.getDefaultAttributes().setTermColour(new RGB(ctport[0],ctport[1],ctport[2]));
 	//tport.getDefaultAttributes().setLineProperties(0, LineStyle.SOLID);
@@ -890,9 +890,9 @@ public class MetabolicNotationSyntaxService implements INotationSyntaxService {
 	LinkTerminusDefinition tport=this.Inhibition.getTargetTerminusDefinition();
 	sport.getDefaultAttributes().setGap((short)2);
 	sport.getDefaultAttributes().setEndDecoratorType(LinkEndDecoratorShape.NONE);//, 8,8);
-	sport.getDefaultAttributes().setEndSize(new Size(8,8));
+	sport.getDefaultAttributes().setEndSize(new Dimension(8,8));
 	sport.getDefaultAttributes().setTermDecoratorType(PrimitiveShapeType.RECTANGLE);
-	sport.getDefaultAttributes().setTermSize(new Size(0,0));
+	sport.getDefaultAttributes().setTermSize(new Dimension(0,0));
 	int[] csport=new int[]{255,255,255};
 	sport.getDefaultAttributes().setTermColour(new RGB(csport[0],csport[1],csport[2]));
 	//sport.getDefaultAttributes().setLineProperties(0, LineStyle.SOLID);
@@ -911,9 +911,9 @@ public class MetabolicNotationSyntaxService implements INotationSyntaxService {
 	sport.getDefaultAttributes().addPropertyDefinition(Stoich);
 	 tport.getDefaultAttributes().setGap((short)0);//to set default offset value
 	tport.getDefaultAttributes().setEndDecoratorType(LinkEndDecoratorShape.BAR);//, 8,8);
-	tport.getDefaultAttributes().setEndSize(new Size(8,8));
+	tport.getDefaultAttributes().setEndSize(new Dimension(8,8));
 	tport.getDefaultAttributes().setTermDecoratorType(PrimitiveShapeType.RECTANGLE);
-	tport.getDefaultAttributes().setTermSize(new Size(0,0));
+	tport.getDefaultAttributes().setTermSize(new Dimension(0,0));
 	int[] ctport=new int[]{255,255,255};
 	tport.getDefaultAttributes().setTermColour(new RGB(ctport[0],ctport[1],ctport[2]));
 	//tport.getDefaultAttributes().setLineProperties(0, LineStyle.SOLID);
